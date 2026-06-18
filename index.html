@@ -4,48 +4,174 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Milo54</title>
-  <meta name="description" content="I read manhwa, manga, and novels. I watch anime. I also build things sometimes." />
+  <meta name="description" content="Reader · Builder · Professional Manhwa Addict" />
   <meta property="og:title" content="Milo54" />
-  <meta property="og:description" content="I read manhwa, manga, and novels. I watch anime. I also build things sometimes." />
+  <meta property="og:description" content="Reader · Builder · Professional Manhwa Addict" />
+  <meta property="og:image" content="avatar.jpg" />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --pink:        #ff2d78;
+      --pink-soft:   #fff0f5;
+      --pink-border: #ffd6e7;
+      --black:       #111111;
+      --gray:        #666666;
+      --white:       #ffffff;
+    }
+
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+    }
 
     body {
       font-family: 'Nunito', sans-serif;
-      background: #ffffff;
-      color: #111111;
-      line-height: 1.6;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.65;
     }
 
-    /* ── Hero ── */
-    .hero {
+    /* ── NAV ── */
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--pink-border);
+      padding: 0 28px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 64px 24px 40px;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--pink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--pink);
+      border-bottom-color: var(--pink);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--pink-border);
+      padding: 16px 28px 20px;
+      gap: 16px;
+      z-index: 99;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gray);
+      text-decoration: none;
+    }
+
+    .mobile-menu a:hover { color: var(--pink); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── SECTION SCAFFOLD ── */
+    section {
+      padding: 64px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-marker {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 28px;
+    }
+
+    /* ── HERO ── */
+    #home {
       text-align: center;
+      padding-top: 72px;
+      padding-bottom: 64px;
     }
 
     @keyframes ringPulse {
-      0%   { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0.5); }
-      70%  { box-shadow: 0 0 0 14px rgba(255, 45, 120, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0); }
+      0%   { box-shadow: 0 0 0 0 rgba(255,45,120,0.45); }
+      70%  { box-shadow: 0 0 0 16px rgba(255,45,120,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,45,120,0); }
     }
 
     .avatar-wrap {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      border: 4px solid #ff2d78;
+      border: 4px solid var(--pink);
       overflow: hidden;
-      animation: ringPulse 1.2s ease-out 0.3s 1;
-      flex-shrink: 0;
+      margin: 0 auto 24px;
+      box-shadow: 0 4px 20px rgba(255,45,120,0.18);
+      animation: ringPulse 1.3s ease-out 0.4s 1;
     }
 
     .avatar-wrap img {
@@ -58,199 +184,415 @@
     .avatar-fallback {
       width: 100%;
       height: 100%;
-      background: #fff0f5;
-      display: flex;
+      background: var(--pink-soft);
+      display: none;
       align-items: center;
       justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 56px;
+      font-size: 64px;
       font-weight: 700;
-      color: #ff2d78;
+      color: var(--pink);
     }
 
     .hero-name {
       font-family: 'Playfair Display', serif;
-      font-size: 42px;
+      font-size: 52px;
       font-weight: 700;
-      color: #111111;
-      margin-top: 20px;
+      color: var(--black);
+      line-height: 1.1;
     }
 
-    .hero-sub {
-      font-size: 16px;
-      color: #666;
+    .hero-tagline {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--pink);
       margin-top: 10px;
-      max-width: 420px;
+      letter-spacing: 0.04em;
     }
 
-    .divider {
-      width: 48px;
+    .hero-bio {
+      font-size: 16px;
+      color: var(--gray);
+      margin-top: 16px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-divider {
+      width: 56px;
       height: 3px;
-      background: #ff2d78;
+      background: var(--pink);
       border-radius: 2px;
-      margin: 24px auto 0;
+      margin: 28px auto 0;
     }
 
-    /* ── What I do ── */
-    .what-section {
-      padding: 48px 24px;
-      max-width: 860px;
-      margin: 0 auto;
+    /* ── CARDS SHARED ── */
+    .card {
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      box-shadow: 0 2px 14px rgba(255,45,120,0.07);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .cards-row {
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 28px rgba(255,45,120,0.14);
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 12px;
+    }
+
+    /* ── CURRENTLY ── */
+    #currently { padding-top: 0; }
+
+    .currently-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 680px) {
+      .currently-grid { grid-template-columns: 1fr; }
+    }
+
+    .currently-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .currently-list li {
+      font-size: 14px;
+      color: var(--black);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .currently-list li::before {
+      content: '›';
+      color: var(--pink);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 14px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .stats-box {
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      box-shadow: 0 2px 14px rgba(255,45,120,0.07);
+    }
+
+    .stats-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--pink);
+      margin-bottom: 16px;
+    }
+
+    .stats-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stats-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      border-bottom: 1px dashed var(--pink-border);
+      padding-bottom: 8px;
+    }
+
+    .stats-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .stat-key { color: var(--gray); }
+    .stat-val { font-weight: 700; color: var(--black); }
+
+    /* ── FAVORITES ── */
+    .scroll-row-wrap {
+      overflow-x: auto;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .scroll-row-wrap::-webkit-scrollbar { height: 4px; }
+    .scroll-row-wrap::-webkit-scrollbar-track { background: var(--pink-soft); border-radius: 2px; }
+    .scroll-row-wrap::-webkit-scrollbar-thumb { background: var(--pink-border); border-radius: 2px; }
+
+    .scroll-row {
+      display: flex;
+      gap: 14px;
+      width: max-content;
+    }
+
+    .cover-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: default;
+    }
+
+    .cover-box {
+      width: 120px;
+      height: 170px;
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--pink);
+      line-height: 1.3;
+      box-shadow: 0 2px 10px rgba(255,45,120,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      overflow: hidden;
+    }
+
+    .cover-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .cover-card:hover .cover-box {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px rgba(255,45,120,0.16);
+    }
+
+    .cover-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      text-align: center;
+      max-width: 120px;
+      line-height: 1.3;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
 
     @media (max-width: 600px) {
-      .cards-row { grid-template-columns: 1fr; }
-    }
-
-    .card {
-      background: #fff0f5;
-      border-radius: 16px;
-      padding: 28px 24px;
-      box-shadow: 0 2px 12px rgba(255, 45, 120, 0.07);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 24px rgba(255, 45, 120, 0.13);
-    }
-
-    .card-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #ff2d78;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 10px;
-    }
-
-    .card-desc {
-      font-size: 15px;
-      color: #444;
-      margin-bottom: 20px;
-    }
-
-    .btn-pink {
-      display: inline-block;
-      background: #ff2d78;
-      color: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 9px 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: background 0.15s ease;
-    }
-
-    .btn-pink:hover { background: #e0005e; }
-
-    /* ── Projects ── */
-    .projects-section {
-      padding: 0 24px 56px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .section-heading {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 20px;
+      .projects-grid { grid-template-columns: 1fr; }
     }
 
     .project-card {
-      background: #fff0f5;
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
       border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 2px 12px rgba(255, 45, 120, 0.07);
+      padding: 26px 22px;
+      box-shadow: 0 2px 14px rgba(255,45,120,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-      color: inherit;
-      display: block;
     }
 
     .project-card:hover {
       transform: scale(1.02);
-      box-shadow: 0 6px 24px rgba(255, 45, 120, 0.13);
+      box-shadow: 0 6px 28px rgba(255,45,120,0.14);
+    }
+
+    .project-type {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pink);
     }
 
     .project-name {
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--black);
+    }
+
+    .project-story {
+      font-size: 14px;
+      color: var(--gray);
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .btn-pink {
+      display: inline-block;
+      background: var(--pink);
+      color: var(--white);
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-pink:hover { background: #e0005e; }
+
+    .stars-badge { height: 20px; display: block; }
+
+    /* ── THINGS I LIKE ── */
+    .likes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 500px) {
+      .likes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .like-item {
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
+      border-radius: 14px;
+      padding: 18px 10px;
+      text-align: center;
+      font-size: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.18s ease;
+    }
+
+    .like-item:hover { transform: scale(1.04); }
+
+    .like-label {
+      font-size: 12px;
       font-weight: 700;
-      color: #111;
+      color: var(--gray);
+    }
+
+    /* ── GUESTBOOK ── */
+    .guestbook-card {
+      background: var(--pink-soft);
+      border: 1px solid var(--pink-border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 2px 14px rgba(255,45,120,0.07);
+    }
+
+    .guestbook-header {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--black);
       margin-bottom: 6px;
     }
 
-    .project-desc {
+    .guestbook-sub {
       font-size: 14px;
-      color: #555;
-      margin-bottom: 14px;
+      color: var(--gray);
+      margin-bottom: 24px;
     }
 
-    .project-card img {
-      height: 20px;
-    }
-
-    /* ── Art ── */
-    .art-section {
-      padding: 0 24px 56px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .art-grid {
+    .gb-form {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
     }
 
-    .art-box {
-      width: 150px;
-      height: 150px;
-      background: #fff0f5;
-      border-radius: 12px;
+    .gb-form input,
+    .gb-form textarea {
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      background: var(--white);
+      border: 1px solid var(--pink-border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+
+    .gb-form input:focus,
+    .gb-form textarea:focus {
+      border-color: var(--pink);
+    }
+
+    .gb-form textarea { min-height: 90px; }
+
+    .gb-entries {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #bbb;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      flex-shrink: 0;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .art-sub {
-      font-size: 13px;
-      color: #aaa;
-      margin-top: 14px;
+    .gb-entry {
+      background: var(--white);
+      border: 1px solid var(--pink-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--gray);
     }
 
-    /* ── Links ── */
-    .links-section {
-      padding: 0 24px 56px;
+    /* ── LINKS ── */
+    #contact {
       text-align: center;
     }
 
     .links-label {
       font-size: 13px;
       color: #aaa;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .pill-row {
@@ -262,49 +604,67 @@
 
     .pill {
       display: inline-block;
-      padding: 9px 22px;
+      padding: 10px 24px;
       border-radius: 999px;
       font-family: 'Nunito', sans-serif;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
-      border: 2px solid #ff2d78;
-      color: #ff2d78;
+      border: 2px solid var(--pink);
+      color: var(--pink);
       background: transparent;
-      transition: background 0.15s ease, color 0.15s ease;
+      transition: background 0.15s, color 0.15s;
     }
 
-    .pill:hover {
-      background: #ff2d78;
-      color: #fff;
-    }
+    .pill:hover { background: var(--pink); color: var(--white); }
 
     .pill-disabled {
       border-color: #ddd;
       color: #bbb;
       pointer-events: none;
-      cursor: default;
     }
 
-    .pill-disabled:hover {
-      background: transparent;
-      color: #bbb;
-    }
-
-    /* ── Footer ── */
+    /* ── FOOTER ── */
     footer {
-      padding: 24px;
+      padding: 32px 24px;
       text-align: center;
-      font-size: 13px;
-      color: #bbb;
-      border-top: 1px solid #f5f5f5;
+      border-top: 1px solid var(--pink-border);
+    }
+
+    footer p {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.8;
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
-  <section class="hero">
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#home">Milo54</a>
+    <ul class="nav-links">
+      <li><a href="#home">home</a></li>
+      <li><a href="#currently">currently</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#home" class="mobile-link">home</a>
+    <a href="#currently" class="mobile-link">currently</a>
+    <a href="#about" class="mobile-link">about</a>
+    <a href="#projects" class="mobile-link">projects</a>
+    <a href="#contact" class="mobile-link">contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home">
     <div class="avatar-wrap">
       <!-- To update avatar: replace avatar.jpg in this folder, then git add avatar.jpg && git commit -m "update avatar" && git push -->
       <img
@@ -312,59 +672,184 @@
         alt="Milo54"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
-      <div class="avatar-fallback" style="display:none;">M</div>
+      <div class="avatar-fallback">M</div>
     </div>
     <h1 class="hero-name">Milo54</h1>
-    <p class="hero-sub">I read manhwa, manga, and novels. I watch anime. I also build things sometimes.</p>
-    <div class="divider"></div>
+    <p class="hero-tagline">Reader · Builder · Professional Manhwa Addict</p>
+    <p class="hero-bio">I read manhwa, manga, and novels. I watch anime. I build random tools when something I want doesn't exist. Sometimes people actually use them.</p>
+    <div class="hero-divider"></div>
   </section>
 
-  <!-- What I do -->
-  <section class="what-section">
-    <div class="cards-row">
+  <!-- CURRENTLY -->
+  <section id="currently">
+    <p class="section-marker">★ currently...</p>
+    <div class="currently-grid">
+
       <div class="card">
-        <div class="card-label">on youtube</div>
-        <div class="card-title">Qick Manhwa</div>
-        <p class="card-desc">Manhwa and anime recaps. I retell the stories I've read so you can experience them too.</p>
-        <a class="btn-pink" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">Watch &rarr;</a>
+        <div class="card-label">currently reading</div>
+        <ul class="currently-list">
+          <li>The Fall of the Sea</li>
+          <li>Myst, Might, Mayhem</li>
+          <li>Raising Villains the Right Way</li>
+          <li>Return of the Mount Hua Sect</li>
+          <li>Sword of the Undying</li>
+        </ul>
       </div>
+
       <div class="card">
-        <div class="card-label">open source</div>
-        <div class="card-title">I build tools</div>
-        <p class="card-desc">When something I want doesn't exist, I build it. Usually for reading manhwa or gaming.</p>
+        <div class="card-label">currently watching</div>
+        <ul class="currently-list">
+          <li>Re:Zero Season 4</li>
+          <li>Overlord (rewatch)</li>
+          <li>Mushoku Tensei</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-label">currently playing</div>
+        <ul class="currently-list">
+          <li>Wuthering Waves</li>
+          <li>Roblox</li>
+          <li>Fortnite</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-marker">★ about me</p>
+    <div class="about-grid">
+
+      <div class="about-text">
+        <p>Hi. I'm Milo.</p>
+        <p>I spend most of my time reading stories — manhwa, manga, novels, doesn't matter. If it has a good power system and an underdog protagonist, I'm reading it.</p>
+        <p>When I'm not reading I'm usually building something. Most of my projects exist because I got annoyed that something I wanted didn't already exist.</p>
+        <p>Nice to meet you \(^_^)/</p>
+      </div>
+
+      <div class="stats-box">
+        <div class="stats-title">★ Stats</div>
+        <ul class="stats-list">
+          <li><span class="stat-key">Manhwa Read</span><span class="stat-val">500+</span></li>
+          <li><span class="stat-key">Anime Watched</span><span class="stat-val">300+</span></li>
+          <li><span class="stat-key">Novels Started</span><span class="stat-val">Too Many</span></li>
+          <li><span class="stat-key">Novels Finished</span><span class="stat-val">Ask Me Later</span></li>
+          <li><span class="stat-key">Projects Started</span><span class="stat-val">Also Too Many</span></li>
+          <li><span class="stat-key">Projects Finished</span><span class="stat-val">Don't Ask</span></li>
+          <li><span class="stat-key">All-nighters Pulled</span><span class="stat-val">Countless</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAVORITES -->
+  <section id="favorites">
+    <p class="section-marker">★ favorites</p>
+    <div class="scroll-row-wrap">
+      <div class="scroll-row">
+
+        <div class="cover-card">
+          <div class="cover-box">Second Coming of Gluttony</div>
+          <span class="cover-title">Second Coming of Gluttony</span>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-box">Raising Villains the Right Way</div>
+          <span class="cover-title">Raising Villains the Right Way</span>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-box">Return of the Mount Hua Sect</div>
+          <span class="cover-title">Return of the Mount Hua Sect</span>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-box">Wandering Knight's Survival Guide</div>
+          <span class="cover-title">Wandering Knight's Survival Guide</span>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-box">Margrave's Worthless Mage</div>
+          <span class="cover-title">Margrave's Worthless Mage</span>
+        </div>
+
+        <div class="cover-card">
+          <div class="cover-box">Sword of the Undying</div>
+          <span class="cover-title">Sword of the Undying</span>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Projects -->
-  <section class="projects-section">
-    <div class="section-heading">projects</div>
-    <div class="cards-row">
-      <a class="project-card" href="https://github.com/foxmanhwa/manhwa-pulse" target="_blank" rel="noopener">
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-marker">★ things i've built</p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-type">aggregator</div>
         <div class="project-name">Manhwa Pulse</div>
-        <p class="project-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
-      </a>
-      <a class="project-card" href="https://github.com/foxmanhwa/presencepal" target="_blank" rel="noopener">
+        <p class="project-story">I got tired of jumping between manhwa sites. So I built one place for everything. 13+ sources, anime integration, Discord bot.</p>
+        <div class="project-footer">
+          <a class="btn-pink" href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Check it out →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">desktop app</div>
         <div class="project-name">PresencePal</div>
-        <p class="project-desc">Show any game on your Discord activity — even mobile games.</p>
-        <img src="https://img.shields.io/github/stars/foxmanhwa/presencepal?style=flat" alt="GitHub stars" />
-      </a>
+        <p class="project-story">Discord wouldn't show my mobile games on my activity. That annoyed me. So I fixed it.</p>
+        <div class="project-footer">
+          <a class="btn-pink" href="https://github.com/foxmanhwa/presencepal/releases/latest" target="_blank" rel="noopener">Download →</a>
+          <img class="stars-badge" src="https://img.shields.io/github/stars/foxmanhwa/presencepal?style=flat&color=ff2d78&labelColor=fff0f5" alt="GitHub stars" />
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Art -->
-  <section class="art-section">
-    <div class="section-heading">things i make</div>
-    <div class="art-grid">
-      <div class="art-box">coming soon</div>
-      <div class="art-box">coming soon</div>
-      <div class="art-box">coming soon</div>
+  <!-- THINGS I LIKE -->
+  <section id="likes">
+    <p class="section-marker">★ things i like</p>
+    <div class="likes-grid">
+      <div class="like-item"><span>📚</span><span class="like-label">Manhwa</span></div>
+      <div class="like-item"><span>🎌</span><span class="like-label">Anime</span></div>
+      <div class="like-item"><span>📖</span><span class="like-label">Novels</span></div>
+      <div class="like-item"><span>🎮</span><span class="like-label">Games</span></div>
+      <div class="like-item"><span>☕</span><span class="like-label">Coffee</span></div>
+      <div class="like-item"><span>🎵</span><span class="like-label">Music</span></div>
+      <div class="like-item"><span>🌙</span><span class="like-label">Late Nights</span></div>
+      <div class="like-item"><span>🔧</span><span class="like-label">Building Things</span></div>
     </div>
-    <p class="art-sub">AI art on PixAI</p>
   </section>
 
-  <!-- Links -->
-  <section class="links-section">
+  <!-- GUESTBOOK -->
+  <section id="guestbook">
+    <p class="section-marker">★ guestbook</p>
+    <div class="guestbook-card">
+      <div class="guestbook-header">leave a message ♡</div>
+      <p class="guestbook-sub">say hi, recommend a manhwa, or just vibe</p>
+
+      <form class="gb-form" action="https://formspree.io/f/PLACEHOLDER" method="POST" target="_blank">
+        <input type="text" name="name" placeholder="your name" required />
+        <textarea name="message" placeholder="your message..." required></textarea>
+        <div><button type="submit" class="btn-pink">Send ★</button></div>
+      </form>
+
+      <div class="gb-entries">
+        <div class="gb-entry">your site is so cozy! — <strong>a visitor</strong></div>
+        <div class="gb-entry">PresencePal actually works, bro 🙏 — <strong>someone from reddit</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section id="contact">
+    <p class="section-marker">★ find me</p>
     <p class="links-label">find me around the web</p>
     <div class="pill-row">
       <a class="pill" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">GitHub</a>
@@ -373,9 +858,47 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    Milo54 &middot; made with too much free time
+    <p>Thanks for visiting! Hope you enjoy your stay ♡</p>
+    <p>© Milo54 · built with too much free time and too many manhwa chapters</p>
   </footer>
 
+  <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle(
+              'active',
+              link.getAttribute('href') === '#' + entry.target.id
+            );
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
 </body>
 </html>
