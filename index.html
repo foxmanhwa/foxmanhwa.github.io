@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Patrick+Hand&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -30,13 +30,18 @@
       --white:       #ffffff;
       --card-bg:     #ffffff;
       --card-border: #f0e0e8;
+      --hand:        'Patrick Hand', cursive;
     }
 
     body {
       font-family: 'Nunito', sans-serif;
       font-size: 14px;
       line-height: 1.7;
-      background: var(--white);
+      background-color: #fff8f8;
+      background-image:
+        linear-gradient(rgba(255,192,203,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,192,203,.08) 1px, transparent 1px);
+      background-size: 32px 32px;
       color: var(--black);
     }
 
@@ -146,25 +151,42 @@
 
     /* ── SHARED CARD ── */
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(255,45,120,0.08);
+      background: rgba(255,255,255,0.75);
+      border: 2px solid #f7cad6;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(255,143,177,0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(255,45,120,0.13);
+      box-shadow: 0 12px 32px rgba(255,143,177,0.18);
     }
 
     .card-pad { padding: 22px 22px 22px 22px; }
 
     .card-title {
-      font-size: 14px;
-      font-weight: 800;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 15px;
+      font-weight: 400;
       color: var(--black);
       margin-bottom: 14px;
+    }
+
+    /* ── WASHI TAPE ── */
+    .washi {
+      position: absolute;
+      width: 70px;
+      height: 16px;
+      background: rgba(255,182,193,0.55);
+      transform: rotate(-3deg);
+      top: -8px;
+      left: 24px;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 5;
     }
 
     /* ── SPIRAL BINDING ── */
@@ -207,9 +229,10 @@
       display: inline-block;
       background: var(--pink-light);
       color: var(--pink);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
       padding: 3px 10px;
       border-radius: 999px;
       border: 1px solid var(--pink-border);
@@ -217,10 +240,12 @@
 
     /* ── HERO ── */
     .hero-card {
-      background: #fff8fb;
-      border: 1px solid var(--pink-border);
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(255,45,120,0.08);
+      background: rgba(255,248,251,0.80);
+      border: 2px solid #f7cad6;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(255,143,177,0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 40px 40px 40px 0;
       position: relative;
       overflow: visible;
@@ -334,7 +359,8 @@
     }
 
     .quote-text {
-      font-size: 12px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 13px;
       color: var(--gray);
       line-height: 1.5;
       font-style: italic;
@@ -342,8 +368,9 @@
 
     /* ── CURRENTLY ── */
     .currently-label {
-      font-size: 13px;
-      font-weight: 800;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      font-weight: 400;
       color: var(--pink);
       margin-bottom: 12px;
     }
@@ -361,7 +388,7 @@
       margin-bottom: 14px;
     }
 
-    .curr-header-title { font-size: 14px; font-weight: 800; color: var(--black); }
+    .curr-header-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); }
     .dots { font-size: 16px; color: var(--gray); cursor: default; letter-spacing: 1px; }
 
     .curr-entry {
@@ -405,9 +432,9 @@
     }
 
     .prog-bar {
-      height: 4px;
+      height: 6px;
       background: var(--pink-light);
-      border-radius: 2px;
+      border-radius: 3px;
       overflow: hidden;
       margin-top: 4px;
     }
@@ -415,7 +442,7 @@
     .prog-fill {
       height: 100%;
       background: var(--pink);
-      border-radius: 2px;
+      border-radius: 3px;
     }
 
     .curr-note {
@@ -605,7 +632,7 @@
     .center-col { display: flex; flex-direction: column; gap: 16px; }
 
     .find-section { padding: 18px 20px; }
-    .find-title { font-size: 14px; font-weight: 800; color: var(--black); margin-bottom: 14px; }
+    .find-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); margin-bottom: 14px; }
 
     .social-row {
       display: flex;
@@ -649,7 +676,7 @@
       margin-bottom: 14px;
     }
 
-    .gb-header-title { font-size: 14px; font-weight: 800; color: var(--black); }
+    .gb-header-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); }
     .gb-sign { font-size: 12px; font-weight: 700; color: var(--pink); cursor: pointer; }
 
     .gb-entries { display: flex; flex-direction: column; gap: 10px; }
@@ -658,13 +685,15 @@
       display: flex;
       gap: 9px;
       align-items: flex-start;
+      border-left: 3px solid #ffd6e7;
+      padding-left: 10px;
     }
 
     .gb-avatar {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--pink-light);
+      background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
       border: 1px solid var(--pink-border);
       display: flex;
       align-items: center;
@@ -682,7 +711,7 @@
 
     /* Now Playing */
     .np-card { padding: 20px; }
-    .np-title { font-size: 14px; font-weight: 800; color: var(--black); margin-bottom: 16px; }
+    .np-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); margin-bottom: 16px; }
 
     .np-inner {
       display: flex;
@@ -740,6 +769,7 @@
 
     /* ── FOOTER ── */
     footer {
+      background: #fff0f5;
       border-top: 1px solid var(--pink-border);
       padding: 24px 20px;
     }
@@ -748,21 +778,28 @@
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 12px;
     }
 
     .footer-left { font-size: 14px; color: var(--gray); }
+    .footer-heart { font-size: 18px; color: var(--pink); text-align: center; }
     .footer-right { font-size: 13px; color: var(--gray); text-align: right; }
 
     /* ── SCROLL TO TOP ── */
+    @keyframes bounce-up {
+      0%, 100% { transform: translateY(0); }
+      40%       { transform: translateY(-6px); }
+      70%       { transform: translateY(-2px); }
+    }
+
     #scroll-top {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: var(--pink);
       color: var(--white);
@@ -775,12 +812,12 @@
       box-shadow: 0 4px 14px rgba(255,45,120,0.35);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s, transform 0.15s;
+      transition: opacity 0.25s;
       z-index: 300;
     }
 
     #scroll-top.visible { opacity: 1; pointer-events: auto; }
-    #scroll-top:hover { transform: translateY(-2px); }
+    #scroll-top:hover { animation: bounce-up 0.45s ease; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
@@ -807,6 +844,7 @@
       .covers-grid { grid-template-columns: repeat(2, 1fr); }
 
       .footer-inner { grid-template-columns: 1fr; }
+      .footer-heart { text-align: left; }
       .footer-right { text-align: left; }
     }
 
@@ -853,13 +891,14 @@
     <!-- ── HERO ── -->
     <section id="home">
       <div class="hero-card with-binding">
+        <div class="washi"></div>
         <div class="spiral">
           <span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span>
         </div>
         <div class="hero-inner">
           <div class="hero-left">
-            <div><span class="pill-tag">welcome!</span></div>
+            <div><span class="pill-tag">✿ welcome!</span></div>
             <h1 class="hero-name-line">Milo<span class="pink">54</span><span class="pink"> ~</span></h1>
             <p class="hero-tagline">Reader. Builder. Professional Manhwa Addict.</p>
             <p class="hero-bio">I read way too much, watch anime, build random things, and make recap videos when inspiration hits.</p>
@@ -877,7 +916,8 @@
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
               <div class="avatar-fallback-hero">M</div>
             </div>
-            <div class="quote-card">
+            <div class="quote-card" style="position:absolute;overflow:visible;">
+              <div class="washi" style="left:16px;"></div>
               <div class="quote-label">Quote of the day</div>
               <p class="quote-text">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
             </div>
@@ -888,13 +928,13 @@
 
     <!-- ── CURRENTLY ── -->
     <section id="currently">
-      <div class="currently-label">currently...</div>
+      <div class="currently-label">★ currently...</div>
       <div class="three-col">
 
         <!-- Reading -->
         <div class="card card-pad">
           <div class="curr-header">
-            <span class="curr-header-title">Reading</span>
+            <span class="curr-header-title">Reading ♡</span>
             <span class="dots">···</span>
           </div>
           <div class="curr-entry">
@@ -926,7 +966,7 @@
         <!-- Watching -->
         <div class="card card-pad">
           <div class="curr-header">
-            <span class="curr-header-title">Watching</span>
+            <span class="curr-header-title">Watching ♡</span>
             <span class="dots">···</span>
           </div>
           <div class="curr-entry">
@@ -958,7 +998,7 @@
         <!-- Playing -->
         <div class="card card-pad">
           <div class="curr-header">
-            <span class="curr-header-title">Playing</span>
+            <span class="curr-header-title">Playing ♡</span>
             <span class="dots">···</span>
           </div>
           <div class="curr-entry">
@@ -980,12 +1020,13 @@
       <div class="two-col">
 
         <!-- About -->
-        <div class="card card-pad with-binding">
+        <div class="card card-pad with-binding" style="overflow:visible;">
+          <div class="washi"></div>
           <div class="spiral">
             <span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span>
           </div>
-          <div class="card-title" style="color:var(--pink);text-transform:uppercase;font-size:12px;letter-spacing:0.1em;">about me</div>
+          <div class="card-title" style="color:var(--pink);text-transform:uppercase;font-size:13px;letter-spacing:0.1em;">about me</div>
           <div class="about-text">
             <p>Hi! I'm Milo.</p>
             <p>I started reading manga years ago and somehow ended up deep in the manhwa rabbit hole.</p>
@@ -1045,7 +1086,8 @@
       <div class="two-col">
 
         <!-- Projects -->
-        <div class="card card-pad">
+        <div class="card card-pad" style="position:relative;overflow:visible;">
+          <div class="washi"></div>
           <div class="proj-header">
             <div class="card-title" style="margin-bottom:0;">things i've built</div>
             <a class="proj-view-all" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">view all projects →</a>
@@ -1150,7 +1192,8 @@
             </div>
           </div>
 
-          <div class="card gb-section" id="guestbook">
+          <div class="card gb-section" id="guestbook" style="position:relative;overflow:visible;">
+            <div class="washi"></div>
             <div class="gb-header">
               <span class="gb-header-title">guestbook</span>
               <a class="gb-sign" href="https://formspree.io/f/PLACEHOLDER" target="_blank" rel="noopener">sign my guestbook!</a>
@@ -1207,6 +1250,7 @@
 <footer>
   <div class="footer-inner">
     <p class="footer-left">Thanks for visiting! Hope you have a great day!</p>
+    <p class="footer-heart">♡</p>
     <p class="footer-right">© Milo54 · Built with ♡, anime, and way too much free time.</p>
   </div>
 </footer>
