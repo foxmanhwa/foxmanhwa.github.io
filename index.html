@@ -40,9 +40,21 @@
     }
 
     .wrapper {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 5vw;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── STICKER BG OVERLAY ── */
+    .bg-stickers {
+      position: fixed;
+      inset: 0;
+      background-image: url('public/stickers/doodles-sheet.png');
+      background-size: 500px auto;
+      background-repeat: repeat;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ── CARD ── */
@@ -51,7 +63,7 @@
       border: 1.5px solid #f7cad6;
       border-radius: 18px;
       box-shadow: 0 4px 16px rgba(255,143,177,0.10);
-      padding: 32px;
+      padding: 36px;
       position: relative;
       margin-bottom: 20px;
     }
@@ -92,15 +104,13 @@
       position: sticky;
       top: 0;
       z-index: 200;
-      background: #fff;
+      background: rgba(255,255,255,0.97);
       border-bottom: 1px solid #f7cad6;
       height: 48px;
     }
 
     .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 5vw;
       height: 100%;
       display: flex;
       align-items: center;
@@ -191,7 +201,7 @@
     .mobile-nav a:hover { color: var(--pink); }
 
     /* ── HERO ── */
-    .hero-card { margin: 24px 0; overflow: visible; }
+    .hero-card { margin: 24px 0; overflow: visible; min-height: 340px; padding: 48px; }
 
     .hero-grid {
       display: grid;
@@ -215,9 +225,9 @@
     }
 
     .hero-name { line-height: 1.05; }
-    .name-milo  { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; color: #111; }
-    .name-54    { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; color: #ff2d78; }
-    .name-tilde { font-family: 'Playfair Display', serif; font-size: 40px; color: #ff2d78; }
+    .name-milo  { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 700; color: #111; }
+    .name-54    { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 700; color: #ff2d78; }
+    .name-tilde { font-family: 'Playfair Display', serif; font-size: 48px; color: #ff2d78; }
 
     .hero-subtitle {
       font-family: 'Patrick Hand', cursive;
@@ -239,7 +249,7 @@
 
     .hero-img {
       width: 100%;
-      height: 280px;
+      height: 360px;
       object-fit: cover;
       border-radius: 16px;
       display: block;
@@ -247,7 +257,7 @@
 
     .hero-img-fallback {
       width: 100%;
-      height: 280px;
+      height: 360px;
       background: var(--pink-light);
       border-radius: 16px;
       display: none;
@@ -270,7 +280,7 @@
     .curr-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
+      gap: 32px;
     }
 
     .curr-header {
@@ -294,14 +304,14 @@
     }
 
     .curr-cover {
-      width: 40px;
-      height: 55px;
+      width: 50px;
+      height: 70px;
       background: #1a1a2e;
       border-radius: 6px;
       flex-shrink: 0;
     }
 
-    .curr-cover.sq { width: 60px; height: 60px; }
+    .curr-cover.sq { width: 70px; height: 70px; }
 
     .curr-info { flex: 1; min-width: 0; }
 
@@ -324,13 +334,14 @@
     }
 
     .curr-note { font-size: 12px; color: #999; font-style: italic; margin-top: 10px; }
+    .curr-grid .card { padding: 28px; }
 
     /* ── ABOUT + FAVORITES ── */
     .about-fav-grid {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 16px;
-      margin: 24px 0;
+      gap: 32px;
+      margin: 32px 0;
     }
 
     .about-body { font-size: 14px; color: #444; line-height: 2.0; }
@@ -368,8 +379,8 @@
     .proj-stats-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 16px;
-      margin: 24px 0;
+      gap: 32px;
+      margin: 32px 0;
     }
 
     .proj-header {
@@ -420,8 +431,8 @@
     .bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin: 24px 0;
+      gap: 32px;
+      margin: 32px 0;
     }
 
     .likes-grid {
@@ -580,6 +591,21 @@
       z-index: 2;
     }
 
+    /* ── LARGE WASHI TAPE DECORATIONS ── */
+    .washi-deco {
+      position: absolute;
+      width: 260px;
+      height: auto;
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 2;
+      object-fit: cover;
+      object-position: 0 0;
+    }
+    .washi-1 { top: 320px; left: -30px; transform: rotate(-8deg); width: 220px; }
+    .washi-2 { top: 900px; right: -20px; transform: rotate(5deg); width: 200px; object-position: 0 -80px; }
+    .washi-3 { bottom: 200px; left: 20px; transform: rotate(-3deg); width: 240px; object-position: 0 -160px; }
+
     /* ── CHIBI / DECORATIVE IMAGES ── */
     .chibi {
       position: absolute;
@@ -656,11 +682,11 @@
       .hamburger { display: flex; }
 
       .hero-grid { grid-template-columns: 1fr; }
-      .name-milo, .name-54 { font-size: 48px; }
-      .name-tilde { font-size: 32px; }
+      .name-milo, .name-54 { font-size: 52px; }
+      .name-tilde { font-size: 36px; }
       .quote-card { position: static; width: 100%; margin-top: 12px; }
 
-      .curr-grid         { grid-template-columns: 1fr; }
+      .curr-grid         { grid-template-columns: 1fr; gap: 16px; }
       .about-fav-grid    { grid-template-columns: 1fr; }
       .fav-grid          { grid-template-columns: repeat(3, 1fr); }
       .proj-stats-grid   { grid-template-columns: 1fr; }
@@ -673,6 +699,8 @@
   </style>
 </head>
 <body>
+
+<div class="bg-stickers" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav>
@@ -743,6 +771,8 @@
       </div>
     </div>
   </section>
+
+  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-1" aria-hidden="true" onerror="this.style.display='none'">
 
   <!-- ── CURRENTLY ── -->
   <section id="currently" style="position:relative;">
@@ -834,6 +864,8 @@
 
     </div>
   </section>
+
+  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-2" aria-hidden="true" onerror="this.style.display='none'">
 
   <!-- ── ABOUT + FAVORITES ── -->
   <section id="about">
@@ -1046,6 +1078,8 @@
 
     </div>
   </section>
+
+  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-3" aria-hidden="true" onerror="this.style.display='none'">
 
 </div><!-- /wrapper -->
 
