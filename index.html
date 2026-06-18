@@ -1,65 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milo54</title>
-  <meta name="description" content="Reader · Builder · Professional Manhwa Addict" />
-  <meta property="og:title" content="Milo54" />
-  <meta property="og:description" content="Reader · Builder · Professional Manhwa Addict" />
-  <meta property="og:image" content="avatar.jpg" />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Patrick+Hand&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Reader · Builder · Professional Manhwa Addict">
+  <meta property="og:title" content="Milo54">
+  <meta property="og:description" content="Reader · Builder · Professional Manhwa Addict">
+  <meta property="og:image" content="avatar.jpg">
+  <meta property="og:type" content="website">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
     :root {
+      --paper:       #fff8f8;
       --pink:        #ff2d78;
       --pink-light:  #fff0f5;
-      --pink-border: #ffd6e7;
+      --pink-border: #f7cad6;
       --pink-mid:    #ffb3cc;
-      --black:       #111111;
-      --gray:        #888888;
-      --white:       #ffffff;
-      --card-bg:     #ffffff;
-      --card-border: #f0e0e8;
-      --hand:        'Patrick Hand', cursive;
+      --black:       #111;
+      --gray:        #777;
+      --card:        rgba(255,255,255,0.85);
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      font-size: 14px;
-      line-height: 1.7;
       background-color: #fff8f8;
       background-image:
-        linear-gradient(rgba(255,192,203,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,192,203,.08) 1px, transparent 1px);
+        linear-gradient(rgba(255,192,203,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,192,203,.07) 1px, transparent 1px);
       background-size: 32px 32px;
-      color: var(--black);
+      font-family: 'Nunito', sans-serif;
+      color: #111;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
-    /* ── CONTAINER ── */
-    .wrap {
+    .wrapper {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
+    /* ── CARD ── */
+    .card {
+      background: rgba(255,255,255,0.85);
+      border: 1.5px solid #f7cad6;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(255,143,177,0.10);
+      padding: 24px;
+      position: relative;
+    }
+
+    /* ── WASHI TAPE ── */
+    .tape {
+      position: absolute;
+      width: 64px;
+      height: 14px;
+      background: rgba(255,182,193,0.5);
+      border-radius: 3px;
+      transform: rotate(-2deg);
+      top: -7px;
+      left: 20px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── CARD TITLE ── */
+    .card-title {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 20px;
+      color: var(--pink);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 16px;
+      color: var(--pink);
+      margin: 24px 0 12px;
+    }
+
     /* ── NAV ── */
-    #nav {
+    nav {
       position: sticky;
       top: 0;
       z-index: 200;
-      background: var(--white);
-      border-bottom: 1px solid var(--pink-border);
-      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #f7cad6;
+      height: 48px;
     }
 
     .nav-inner {
@@ -67,45 +101,49 @@
       margin: 0 auto;
       padding: 0 20px;
       height: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .nav-logo {
       font-family: 'Nunito', sans-serif;
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--black);
+      font-weight: 700;
+      font-size: 18px;
+      color: #111;
       text-decoration: none;
+      flex-shrink: 0;
     }
 
     .nav-links {
       display: flex;
-      gap: 4px;
       list-style: none;
+      gap: 24px;
     }
 
     .nav-links a {
-      font-size: 13px;
-      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
       color: var(--gray);
       text-decoration: none;
-      padding: 4px 10px;
-      border-radius: 999px;
-      transition: color 0.15s, background 0.15s;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
       color: var(--pink);
-      background: var(--pink-light);
+      border-bottom-color: var(--pink);
     }
 
-    .nav-right {
+    .nav-music {
+      font-family: 'Nunito', sans-serif;
       font-size: 13px;
-      color: var(--gray);
-      text-align: right;
+      color: #999;
+      flex-shrink: 0;
     }
 
     .hamburger {
@@ -116,13 +154,14 @@
       background: none;
       border: none;
       padding: 4px;
+      flex-shrink: 0;
     }
 
     .hamburger span {
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--black);
+      background: #111;
       border-radius: 2px;
       transition: transform 0.2s, opacity 0.2s;
     }
@@ -131,403 +170,207 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .mobile-menu {
+    .mobile-nav {
       display: none;
       position: fixed;
-      top: 52px;
+      top: 48px;
       left: 0;
       right: 0;
-      background: var(--white);
-      border-bottom: 1px solid var(--pink-border);
-      padding: 14px 20px 18px;
+      background: #fff;
+      border-bottom: 1px solid #f7cad6;
+      padding: 16px 20px;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       z-index: 199;
+      box-shadow: 0 4px 16px rgba(255,143,177,0.1);
     }
 
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 15px; font-weight: 700; color: var(--gray); text-decoration: none; }
-    .mobile-menu a:hover { color: var(--pink); }
-
-    /* ── SHARED CARD ── */
-    .card {
-      background: rgba(255,255,255,0.75);
-      border: 2px solid #f7cad6;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(255,143,177,0.12);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(255,143,177,0.18);
-    }
-
-    .card-pad { padding: 22px 22px 22px 22px; }
-
-    .card-title {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--black);
-      margin-bottom: 14px;
-    }
-
-    /* ── WASHI TAPE ── */
-    .washi {
-      position: absolute;
-      width: 70px;
-      height: 16px;
-      background: rgba(255,182,193,0.55);
-      transform: rotate(-3deg);
-      top: -8px;
-      left: 24px;
-      border-radius: 3px;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* ── SPIRAL BINDING ── */
-    .with-binding {
-      position: relative;
-      padding-left: 28px;
-    }
-
-    .spiral {
-      position: absolute;
-      left: 10px;
-      top: 20px;
-      bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .spiral span {
-      display: block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: 2px solid #d0d0d0;
-      background: var(--white);
-      flex-shrink: 0;
-    }
-
-    /* ── SECTION WRAPPER ── */
-    .sections {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding: 20px 0 40px;
-    }
-
-    /* ── PILL ── */
-    .pill-tag {
-      display: inline-block;
-      background: var(--pink-light);
-      color: var(--pink);
-      font-family: 'Patrick Hand', cursive;
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--pink-border);
-    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 15px; font-weight: 600; color: var(--gray); text-decoration: none; }
+    .mobile-nav a:hover { color: var(--pink); }
 
     /* ── HERO ── */
-    .hero-card {
-      background: rgba(255,248,251,0.80);
-      border: 2px solid #f7cad6;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(255,143,177,0.12);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 40px 40px 40px 0;
-      position: relative;
-      overflow: visible;
-    }
+    .hero-card { margin: 24px 0; overflow: visible; }
 
-    .hero-inner {
+    .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 36px;
+      gap: 32px;
       align-items: center;
     }
 
-    .hero-left { display: flex; flex-direction: column; gap: 14px; }
+    .hero-left { display: flex; flex-direction: column; gap: 12px; }
 
-    .hero-name-line {
-      font-family: 'Playfair Display', serif;
-      font-size: 64px;
-      font-weight: 700;
-      line-height: 1.05;
-      color: var(--black);
+    .pill-tag {
+      display: inline-block;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 13px;
+      color: var(--pink);
+      background: #fff0f5;
+      border: 1px solid var(--pink-border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      width: fit-content;
     }
 
-    .hero-name-line .pink { color: var(--pink); }
+    .hero-name { line-height: 1.05; }
+    .name-milo  { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; color: #111; }
+    .name-54    { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; color: #ff2d78; }
+    .name-tilde { font-family: 'Playfair Display', serif; font-size: 40px; color: #ff2d78; }
 
-    .hero-tagline {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--pink);
+    .hero-subtitle {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 20px;
+      color: #ff2d78;
     }
 
     .hero-bio {
       font-size: 14px;
-      color: var(--gray);
-      max-width: 360px;
+      color: #555;
+      line-height: 1.8;
     }
 
-    .hero-btns {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 
-    .btn-black {
-      display: inline-block;
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
+    .hero-right { position: relative; }
 
-    .btn-black:hover { opacity: 0.75; }
+    .hero-img-wrap { position: relative; overflow: visible; }
 
-    .hero-right {
-      position: relative;
-    }
-
-    .avatar-img-wrap {
-      border-radius: 20px;
-      overflow: hidden;
+    .hero-img {
       width: 100%;
       height: 280px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    }
-
-    .avatar-img-wrap img {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
+      border-radius: 16px;
       display: block;
     }
 
-    .avatar-fallback-hero {
+    .hero-img-fallback {
       width: 100%;
-      height: 100%;
+      height: 280px;
       background: var(--pink-light);
+      border-radius: 16px;
       display: none;
       align-items: center;
       justify-content: center;
       font-family: 'Playfair Display', serif;
       font-size: 80px;
-      font-weight: 700;
       color: var(--pink);
     }
 
     .quote-card {
       position: absolute;
-      top: -16px;
-      right: -16px;
-      background: var(--white);
-      border: 1px solid var(--pink-border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      max-width: 180px;
-      box-shadow: 0 4px 16px rgba(255,45,120,0.12);
-      z-index: 10;
-    }
-
-    .quote-label {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--pink);
-      margin-bottom: 6px;
-    }
-
-    .quote-text {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 13px;
-      color: var(--gray);
-      line-height: 1.5;
-      font-style: italic;
+      top: -12px;
+      right: -12px;
+      width: 180px;
+      overflow: visible;
     }
 
     /* ── CURRENTLY ── */
-    .currently-label {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--pink);
-      margin-bottom: 12px;
-    }
-
-    .three-col {
+    .curr-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
     }
 
     .curr-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .curr-title {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      color: #111;
+    }
+
+    .curr-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
       margin-bottom: 14px;
     }
 
-    .curr-header-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); }
-    .dots { font-size: 16px; color: var(--gray); cursor: default; letter-spacing: 1px; }
-
-    .curr-entry {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .curr-entry:last-child { margin-bottom: 0; }
-
-    .cover-sm {
+    .curr-cover {
       width: 40px;
       height: 55px;
+      background: #1a1a2e;
       border-radius: 6px;
-      background: #222;
       flex-shrink: 0;
-      overflow: hidden;
     }
 
-    .cover-sm.sq {
-      width: 60px;
-      height: 60px;
-    }
+    .curr-cover.sq { width: 60px; height: 60px; }
 
     .curr-info { flex: 1; min-width: 0; }
 
-    .curr-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--black);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .curr-name  { font-weight: 700; font-size: 13px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .curr-chapter { font-size: 12px; color: #999; margin-top: 2px; }
 
-    .curr-sub {
-      font-size: 12px;
-      color: var(--gray);
-      margin-bottom: 5px;
-    }
-
-    .prog-bar {
-      height: 6px;
-      background: var(--pink-light);
+    .curr-bar {
+      width: 100%;
+      height: 5px;
+      background: #f0e0e8;
       border-radius: 3px;
+      margin-top: 6px;
       overflow: hidden;
-      margin-top: 4px;
     }
 
-    .prog-fill {
+    .curr-bar-fill {
       height: 100%;
-      background: var(--pink);
+      background: linear-gradient(90deg, #ff2d78, #ffb3cc);
       border-radius: 3px;
     }
 
-    .curr-note {
-      font-size: 12px;
-      color: var(--gray);
-      font-style: italic;
-      margin-top: 8px;
-    }
+    .curr-note { font-size: 12px; color: #999; font-style: italic; margin-top: 10px; }
 
     /* ── ABOUT + FAVORITES ── */
-    .two-col {
+    .about-fav-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+      margin: 16px 0;
     }
 
-    .about-text p {
-      font-size: 14px;
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
-
-    .about-text p:last-child { margin-bottom: 0; }
+    .about-body { font-size: 14px; color: #444; line-height: 1.9; }
+    .about-body p { margin-bottom: 8px; }
+    .about-body p:last-child { margin-bottom: 0; }
 
     .fav-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 14px;
-    }
-
-    .fav-note {
-      font-size: 12px;
-      font-style: italic;
-      color: var(--pink);
-    }
-
-    .covers-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .cover-item {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 6px;
+      margin-bottom: 16px;
     }
 
-    .cover-box {
-      width: 100%;
-      aspect-ratio: 120 / 170;
+    .fav-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .fav-item { display: flex; flex-direction: column; }
+
+    .fav-cover {
+      aspect-ratio: 3 / 4;
+      background: #1a1a2e;
       border-radius: 10px;
       overflow: hidden;
-      background: #1a1a2e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.3;
-      position: relative;
-    }
-
-    .cover-box img {
-      position: absolute;
-      inset: 0;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
-    .cover-name {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--black);
-      text-align: center;
-      line-height: 1.3;
-    }
+    .fav-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .fav-name { text-align: center; font-size: 11px; margin-top: 6px; color: #333; line-height: 1.3; }
 
     /* ── PROJECTS + STATS ── */
+    .proj-stats-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
     .proj-header {
       display: flex;
       justify-content: space-between;
@@ -535,265 +378,193 @@
       margin-bottom: 16px;
     }
 
-    .proj-view-all {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--pink);
-      text-decoration: none;
-    }
-
-    .proj-view-all:hover { text-decoration: underline; }
-
     .proj-entries {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 16px;
     }
 
-    .proj-entry {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .project-item { display: flex; flex-direction: column; gap: 8px; }
 
-    .proj-ss {
+    .project-thumb {
       width: 100%;
-      height: 80px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      height: 90px;
+      background: #1a1a2e;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.3);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.33);
+      font-size: 12px;
     }
 
-    .proj-name { font-size: 14px; font-weight: 800; color: var(--black); }
-    .proj-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
-    .proj-why  { font-size: 12px; color: var(--pink); font-style: italic; }
-
-    .stats-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .project-name  { font-weight: 700; font-size: 15px; color: #111; }
+    .project-desc  { font-size: 13px; color: #666; line-height: 1.6; }
+    .project-story { font-size: 13px; color: #999; }
 
     .stat-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #fff0f5;
       font-size: 13px;
-      border-bottom: 1px dashed var(--pink-border);
-      padding-bottom: 8px;
     }
 
-    .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .stat-left { display: flex; align-items: center; gap: 8px; color: var(--gray); }
-    .stat-val  { font-weight: 800; color: var(--black); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-left { display: flex; align-items: center; gap: 8px; color: #555; }
+    .stat-val  { font-weight: 700; font-size: 14px; color: #111; }
 
-    /* ── BOTTOM THREE COL ── */
-    .three-col-bottom {
+    /* ── BOTTOM THREE COLS ── */
+    .bottom-grid {
       display: grid;
-      grid-template-columns: 1fr 1.2fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
     }
 
-    /* Things I Like */
     .likes-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
     .like-item {
-      background: var(--white);
-      border: 1px solid var(--card-border);
+      background: #fff0f5;
       border-radius: 12px;
-      padding: 14px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      font-size: 22px;
-      transition: border-color 0.15s, transform 0.15s;
+      padding: 12px 8px;
+      text-align: center;
+      border: 1px solid #f7cad6;
       cursor: default;
+      transition: background 0.15s;
     }
 
-    .like-item:hover {
-      border-color: var(--pink-border);
-      transform: translateY(-2px);
-    }
+    .like-item:hover { background: #ffd6e7; }
+    .like-emoji { font-size: 24px; display: block; }
+    .like-label { font-size: 11px; color: #555; margin-top: 4px; display: block; }
 
-    .like-label { font-size: 12px; font-weight: 700; color: var(--gray); }
+    /* Find me */
+    .center-col { display: flex; flex-direction: column; gap: 12px; }
 
-    /* Find me + Guestbook */
-    .center-col { display: flex; flex-direction: column; gap: 16px; }
-
-    .find-section { padding: 18px 20px; }
-    .find-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); margin-bottom: 14px; }
-
-    .social-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .social-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
     .social-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       text-decoration: none;
     }
 
     .social-circle {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: var(--pink-light);
+      border: 1px solid #f7cad6;
+      background: #fff0f5;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
     .social-btn:hover .social-circle {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255,45,120,0.18);
+      box-shadow: 0 4px 12px rgba(255,45,120,0.15);
     }
 
-    .social-label { font-size: 11px; font-weight: 700; color: var(--gray); }
+    .social-label { font-size: 11px; color: #555; }
 
-    .gb-section { padding: 18px 20px; }
-
-    .gb-header {
+    /* Guestbook */
+    .gb-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 14px;
     }
 
-    .gb-header-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); }
-    .gb-sign { font-size: 12px; font-weight: 700; color: var(--pink); cursor: pointer; }
-
-    .gb-entries { display: flex; flex-direction: column; gap: 10px; }
-
     .gb-entry {
       display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      border-left: 3px solid #ffd6e7;
-      padding-left: 10px;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #fff0f5;
     }
 
+    .gb-entry:last-child { border-bottom: none; }
+
     .gb-avatar {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
-      border: 1px solid var(--pink-border);
+      background: linear-gradient(135deg, #ff2d78, #ffb3cc);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--pink);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
       flex-shrink: 0;
     }
 
-    .gb-body { flex: 1; }
-    .gb-meta { font-size: 12px; font-weight: 700; color: var(--black); }
-    .gb-date { font-size: 11px; color: var(--gray); font-weight: 400; margin-left: 5px; }
-    .gb-msg  { font-size: 13px; color: var(--gray); }
+    .gb-content { flex: 1; }
 
     /* Now Playing */
-    .np-card { padding: 20px; }
-    .np-title { font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 400; color: var(--black); margin-bottom: 16px; }
-
-    .np-inner {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
+    .np-inner { display: flex; gap: 12px; align-items: center; }
 
     .np-art {
       width: 60px;
       height: 60px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #1a1a2e, #2d1b3d);
+      background: #1a1a2e;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-    }
-
-    .np-track { font-size: 14px; font-weight: 800; color: var(--black); }
-    .np-artist { font-size: 12px; color: var(--gray); }
-
-    .np-prog-wrap { margin-bottom: 6px; }
-
-    .np-timestamps {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--gray);
-      margin-top: 4px;
-    }
-
-    .np-controls {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+      color: rgba(255,255,255,0.5);
       font-size: 20px;
-      margin-bottom: 14px;
-      color: var(--black);
     }
 
-    .np-controls span { cursor: pointer; transition: color 0.15s; }
-    .np-controls span:hover { color: var(--pink); }
-    .np-controls .play { color: var(--pink); font-size: 24px; }
+    .np-info { flex: 1; }
 
-    .np-link {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--pink);
+    .np-bar-wrap { margin-top: 12px; }
+    .np-times { display: flex; justify-content: space-between; font-size: 11px; color: #999; margin-bottom: 4px; }
+    .np-bar  { height: 4px; background: #f0e0e8; border-radius: 2px; overflow: hidden; }
+    .np-fill { height: 100%; background: linear-gradient(90deg, #ff2d78, #ffb3cc); width: 35%; }
+    .np-controls { text-align: center; margin-top: 10px; font-size: 18px; color: #ccc; }
+
+    /* ── BTN-BLACK ── */
+    .btn-black {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-block;
       text-decoration: none;
     }
 
-    .np-link:hover { text-decoration: underline; }
+    .btn-black:hover { background: #333; }
 
     /* ── FOOTER ── */
     footer {
       background: #fff0f5;
-      border-top: 1px solid var(--pink-border);
-      padding: 24px 20px;
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      border-top: 1px solid #f7cad6;
+      padding: 20px;
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 12px;
     }
 
-    .footer-left { font-size: 14px; color: var(--gray); }
-    .footer-heart { font-size: 18px; color: var(--pink); text-align: center; }
-    .footer-right { font-size: 13px; color: var(--gray); text-align: right; }
+    .footer-text { font-size: 13px; color: #666; }
 
     /* ── SCROLL TO TOP ── */
-    @keyframes bounce-up {
-      0%, 100% { transform: translateY(0); }
-      40%       { transform: translateY(-6px); }
-      70%       { transform: translateY(-2px); }
-    }
-
     #scroll-top {
       position: fixed;
       bottom: 24px;
@@ -801,8 +572,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: var(--pink);
-      color: var(--white);
+      background: #ff2d78;
+      color: #fff;
       border: none;
       font-size: 18px;
       cursor: pointer;
@@ -812,52 +583,38 @@
       box-shadow: 0 4px 14px rgba(255,45,120,0.35);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s;
+      transition: opacity 0.25s, transform 0.15s;
       z-index: 300;
     }
 
-    #scroll-top.visible { opacity: 1; pointer-events: auto; }
-    #scroll-top:hover { animation: bounce-up 0.45s ease; }
+    #scroll-top:hover { transform: scale(1.1); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .three-col-bottom { grid-template-columns: 1fr 1fr; }
-      .three-col-bottom .center-col { grid-column: span 2; }
-    }
-
-    @media (max-width: 720px) {
-      .nav-links, .nav-right { display: none; }
+    @media (max-width: 768px) {
+      .nav-links, .nav-music { display: none; }
       .hamburger { display: flex; }
-      .nav-inner { grid-template-columns: 1fr auto; }
 
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-name-line { font-size: 48px; }
-      .quote-card { position: static; max-width: 100%; margin-top: 12px; }
-      .avatar-img-wrap { height: 220px; }
-      .hero-card { padding: 28px 20px 28px 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .name-milo, .name-54 { font-size: 48px; }
+      .name-tilde { font-size: 32px; }
+      .quote-card { position: static; width: 100%; margin-top: 12px; }
 
-      .three-col { grid-template-columns: 1fr; }
-      .two-col { grid-template-columns: 1fr; }
-      .proj-entries { grid-template-columns: 1fr; }
-      .three-col-bottom { grid-template-columns: 1fr; }
-      .three-col-bottom .center-col { grid-column: span 1; }
-      .covers-grid { grid-template-columns: repeat(2, 1fr); }
+      .curr-grid         { grid-template-columns: 1fr; }
+      .about-fav-grid    { grid-template-columns: 1fr; }
+      .fav-grid          { grid-template-columns: repeat(3, 1fr); }
+      .proj-stats-grid   { grid-template-columns: 1fr; }
+      .proj-entries      { grid-template-columns: 1fr; }
+      .bottom-grid       { grid-template-columns: 1fr; }
+      .likes-grid        { grid-template-columns: repeat(4, 1fr); }
 
-      .footer-inner { grid-template-columns: 1fr; }
-      .footer-heart { text-align: left; }
-      .footer-right { text-align: left; }
-    }
-
-    @media (max-width: 480px) {
-      .hero-name-line { font-size: 38px; }
-      .covers-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="nav">
+<nav>
   <div class="nav-inner">
     <a class="nav-logo" href="#home">Milo54</a>
     <ul class="nav-links">
@@ -868,429 +625,392 @@
       <li><a href="#guestbook">wall</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
-    <div class="nav-right">♪ unravel - TK</div>
+    <span class="nav-music">♪ unravel - TK</span>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#home"     class="mob-link">home</a>
-  <a href="#about"    class="mob-link">about me</a>
-  <a href="#likes"    class="mob-link">stuff i like</a>
-  <a href="#projects" class="mob-link">projects</a>
-  <a href="#guestbook"class="mob-link">wall</a>
-  <a href="#contact"  class="mob-link">contact</a>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#home"      class="mob-link">home</a>
+  <a href="#about"     class="mob-link">about me</a>
+  <a href="#likes"     class="mob-link">stuff i like</a>
+  <a href="#projects"  class="mob-link">projects</a>
+  <a href="#guestbook" class="mob-link">wall</a>
+  <a href="#contact"   class="mob-link">contact</a>
 </div>
 
-<!-- MAIN -->
-<div class="wrap">
-  <div class="sections">
+<div class="wrapper">
 
-    <!-- ── HERO ── -->
-    <section id="home">
-      <div class="hero-card with-binding">
-        <div class="washi"></div>
-        <div class="spiral">
-          <span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="hero-inner">
-          <div class="hero-left">
-            <div><span class="pill-tag">✿ welcome!</span></div>
-            <h1 class="hero-name-line">Milo<span class="pink">54</span><span class="pink"> ~</span></h1>
-            <p class="hero-tagline">Reader. Builder. Professional Manhwa Addict.</p>
-            <p class="hero-bio">I read way too much, watch anime, build random things, and make recap videos when inspiration hits.</p>
-            <div class="hero-btns">
-              <a class="btn-black" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">YouTube</a>
-              <a class="btn-black" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">GitHub</a>
-              <a class="btn-black" href="#contact">Discord</a>
-              <a class="btn-black" href="#contact">Email</a>
-            </div>
-          </div>
-          <div class="hero-right">
-            <div class="avatar-img-wrap">
-              <!-- To update avatar: replace avatar.jpg then git add avatar.jpg && git commit -m "update avatar" && git push -->
-              <img src="avatar.jpg" alt="Milo54"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-              <div class="avatar-fallback-hero">M</div>
-            </div>
-            <div class="quote-card" style="position:absolute;overflow:visible;">
-              <div class="washi" style="left:16px;"></div>
-              <div class="quote-label">Quote of the day</div>
-              <p class="quote-text">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- ── HERO ── -->
+  <section id="home">
+    <div class="card hero-card">
+      <div class="tape"></div>
+      <div class="hero-grid">
 
-    <!-- ── CURRENTLY ── -->
-    <section id="currently">
-      <div class="currently-label">★ currently...</div>
-      <div class="three-col">
-
-        <!-- Reading -->
-        <div class="card card-pad">
-          <div class="curr-header">
-            <span class="curr-header-title">Reading ♡</span>
-            <span class="dots">···</span>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">Shadow Slave</div>
-              <div class="curr-sub">Chapter 1656</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:82%"></div></div>
-            </div>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">Lord of the Mysteries</div>
-              <div class="curr-sub">Chapter 1343</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div>
-            </div>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">Omniscient Reader</div>
-              <div class="curr-sub">Chapter 216</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:48%"></div></div>
-            </div>
+        <div class="hero-left">
+          <span class="pill-tag">✿ welcome!</span>
+          <h1 class="hero-name">
+            <span class="name-milo">Milo</span><span class="name-54">54</span><span class="name-tilde"> ~</span>
+          </h1>
+          <p class="hero-subtitle">Reader. Builder. Professional Manhwa Addict.</p>
+          <p class="hero-bio">I read way too much, watch anime, build random things, and make recap videos when inspiration hits.</p>
+          <div class="hero-btns">
+            <a class="btn-black" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">YouTube</a>
+            <a class="btn-black" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn-black" href="#contact">Discord</a>
+            <a class="btn-black" href="#contact">Email</a>
           </div>
         </div>
 
-        <!-- Watching -->
-        <div class="card card-pad">
-          <div class="curr-header">
-            <span class="curr-header-title">Watching ♡</span>
-            <span class="dots">···</span>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">Dandadan</div>
-              <div class="curr-sub">Episode 8</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:73%"></div></div>
-            </div>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">One Piece</div>
-              <div class="curr-sub">Episode 1112</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div>
-            </div>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm"></div>
-            <div class="curr-info">
-              <div class="curr-title">Frieren: Beyond Journey's End</div>
-              <div class="curr-sub">Episode 16</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:38%"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Playing -->
-        <div class="card card-pad">
-          <div class="curr-header">
-            <span class="curr-header-title">Playing ♡</span>
-            <span class="dots">···</span>
-          </div>
-          <div class="curr-entry">
-            <div class="cover-sm sq"></div>
-            <div class="curr-info">
-              <div class="curr-title">Wuthering Waves</div>
-              <div class="curr-sub">Level 48</div>
-              <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
-            </div>
-          </div>
-          <p class="curr-note">Just exploring and enjoying the story</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ── ABOUT + FAVORITES ── -->
-    <section id="about">
-      <div class="two-col">
-
-        <!-- About -->
-        <div class="card card-pad with-binding" style="overflow:visible;">
-          <div class="washi"></div>
-          <div class="spiral">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </div>
-          <div class="card-title" style="color:var(--pink);text-transform:uppercase;font-size:13px;letter-spacing:0.1em;">about me</div>
-          <div class="about-text">
-            <p>Hi! I'm Milo.</p>
-            <p>I started reading manga years ago and somehow ended up deep in the manhwa rabbit hole.</p>
-            <p>When I'm not reading, I'm usually building tools that solve tiny problems nobody else cares about.</p>
-            <p>Most of my projects are born from wanting something that didn't exist.</p>
-            <p>Nice to meet you! \(^_^)/</p>
-          </div>
-        </div>
-
-        <!-- Favorites -->
-        <div class="card card-pad">
-          <div class="fav-header">
-            <div class="card-title" style="margin-bottom:0;">favorite manhwa &amp; anime</div>
-            <span class="fav-note">you have good taste :)</span>
-          </div>
-          <div class="covers-grid">
-            <div class="cover-item">
-              <div class="cover-box">
-                <img src="https://cdn.mangaupdates.com/image/m17923.jpg" alt="Solo Leveling"
-                  onerror="this.style.display='none';" />
-                Solo Leveling
-              </div>
-              <span class="cover-name">Solo Leveling</span>
-            </div>
-            <div class="cover-item">
-              <div class="cover-box">
-                <img src="https://uploads.mangaupdates.com/image/m123914.jpg" alt="Omniscient Reader"
-                  onerror="this.style.display='none';" />
-                Omniscient Reader
-              </div>
-              <span class="cover-name">Omniscient Reader</span>
-            </div>
-            <div class="cover-item">
-              <div class="cover-box">Legend of the Northern Blade</div>
-              <span class="cover-name">Legend of the Northern Blade</span>
-            </div>
-            <div class="cover-item">
-              <div class="cover-box">Steins;Gate</div>
-              <span class="cover-name">Steins;Gate</span>
-            </div>
-            <div class="cover-item">
-              <div class="cover-box">Attack on Titan</div>
-              <span class="cover-name">Attack on Titan</span>
-            </div>
-            <div class="cover-item">
-              <div class="cover-box">Dandadan</div>
-              <span class="cover-name">Dandadan</span>
+        <div class="hero-right">
+          <div class="hero-img-wrap">
+            <!-- To update avatar: replace avatar.jpg then git add avatar.jpg && git commit -m "update avatar" && git push -->
+            <img src="avatar.jpg" class="hero-img" alt="Milo54"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="hero-img-fallback">M</div>
+            <div class="quote-card card">
+              <div class="tape" style="width:40px; left:10px;"></div>
+              <p style="font-size:11px; color:#ff2d78; font-family:'Patrick Hand',cursive; margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase;">Quote of the day</p>
+              <p style="font-size:13px; font-family:'Patrick Hand',cursive; line-height:1.6; color:#333;">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
             </div>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ── PROJECTS + STATS ── -->
-    <section id="projects">
-      <div class="two-col">
+  <!-- ── CURRENTLY ── -->
+  <section id="currently">
+    <p class="section-label">★ currently...</p>
+    <div class="curr-grid">
 
-        <!-- Projects -->
-        <div class="card card-pad" style="position:relative;overflow:visible;">
-          <div class="washi"></div>
-          <div class="proj-header">
-            <div class="card-title" style="margin-bottom:0;">things i've built</div>
-            <a class="proj-view-all" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">view all projects →</a>
+      <div class="card">
+        <div class="curr-header">
+          <span class="curr-title">Reading</span>
+          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
+        </div>
+        <div class="curr-item">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">Shadow Slave</div>
+            <div class="curr-chapter">Chapter 1656</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:85%"></div></div>
           </div>
-          <div class="proj-entries">
-            <div class="proj-entry">
-              <div class="proj-ss">manhwa-pulse</div>
-              <div class="proj-name">Manhwa Pulse</div>
-              <p class="proj-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
-              <p class="proj-why">I was tired of jumping between websites</p>
-              <div><a class="btn-black" href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Check it out!</a></div>
+        </div>
+        <div class="curr-item">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">Lord of the Mysteries</div>
+            <div class="curr-chapter">Chapter 1343</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:60%"></div></div>
+          </div>
+        </div>
+        <div class="curr-item" style="margin-bottom:0;">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">Omniscient Reader</div>
+            <div class="curr-chapter">Chapter 216</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:40%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="curr-header">
+          <span class="curr-title">Watching</span>
+          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
+        </div>
+        <div class="curr-item">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">Dandadan</div>
+            <div class="curr-chapter">Episode 8</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:70%"></div></div>
+          </div>
+        </div>
+        <div class="curr-item">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">One Piece</div>
+            <div class="curr-chapter">Episode 1112</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:45%"></div></div>
+          </div>
+        </div>
+        <div class="curr-item" style="margin-bottom:0;">
+          <div class="curr-cover"></div>
+          <div class="curr-info">
+            <div class="curr-name">Frieren: Beyond Journey's End</div>
+            <div class="curr-chapter">Episode 16</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:30%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="curr-header">
+          <span class="curr-title">Playing</span>
+          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
+        </div>
+        <div class="curr-item" style="margin-bottom:0;">
+          <div class="curr-cover sq"></div>
+          <div class="curr-info">
+            <div class="curr-name">Wuthering Waves</div>
+            <div class="curr-chapter">Level 48</div>
+            <div class="curr-bar"><div class="curr-bar-fill" style="width:65%"></div></div>
+          </div>
+        </div>
+        <p class="curr-note">Just exploring and enjoying the story</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ABOUT + FAVORITES ── -->
+  <section id="about">
+    <div class="about-fav-grid">
+
+      <div class="card">
+        <div class="tape"></div>
+        <span class="card-title">about me</span>
+        <div class="about-body">
+          <p>Hi! I'm Milo.</p>
+          <p>I started reading manga years ago and somehow ended up deep in the manhwa rabbit hole.</p>
+          <p>When I'm not reading, I'm usually building tools that solve tiny problems nobody else cares about.</p>
+          <p>Most of my projects are born from wanting something that didn't exist.</p>
+          <p>Nice to meet you! \(^_^)/</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="fav-header">
+          <span class="card-title" style="margin-bottom:0;">favorite manhwa &amp; anime</span>
+          <span style="color:#ff2d78; font-size:12px; font-style:italic;">you have good taste :)</span>
+        </div>
+        <div class="fav-grid">
+          <div class="fav-item">
+            <div class="fav-cover">
+              <img src="https://cdn.myanimelist.net/images/manga/3/222295.jpg" alt="Solo Leveling"
+                onerror="this.style.display='none';">
             </div>
-            <div class="proj-entry">
-              <div class="proj-ss">presencepal</div>
-              <div class="proj-name">PresencePal</div>
-              <p class="proj-desc">Show any game on your Discord activity — even mobile games.</p>
-              <p class="proj-why">Discord didn't show my mobile games, so I built it.</p>
-              <div><a class="btn-black" href="https://github.com/foxmanhwa/presencepal/releases/latest" target="_blank" rel="noopener">Download →</a></div>
+            <p class="fav-name">Solo Leveling</p>
+          </div>
+          <div class="fav-item">
+            <div class="fav-cover">
+              <img src="https://cdn.myanimelist.net/images/manga/1/259352.jpg" alt="Omniscient Reader"
+                onerror="this.style.display='none';">
             </div>
+            <p class="fav-name">Omniscient Reader</p>
+          </div>
+          <div class="fav-item">
+            <div class="fav-cover"></div>
+            <p class="fav-name">Legend of the Northern Blade</p>
+          </div>
+          <div class="fav-item">
+            <div class="fav-cover"></div>
+            <p class="fav-name">Steins;Gate</p>
+          </div>
+          <div class="fav-item">
+            <div class="fav-cover"></div>
+            <p class="fav-name">Attack on Titan</p>
+          </div>
+          <div class="fav-item">
+            <div class="fav-cover"></div>
+            <p class="fav-name">Dandadan</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PROJECTS + STATS ── -->
+  <section id="projects">
+    <div class="proj-stats-grid">
+
+      <div class="card">
+        <div class="tape"></div>
+        <div class="proj-header">
+          <span class="card-title" style="margin-bottom:0;">things i've built</span>
+          <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener"
+            style="color:#ff2d78; font-size:12px; text-decoration:none;">view all projects →</a>
+        </div>
+        <div class="proj-entries">
+          <div class="project-item">
+            <div class="project-thumb">manhwa-pulse</div>
+            <div class="project-name">Manhwa Pulse</div>
+            <p class="project-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
+            <p class="project-story">I was tired of jumping between websites</p>
+            <a class="btn-black" href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Check it out!</a>
+          </div>
+          <div class="project-item">
+            <div class="project-thumb">presencepal</div>
+            <div class="project-name">PresencePal</div>
+            <p class="project-desc">Show any game on your Discord activity — even mobile games.</p>
+            <p class="project-story">Discord didn't show my mobile games, so I built it.</p>
+            <a class="btn-black" href="https://github.com/foxmanhwa/presencepal/releases/latest" target="_blank" rel="noopener">Download →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">random stats</p>
+        <div class="stat-row"><span class="stat-left"><span>📚</span> Manhwa Read</span><span class="stat-val">500+</span></div>
+        <div class="stat-row"><span class="stat-left"><span>📺</span> Anime Watched</span><span class="stat-val">300+</span></div>
+        <div class="stat-row"><span class="stat-left"><span>📁</span> Projects Started</span><span class="stat-val">Too Many</span></div>
+        <div class="stat-row"><span class="stat-left"><span>✅</span> Projects Finished</span><span class="stat-val">Don't Ask</span></div>
+        <div class="stat-row"><span class="stat-left"><span>🌙</span> All-nighters Pulled</span><span class="stat-val">Countless</span></div>
+        <div class="stat-row"><span class="stat-left"><span>☕</span> Coffee Consumed</span><span class="stat-val">Inhuman</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── BOTTOM THREE COLS ── -->
+  <section id="likes">
+    <div class="bottom-grid">
+
+      <!-- Things I Like -->
+      <div class="card">
+        <p class="card-title">things i like</p>
+        <div class="likes-grid">
+          <div class="like-item"><span class="like-emoji">📚</span><span class="like-label">Manhwa</span></div>
+          <div class="like-item"><span class="like-emoji">🎌</span><span class="like-label">Anime</span></div>
+          <div class="like-item"><span class="like-emoji">📖</span><span class="like-label">Novels</span></div>
+          <div class="like-item"><span class="like-emoji">🎮</span><span class="like-label">Games</span></div>
+          <div class="like-item"><span class="like-emoji">☕</span><span class="like-label">Coffee</span></div>
+          <div class="like-item"><span class="like-emoji">🎵</span><span class="like-label">Music</span></div>
+          <div class="like-item"><span class="like-emoji">🌙</span><span class="like-label">Late Nights</span></div>
+          <div class="like-item"><span class="like-emoji">🐱</span><span class="like-label">Cats</span></div>
+        </div>
+      </div>
+
+      <!-- Center: Find me + Guestbook -->
+      <div class="center-col">
+
+        <div class="card" id="contact">
+          <p class="card-title">find me around the web</p>
+          <div class="social-row">
+            <a class="social-btn" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">
+              <div class="social-circle"><span style="color:#ff0000;">▶</span></div>
+              <span class="social-label">YouTube</span>
+            </a>
+            <a class="social-btn" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">
+              <div class="social-circle"><span style="color:#111;">⌂</span></div>
+              <span class="social-label">GitHub</span>
+            </a>
+            <a class="social-btn" href="#contact">
+              <div class="social-circle"><span style="color:#5865F2;">◈</span></div>
+              <span class="social-label">Discord</span>
+            </a>
+            <a class="social-btn" href="#contact">
+              <div class="social-circle"><span style="color:#FF4500;">●</span></div>
+              <span class="social-label">Reddit</span>
+            </a>
+            <a class="social-btn" href="#contact">
+              <div class="social-circle"><span style="color:#1DA1F2;">✦</span></div>
+              <span class="social-label">Twitter</span>
+            </a>
           </div>
         </div>
 
-        <!-- Stats -->
-        <div class="card card-pad">
-          <div class="card-title">random stats</div>
-          <div class="stats-list">
-            <div class="stat-row">
-              <span class="stat-left"><span>📚</span> Manhwa Read</span>
-              <span class="stat-val">500+</span>
+        <div class="card" id="guestbook">
+          <div class="tape"></div>
+          <div class="gb-header-row">
+            <span class="card-title" style="margin-bottom:0;">guestbook</span>
+            <a href="https://formspree.io/f/PLACEHOLDER" target="_blank" rel="noopener"
+              style="color:#ff2d78; font-size:12px; text-decoration:none;">sign my guestbook!</a>
+          </div>
+          <div class="gb-entry">
+            <div class="gb-avatar">A</div>
+            <div class="gb-content">
+              <div><span style="font-weight:700; font-size:13px;">azura</span> <span style="color:#999; font-size:11px;">May 20, 2025</span></div>
+              <p style="font-size:13px; color:#555; margin-top:2px;">awesome site!! love the vibe &lt;3</p>
             </div>
-            <div class="stat-row">
-              <span class="stat-left"><span>📺</span> Anime Watched</span>
-              <span class="stat-val">300+</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-left"><span>📁</span> Projects Started</span>
-              <span class="stat-val">Too Many</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-left"><span>✅</span> Projects Finished</span>
-              <span class="stat-val">Don't Ask</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-left"><span>🌙</span> All-nighters Pulled</span>
-              <span class="stat-val">Countless</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-left"><span>☕</span> Coffee Consumed</span>
-              <span class="stat-val">Inhuman</span>
+          </div>
+          <div class="gb-entry">
+            <div class="gb-avatar">V</div>
+            <div class="gb-content">
+              <div><span style="font-weight:700; font-size:13px;">voidwalker</span> <span style="color:#999; font-size:11px;">May 18, 2025</span></div>
+              <p style="font-size:13px; color:#555; margin-top:2px;">your projects are really useful, thanks!</p>
             </div>
           </div>
         </div>
 
       </div>
-    </section>
 
-    <!-- ── BOTTOM THREE COL ── -->
-    <section id="likes">
-      <div class="three-col-bottom">
-
-        <!-- Things I Like -->
-        <div class="card card-pad">
-          <div class="card-title">things i like</div>
-          <div class="likes-grid">
-            <div class="like-item"><span>📚</span><span class="like-label">Manhwa</span></div>
-            <div class="like-item"><span>🎌</span><span class="like-label">Anime</span></div>
-            <div class="like-item"><span>📖</span><span class="like-label">Novels</span></div>
-            <div class="like-item"><span>🎮</span><span class="like-label">Games</span></div>
-            <div class="like-item"><span>☕</span><span class="like-label">Coffee</span></div>
-            <div class="like-item"><span>🎵</span><span class="like-label">Music</span></div>
-            <div class="like-item"><span>🌙</span><span class="like-label">Late Nights</span></div>
-            <div class="like-item"><span>🐱</span><span class="like-label">Cats</span></div>
+      <!-- Now Playing -->
+      <div class="card">
+        <p class="card-title">now playing ♪</p>
+        <div class="np-inner">
+          <div class="np-art">♪</div>
+          <div class="np-info">
+            <p style="font-weight:700; font-size:15px;">unravel</p>
+            <p style="font-size:12px; color:#999;">TK from 凜として時雨</p>
           </div>
         </div>
-
-        <!-- Center col: Find me + Guestbook -->
-        <div class="center-col">
-
-          <div class="card find-section" id="contact">
-            <div class="find-title">find me around the web</div>
-            <div class="social-row">
-              <a class="social-btn" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">
-                <div class="social-circle">▶</div>
-                <span class="social-label">YouTube</span>
-              </a>
-              <a class="social-btn" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">
-                <div class="social-circle">⌥</div>
-                <span class="social-label">GitHub</span>
-              </a>
-              <a class="social-btn" href="#contact">
-                <div class="social-circle">◈</div>
-                <span class="social-label">Discord</span>
-              </a>
-              <a class="social-btn" href="#contact">
-                <div class="social-circle">◉</div>
-                <span class="social-label">Reddit</span>
-              </a>
-              <a class="social-btn" href="#contact">
-                <div class="social-circle">✦</div>
-                <span class="social-label">Twitter</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="card gb-section" id="guestbook" style="position:relative;overflow:visible;">
-            <div class="washi"></div>
-            <div class="gb-header">
-              <span class="gb-header-title">guestbook</span>
-              <a class="gb-sign" href="https://formspree.io/f/PLACEHOLDER" target="_blank" rel="noopener">sign my guestbook!</a>
-            </div>
-            <div class="gb-entries">
-              <div class="gb-entry">
-                <div class="gb-avatar">A</div>
-                <div class="gb-body">
-                  <div class="gb-meta">azura <span class="gb-date">May 20, 2025</span></div>
-                  <div class="gb-msg">awesome site!! love the vibe &lt;3</div>
-                </div>
-              </div>
-              <div class="gb-entry">
-                <div class="gb-avatar">V</div>
-                <div class="gb-body">
-                  <div class="gb-meta">voidwalker <span class="gb-date">May 18, 2025</span></div>
-                  <div class="gb-msg">your projects are really useful, thanks!</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="np-bar-wrap">
+          <div class="np-times"><span>1:24</span><span>4:00</span></div>
+          <div class="np-bar"><div class="np-fill"></div></div>
         </div>
-
-        <!-- Now Playing -->
-        <div class="card np-card">
-          <div class="np-title">now playing ♪</div>
-          <div class="np-inner">
-            <div class="np-art">♪</div>
-            <div>
-              <div class="np-track">unravel</div>
-              <div class="np-artist">TK from 凜として時雨</div>
-            </div>
-          </div>
-          <div class="np-prog-wrap">
-            <div class="prog-bar"><div class="prog-fill" style="width:35%"></div></div>
-            <div class="np-timestamps"><span>1:24</span><span>4:00</span></div>
-          </div>
-          <div class="np-controls">
-            <span>⏮</span>
-            <span class="play">⏸</span>
-            <span>⏭</span>
-          </div>
-          <a class="np-link" href="#">anime openings &gt;</a>
+        <div class="np-controls">
+          <span>⏮</span>&nbsp;&nbsp;<span style="color:#ff2d78; font-size:22px;">⏸</span>&nbsp;&nbsp;<span>⏭</span>
         </div>
-
+        <a href="#" style="display:block; text-align:center; color:#ff2d78; font-size:12px; margin-top:10px; text-decoration:none;">anime openings &gt;</a>
       </div>
-    </section>
 
-  </div><!-- /sections -->
-</div><!-- /wrap -->
+    </div>
+  </section>
+
+</div><!-- /wrapper -->
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <p class="footer-left">Thanks for visiting! Hope you have a great day!</p>
-    <p class="footer-heart">♡</p>
-    <p class="footer-right">© Milo54 · Built with ♡, anime, and way too much free time.</p>
-  </div>
+  <span class="footer-text">Thanks for visiting! Hope you have a great day!</span>
+  <span style="color:#ff2d78; font-size:18px;">♡</span>
+  <span class="footer-text">© Milo54 · Built with ♡, anime, and way too much free time.</span>
 </footer>
 
 <!-- SCROLL TO TOP -->
 <button id="scroll-top" aria-label="Scroll to top">↑</button>
 
 <script>
+  // Scroll to top
+  const scrollBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    const show = window.scrollY > 300;
+    scrollBtn.style.opacity = show ? '1' : '0';
+    scrollBtn.style.pointerEvents = show ? 'auto' : 'none';
+  }, { passive: true });
+  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
   // Hamburger
   const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileNav = document.getElementById('mobile-nav');
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
+    mobileNav.classList.toggle('open');
   });
   document.querySelectorAll('.mob-link').forEach(l => {
     l.addEventListener('click', () => {
       hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
+      mobileNav.classList.remove('open');
     });
   });
 
-  // Scroll to top
-  const scrollBtn = document.getElementById('scroll-top');
-  window.addEventListener('scroll', () => {
-    scrollBtn.classList.toggle('visible', window.scrollY > 300);
-  }, { passive: true });
-  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // Active nav
+  // Active nav on scroll
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
-  const io = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
       }
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => io.observe(s));
+  sections.forEach(s => observer.observe(s));
 </script>
 </body>
 </html>
