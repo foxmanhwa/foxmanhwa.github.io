@@ -564,6 +564,51 @@
 
     .footer-text { font-size: 13px; color: #666; }
 
+    /* ── CHIBI / DECORATIVE IMAGES ── */
+    .chibi {
+      position: absolute;
+      pointer-events: none;
+      z-index: 4;
+      height: 70px;
+      width: auto;
+    }
+
+    .chibi-br { bottom: -8px; right: 12px; }
+    .chibi-bl { bottom: -8px; left: 12px; }
+    .chibi-tc { top: -8px; left: 50%; transform: translateX(-50%); height: 54px; }
+
+    .cat-corner {
+      position: absolute;
+      bottom: -6px;
+      right: 8px;
+      height: 30px;
+      width: auto;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* ── PROJECT THUMB IMAGE ── */
+    .project-thumb { position: relative; overflow: hidden; }
+    .project-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* ── NOW PLAYING ART IMAGE ── */
+    .np-art { position: relative; overflow: hidden; }
+    .np-art img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
     /* ── SCROLL TO TOP ── */
     #scroll-top {
       position: fixed;
@@ -666,14 +711,15 @@
 
         <div class="hero-right">
           <div class="hero-img-wrap">
-            <!-- To update avatar: replace avatar.jpg then git add avatar.jpg && git commit -m "update avatar" && git push -->
-            <img src="avatar.jpg" class="hero-img" alt="Milo54"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <!-- To update hero: drop file into public/characters/hero-reader.png and push -->
+            <img src="public/characters/hero-reader.png" class="hero-img" alt="Milo54"
+              onerror="this.src='avatar.jpg'; this.onerror=function(){ this.style.display='none'; this.nextElementSibling.style.display='flex'; };">
             <div class="hero-img-fallback">M</div>
             <div class="quote-card card">
               <div class="tape" style="width:40px; left:10px;"></div>
               <p style="font-size:11px; color:#ff2d78; font-family:'Patrick Hand',cursive; margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase;">Quote of the day</p>
               <p style="font-size:13px; font-family:'Patrick Hand',cursive; line-height:1.6; color:#333;">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
+              <img src="public/cats/doodle-cat.png" class="cat-corner" alt="" onerror="this.style.display='none';">
             </div>
           </div>
         </div>
@@ -687,7 +733,8 @@
     <p class="section-label">★ currently...</p>
     <div class="curr-grid">
 
-      <div class="card">
+      <div class="card" style="overflow:visible;">
+        <img src="public/chibis/blond-reading.png" class="chibi chibi-bl" alt="" onerror="this.style.display='none';">
         <div class="curr-header">
           <span class="curr-title">Reading</span>
           <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
@@ -718,7 +765,8 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" style="overflow:visible;">
+        <img src="public/chibis/pink-chibi.png" class="chibi chibi-tc" alt="" onerror="this.style.display='none';">
         <div class="curr-header">
           <span class="curr-title">Watching</span>
           <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
@@ -749,7 +797,8 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" style="overflow:visible;">
+        <img src="public/chibis/white-chibi.png" class="chibi chibi-br" alt="" onerror="this.style.display='none';">
         <div class="curr-header">
           <span class="curr-title">Playing</span>
           <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
@@ -772,8 +821,9 @@
   <section id="about">
     <div class="about-fav-grid">
 
-      <div class="card">
+      <div class="card" style="overflow:visible;">
         <div class="tape"></div>
+        <img src="public/chibis/blond-sitting.png" class="chibi chibi-br" alt="" onerror="this.style.display='none';">
         <span class="card-title">about me</span>
         <div class="about-body">
           <p>Hi! I'm Milo.</p>
@@ -792,32 +842,38 @@
         <div class="fav-grid">
           <div class="fav-item">
             <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/manga/3/222295.jpg" alt="Solo Leveling"
-                onerror="this.style.display='none';">
+              <img src="public/favorites/solo-leveling.jpg" alt="Solo Leveling" onerror="this.style.display='none';">
             </div>
             <p class="fav-name">Solo Leveling</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/manga/1/259352.jpg" alt="Omniscient Reader"
-                onerror="this.style.display='none';">
+              <img src="public/favorites/omniscient-reader.jpg" alt="Omniscient Reader" onerror="this.style.display='none';">
             </div>
             <p class="fav-name">Omniscient Reader</p>
           </div>
           <div class="fav-item">
-            <div class="fav-cover"></div>
+            <div class="fav-cover">
+              <img src="public/favorites/legend-northern-blade.jpg" alt="Legend of the Northern Blade" onerror="this.style.display='none';">
+            </div>
             <p class="fav-name">Legend of the Northern Blade</p>
           </div>
           <div class="fav-item">
-            <div class="fav-cover"></div>
+            <div class="fav-cover">
+              <img src="public/favorites/steinsgate.jpg" alt="Steins;Gate" onerror="this.style.display='none';">
+            </div>
             <p class="fav-name">Steins;Gate</p>
           </div>
           <div class="fav-item">
-            <div class="fav-cover"></div>
+            <div class="fav-cover">
+              <img src="public/favorites/attack-on-titan.jpg" alt="Attack on Titan" onerror="this.style.display='none';">
+            </div>
             <p class="fav-name">Attack on Titan</p>
           </div>
           <div class="fav-item">
-            <div class="fav-cover"></div>
+            <div class="fav-cover">
+              <img src="public/favorites/dandadan.jpg" alt="Dandadan" onerror="this.style.display='none';">
+            </div>
             <p class="fav-name">Dandadan</p>
           </div>
         </div>
@@ -839,14 +895,20 @@
         </div>
         <div class="proj-entries">
           <div class="project-item">
-            <div class="project-thumb">manhwa-pulse</div>
+            <div class="project-thumb">
+              <img src="public/projects/manhwa-pulse.jpg" alt="" onerror="this.style.display='none';">
+              manhwa-pulse
+            </div>
             <div class="project-name">Manhwa Pulse</div>
             <p class="project-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
             <p class="project-story">I was tired of jumping between websites</p>
             <a class="btn-black" href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Check it out!</a>
           </div>
           <div class="project-item">
-            <div class="project-thumb">presencepal</div>
+            <div class="project-thumb">
+              <img src="public/projects/presencepal.jpg" alt="" onerror="this.style.display='none';">
+              presencepal
+            </div>
             <div class="project-name">PresencePal</div>
             <p class="project-desc">Show any game on your Discord activity — even mobile games.</p>
             <p class="project-story">Discord didn't show my mobile games, so I built it.</p>
@@ -945,7 +1007,10 @@
       <div class="card">
         <p class="card-title">now playing ♪</p>
         <div class="np-inner">
-          <div class="np-art">♪</div>
+          <div class="np-art">
+            <img src="public/music/now-playing.png" alt="" onerror="this.style.display='none';">
+            ♪
+          </div>
           <div class="np-info">
             <p style="font-weight:700; font-size:15px;">unravel</p>
             <p style="font-size:12px; color:#999;">TK from 凜として時雨</p>
