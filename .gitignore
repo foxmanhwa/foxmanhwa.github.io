@@ -3,9 +3,6 @@
 .env.*
 !.env.example
 
-# Admin panel — contains service_role key, local-only, never ships to GitHub Pages
-admin.html
-
 # OS / editor
 .DS_Store
 Thumbs.db

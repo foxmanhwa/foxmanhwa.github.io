@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>admin — foxmanhwa</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      oklch(14% 0.008 60);
+    --surface: oklch(18% 0.008 60);
+    --border:  oklch(26% 0.008 60);
+    --muted:   oklch(50% 0.008 60);
+    --text:    oklch(88% 0.008 60);
+    --gold:    oklch(79% 0.14 80);
+    --red:     oklch(62% 0.18 25);
+    --green:   oklch(62% 0.14 145);
+    --radius:  6px;
+    --mono:    "JetBrains Mono", "Fira Code", monospace;
+  }
+
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ── LOGIN ──────────────────────────────────────────────────────── */
+  #login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .login-card h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+
+  .login-card p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ── DASHBOARD ──────────────────────────────────────────────────── */
+  #dashboard { display: none; }
+
+  .topbar {
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .topbar-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+  }
+
+  .main { padding: 2rem 1.5rem; max-width: 900px; }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .section-head {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .section-head h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .section-body { padding: 1.25rem; }
+
+  /* ── FORMS ──────────────────────────────────────────────────────── */
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    font-family: var(--mono);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 0.55rem 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input:focus { border-color: var(--gold); }
+
+  .row-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* ── BUTTONS ────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s;
+    line-height: 1;
+  }
+
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn:not(:disabled):hover { opacity: 0.85; }
+
+  .btn-primary { background: var(--gold); color: oklch(14% 0.008 60); }
+  .btn-danger  { background: transparent; border: 1px solid var(--red); color: var(--red); }
+  .btn-restore { background: transparent; border: 1px solid var(--green); color: var(--green); }
+  .btn-ghost   { background: transparent; border: 1px solid var(--border); color: var(--text); }
+
+  /* ── TABLE ──────────────────────────────────────────────────────── */
+  .tbl-wrap { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    word-break: break-word;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr.hidden-row td { opacity: 0.45; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.1rem 0.45rem;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  .badge-song    { background: oklch(30% 0.08 270); color: oklch(75% 0.12 270); }
+  .badge-manhwa  { background: oklch(30% 0.08 25);  color: oklch(75% 0.12 25);  }
+  .badge-anime   { background: oklch(30% 0.08 145); color: oklch(75% 0.12 145); }
+  .badge-hidden  { background: oklch(22% 0.005 60); color: var(--muted); }
+
+  .ts {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── MISC ───────────────────────────────────────────────────────── */
+  .status {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius);
+    margin-top: 0.75rem;
+    display: none;
+  }
+
+  .status.ok  { background: oklch(22% 0.06 145); color: var(--green); display: block; }
+  .status.err { background: oklch(22% 0.06 25);  color: var(--red);   display: block; }
+
+  .toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle-label input { cursor: pointer; }
+
+  .empty { color: var(--muted); font-size: 0.8rem; padding: 1rem 0; }
+
+  .logout-btn {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--mono);
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius);
+    transition: color 0.15s;
+  }
+
+  .logout-btn:hover { color: var(--red); }
+
+  select.filter-select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 0.35rem 0.6rem;
+    font-size: 0.78rem;
+    font-family: var(--mono);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <h1>foxmanhwa / admin</h1>
+    <p>Sign in with your admin account to continue.</p>
+    <div class="field">
+      <label for="l-email">email</label>
+      <input type="email" id="l-email" autocomplete="email" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label for="l-pass">password</label>
+      <input type="password" id="l-pass" autocomplete="current-password">
+    </div>
+    <div class="field" style="margin-top:1.25rem">
+      <button class="btn btn-primary" id="btn-login" style="width:100%">Sign in</button>
+    </div>
+    <div class="status" id="login-status"></div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────────────────────────────────── -->
+<div id="dashboard">
+  <div class="topbar">
+    <span class="topbar-title">foxmanhwa/admin</span>
+    <button class="logout-btn" id="btn-logout">sign out</button>
+  </div>
+
+  <div class="main">
+
+    <!-- CURRENTLY -->
+    <div class="section">
+      <div class="section-head">
+        <h2>Currently</h2>
+        <button class="btn btn-primary" id="btn-save-currently">Save</button>
+      </div>
+      <div class="section-body">
+        <div class="row-fields">
+          <div class="field">
+            <label for="c-reading">reading</label>
+            <input type="text" id="c-reading" placeholder="book / manhwa title">
+          </div>
+          <div class="field">
+            <label for="c-watching">watching</label>
+            <input type="text" id="c-watching" placeholder="anime / show title">
+          </div>
+          <div class="field">
+            <label for="c-playing">playing</label>
+            <input type="text" id="c-playing" placeholder="game title">
+          </div>
+        </div>
+        <div class="status" id="currently-status"></div>
+      </div>
+    </div>
+
+    <!-- NOW PLAYING -->
+    <div class="section">
+      <div class="section-head">
+        <h2>Now Playing</h2>
+        <button class="btn btn-primary" id="btn-save-np">Save</button>
+      </div>
+      <div class="section-body">
+        <div class="row-fields">
+          <div class="field">
+            <label for="np-track">track</label>
+            <input type="text" id="np-track" placeholder="song title">
+          </div>
+          <div class="field">
+            <label for="np-artist">artist</label>
+            <input type="text" id="np-artist" placeholder="artist name">
+          </div>
+          <div class="field">
+            <label for="np-art">album art url</label>
+            <input type="url" id="np-art" placeholder="https://...">
+          </div>
+        </div>
+        <div class="status" id="np-status"></div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="section">
+      <div class="section-head">
+        <h2>Recommendations</h2>
+        <div style="display:flex;gap:0.75rem;align-items:center">
+          <select class="filter-select" id="rec-type-filter">
+            <option value="all">all types</option>
+            <option value="song">songs</option>
+            <option value="manhwa">manhwa</option>
+            <option value="anime">anime</option>
+          </select>
+          <label class="toggle-label">
+            <input type="checkbox" id="rec-show-hidden"> show hidden
+          </label>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>type</th>
+              <th>name</th>
+              <th>content</th>
+              <th>note</th>
+              <th>date</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody id="rec-tbody">
+            <tr><td colspan="6" class="empty">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- YEARBOOK -->
+    <div class="section">
+      <div class="section-head">
+        <h2>Yearbook</h2>
+        <label class="toggle-label">
+          <input type="checkbox" id="yb-show-hidden"> show hidden
+        </label>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>message</th>
+              <th>sticker</th>
+              <th>date</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody id="yb-tbody">
+            <tr><td colspan="5" class="empty">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL     = "https://zildayxlcgenepnbzmwm.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_hKAjHBnUtBoaP6lGWBtdSg_e9GOW8QX";
+const FN_URL = `${SUPABASE_URL}/functions/v1/admin`;
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let SESSION = null;
+
+async function api(action, params = {}) {
+  const r = await fetch(FN_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${SESSION.access_token}`,
+    },
+    body: JSON.stringify({ action, ...params }),
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || r.statusText);
+  return data;
+}
+
+function setStatus(el, msg, type) {
+  el.textContent = msg;
+  el.className = `status ${type}`;
+  if (type === "ok") setTimeout(() => { el.className = "status"; }, 3000);
+}
+
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function fmtDate(iso) {
+  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────
+
+document.getElementById("btn-login").addEventListener("click", async () => {
+  const email = document.getElementById("l-email").value.trim();
+  const pass  = document.getElementById("l-pass").value;
+  const btn   = document.getElementById("btn-login");
+  const st    = document.getElementById("login-status");
+  if (!email || !pass) { setStatus(st, "Enter email and password.", "err"); return; }
+  btn.disabled = true;
+  btn.textContent = "Signing in…";
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) {
+    setStatus(st, error.message, "err");
+    btn.disabled = false;
+    btn.textContent = "Sign in";
+    return;
+  }
+  SESSION = data.session;
+  showDashboard();
+});
+
+document.getElementById("l-pass").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("btn-login").click();
+});
+
+document.getElementById("btn-logout").addEventListener("click", async () => {
+  await sb.auth.signOut();
+  SESSION = null;
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("l-pass").value = "";
+});
+
+async function showDashboard() {
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  await Promise.all([loadCurrently(), loadNowPlaying(), loadRecs(), loadYearbook()]);
+}
+
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (session) { SESSION = session; showDashboard(); }
+});
+
+// ── CURRENTLY ─────────────────────────────────────────────────────────────
+
+async function loadCurrently() {
+  try {
+    const d = await api("get-currently");
+    document.getElementById("c-reading").value  = d.reading  ?? "";
+    document.getElementById("c-watching").value = d.watching ?? "";
+    document.getElementById("c-playing").value  = d.playing  ?? "";
+  } catch { /* no row yet */ }
+}
+
+document.getElementById("btn-save-currently").addEventListener("click", async () => {
+  const btn = document.getElementById("btn-save-currently");
+  const st  = document.getElementById("currently-status");
+  btn.disabled = true;
+  try {
+    await api("update-currently", {
+      reading:  document.getElementById("c-reading").value.trim(),
+      watching: document.getElementById("c-watching").value.trim(),
+      playing:  document.getElementById("c-playing").value.trim(),
+    });
+    setStatus(st, "Saved.", "ok");
+  } catch (e) { setStatus(st, e.message, "err"); }
+  btn.disabled = false;
+});
+
+// ── NOW PLAYING ───────────────────────────────────────────────────────────
+
+async function loadNowPlaying() {
+  try {
+    const d = await api("get-now-playing");
+    document.getElementById("np-track").value  = d.track   ?? "";
+    document.getElementById("np-artist").value = d.artist  ?? "";
+    document.getElementById("np-art").value    = d.art_url ?? "";
+  } catch { /* no row yet */ }
+}
+
+document.getElementById("btn-save-np").addEventListener("click", async () => {
+  const btn = document.getElementById("btn-save-np");
+  const st  = document.getElementById("np-status");
+  btn.disabled = true;
+  try {
+    await api("update-now-playing", {
+      track:   document.getElementById("np-track").value.trim(),
+      artist:  document.getElementById("np-artist").value.trim(),
+      art_url: document.getElementById("np-art").value.trim() || null,
+    });
+    setStatus(st, "Saved.", "ok");
+  } catch (e) { setStatus(st, e.message, "err"); }
+  btn.disabled = false;
+});
+
+// ── RECOMMENDATIONS ───────────────────────────────────────────────────────
+
+async function loadRecs() {
+  const show_hidden = document.getElementById("rec-show-hidden").checked;
+  const type_filter = document.getElementById("rec-type-filter").value;
+  const tbody = document.getElementById("rec-tbody");
+  tbody.innerHTML = `<tr><td colspan="6" class="empty">Loading…</td></tr>`;
+  try {
+    const rows = await api("list-recommendations", { show_hidden, type_filter });
+    if (!rows.length) { tbody.innerHTML = `<tr><td colspan="6" class="empty">No entries.</td></tr>`; return; }
+    tbody.innerHTML = rows.map(r => `
+      <tr class="${r.hidden ? "hidden-row" : ""}">
+        <td><span class="badge badge-${esc(r.type)}">${esc(r.type)}</span>${r.hidden ? ' <span class="badge badge-hidden">hidden</span>' : ""}</td>
+        <td>${esc(r.name)}</td>
+        <td>${esc(r.content)}</td>
+        <td>${esc(r.note ?? "")}</td>
+        <td class="ts">${fmtDate(r.created_at)}</td>
+        <td>${r.hidden
+          ? `<button class="btn btn-restore btn-toggle-row" data-table="recommendations" data-id="${esc(r.id)}" data-action="restore-row">Restore</button>`
+          : `<button class="btn btn-danger btn-toggle-row"  data-table="recommendations" data-id="${esc(r.id)}" data-action="hide-row">Hide</button>`
+        }</td>
+      </tr>`).join("");
+  } catch (e) { tbody.innerHTML = `<tr><td colspan="6" class="empty">${esc(e.message)}</td></tr>`; }
+}
+
+document.getElementById("rec-show-hidden").addEventListener("change", loadRecs);
+document.getElementById("rec-type-filter").addEventListener("change", loadRecs);
+
+// ── YEARBOOK ──────────────────────────────────────────────────────────────
+
+async function loadYearbook() {
+  const show_hidden = document.getElementById("yb-show-hidden").checked;
+  const tbody = document.getElementById("yb-tbody");
+  tbody.innerHTML = `<tr><td colspan="5" class="empty">Loading…</td></tr>`;
+  try {
+    const rows = await api("list-yearbook", { show_hidden });
+    if (!rows.length) { tbody.innerHTML = `<tr><td colspan="5" class="empty">No entries.</td></tr>`; return; }
+    tbody.innerHTML = rows.map(r => `
+      <tr class="${r.hidden ? "hidden-row" : ""}">
+        <td>${esc(r.name)}${r.hidden ? ' <span class="badge badge-hidden">hidden</span>' : ""}</td>
+        <td>${esc(r.message)}</td>
+        <td>${esc(r.sticker ?? "")}</td>
+        <td class="ts">${fmtDate(r.created_at)}</td>
+        <td>${r.hidden
+          ? `<button class="btn btn-restore btn-toggle-row" data-table="yearbook" data-id="${esc(r.id)}" data-action="restore-row">Restore</button>`
+          : `<button class="btn btn-danger btn-toggle-row"  data-table="yearbook" data-id="${esc(r.id)}" data-action="hide-row">Hide</button>`
+        }</td>
+      </tr>`).join("");
+  } catch (e) { tbody.innerHTML = `<tr><td colspan="5" class="empty">${esc(e.message)}</td></tr>`; }
+}
+
+document.getElementById("yb-show-hidden").addEventListener("change", loadYearbook);
+
+// ── ROW TOGGLE ────────────────────────────────────────────────────────────
+
+document.body.addEventListener("click", async e => {
+  const btn = e.target.closest(".btn-toggle-row");
+  if (!btn) return;
+  const { table, id, action } = btn.dataset;
+  btn.disabled = true;
+  btn.textContent = "…";
+  try {
+    await api(action, { table, id });
+    if (table === "recommendations") await loadRecs();
+    else await loadYearbook();
+  } catch (err) {
+    alert(err.message);
+    btn.disabled = false;
+    btn.textContent = action === "hide-row" ? "Hide" : "Restore";
+  }
+});
+</script>
+</body>
+</html>
