@@ -791,6 +791,91 @@
     @media (max-width: 480px) {
       .notebook-rings { display: none; }
     }
+
+    /* ── HERO GAP SPARKLES (between text and image columns) ── */
+    .hero-gap-sp {
+      position: absolute;
+      pointer-events: none;
+      z-index: 3;
+      font-style: normal;
+      line-height: 1;
+    }
+    .hgsp-1 { left: 48%; top: 22%; font-size: 18px; color: #ff2d78; transform: rotate(15deg); opacity: 0.9; }
+    .hgsp-2 { left: 50%; top: 50%; font-size: 12px; color: #ffb3cc; transform: rotate(-10deg); opacity: 0.85; }
+    .hgsp-3 { left: 46%; top: 72%; font-size: 14px; color: #ff2d78; transform: rotate(6deg); opacity: 0.75; }
+
+    /* ── HERO PEEK CHIBI (top-right corner, partially outside) ── */
+    .hero-peek-chibi {
+      position: absolute;
+      top: -16px;
+      right: 14px;
+      height: 58px;
+      width: auto;
+      pointer-events: none;
+      z-index: 5;
+      transform: rotate(5deg);
+    }
+
+    /* ── CURRENTLY GAP DECORATIONS ── */
+    .curr-grid { position: relative; }
+    .curr-gap-deco {
+      position: absolute;
+      pointer-events: none;
+      z-index: 11;
+      font-style: normal;
+      line-height: 1;
+    }
+    .cgd-1 { left: calc(33.33% + 5px); top: 36%; font-size: 15px; color: #ff2d78; transform: rotate(-12deg); }
+    .cgd-2 { left: calc(33.33% + 7px); top: 54%; font-size: 11px; color: #ffb3cc; transform: rotate(9deg); }
+
+    /* ── STICKY NOTE (stats card) ── */
+    .sticky-note {
+      position: absolute;
+      top: -14px;
+      right: -8px;
+      background: #fef9c3;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-family: 'Patrick Hand', cursive;
+      color: #78350f;
+      transform: rotate(4deg);
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.13);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 6;
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER LEFT CHIBI ── */
+    .footer-chibi-left {
+      width: 50px;
+      position: absolute;
+      top: -42px;
+      left: 28px;
+      opacity: 0.88;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── LABEL ICON — consistent inline prefix icon ── */
+    .lbl-icon {
+      font-style: normal;
+      font-size: 14px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    /* ── SOCIAL CIRCLE SOLID VARIANTS ── */
+    .social-circle-yt  { background: #ff0000 !important; border-color: #ff0000 !important; }
+    .social-circle-gh  { background: #111    !important; border-color: #111    !important; }
+    .social-circle-dc  { background: #5865F2 !important; border-color: #5865F2 !important; }
+    .social-circle-rd  { background: #FF4500 !important; border-color: #FF4500 !important; }
+    .social-circle-tw  { background: #111    !important; border-color: #111    !important; }
+    .social-circle-yt span,
+    .social-circle-gh span,
+    .social-circle-dc span,
+    .social-circle-rd span,
+    .social-circle-tw span { color: #fff !important; }
   </style>
 </head>
 <body>
@@ -807,7 +892,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="#home">Milo54</a>
+    <a class="nav-logo" href="#home"><span aria-hidden="true" style="color:#ff2d78; font-size:12px; margin-right:3px;">★</span>Milo54<span aria-hidden="true" style="color:#ff2d78; font-size:10px; margin-left:2px;">✦✧</span></a>
     <ul class="nav-links">
       <li><a href="#home">home</a></li>
       <li><a href="#about">about me</a></li>
@@ -816,7 +901,7 @@
       <li><a href="#guestbook">wall</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
-    <span class="nav-music">♪ unravel - TK</span>
+    <span class="nav-music"><span aria-hidden="true" style="font-size:14px; cursor:default;">⏮</span>&nbsp;<span aria-hidden="true" style="font-size:14px; color:#ff2d78; cursor:default;">⏸</span>&nbsp;<span aria-hidden="true" style="font-size:14px; cursor:default;">⏭</span>&nbsp; ♪ unravel - TK</span>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -841,6 +926,9 @@
       <span class="hero-sparkle sp-1" aria-hidden="true">✦</span>
       <span class="hero-sparkle sp-2" aria-hidden="true">✧</span>
       <span class="hero-sparkle sp-3" aria-hidden="true">★</span>
+      <span class="hero-gap-sp hgsp-1" aria-hidden="true">✦</span>
+      <span class="hero-gap-sp hgsp-2" aria-hidden="true">✧</span>
+      <span class="hero-gap-sp hgsp-3" aria-hidden="true">★</span>
       <div class="hero-grid">
 
         <div class="hero-left">
@@ -848,7 +936,7 @@
           <h1 class="hero-name">
             <span class="name-milo">Milo</span><span class="name-54">54</span><span class="name-tilde"> ~</span>
           </h1>
-          <p class="hero-subtitle">Reader. Builder. Professional Manhwa Addict.</p>
+          <p class="hero-subtitle">Reader. Builder. Professional Manhwa Addict. 🐱</p>
           <p class="hero-bio">I read way too much, watch anime, build random things, and make recap videos when inspiration hits.</p>
           <div class="hero-btns">
             <a class="btn-black" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">YouTube</a>
@@ -860,6 +948,7 @@
 
         <div class="hero-right">
           <div class="hero-img-wrap">
+            <img class="hero-peek-chibi" src="public/chibis/pink-chibi.png" alt="" onerror="this.style.display='none'">
             <!-- To update hero: drop file into public/characters/hero-reader.png and push -->
             <img src="public/characters/hero-reader.png" class="hero-img" alt="Milo54"
               onerror="this.src='avatar.jpg'; this.onerror=function(){ this.style.display='none'; this.nextElementSibling.style.display='flex'; };">
@@ -885,6 +974,8 @@
       style="position:absolute; top:-4px; right:0; height:40px; width:auto; opacity:0.7; pointer-events:none; z-index:1;">
     <p class="section-label">★ currently...</p>
     <div class="curr-grid">
+      <span class="curr-gap-deco cgd-1" aria-hidden="true">♡</span>
+      <span class="curr-gap-deco cgd-2" aria-hidden="true">✦</span>
 
       <div class="card" style="overflow:visible;">
         <img src="public/chibis/blond-reading.png" class="chibi chibi-bl" alt="" onerror="this.style.display='none';">
@@ -1000,7 +1091,7 @@
       <div class="card" style="overflow:visible;">
         <img src="public/stickers/washi-tape-sheet.png" class="washi-img" alt="" onerror="this.style.display='none'">
         <img src="public/chibis/blond-sitting.png" class="chibi chibi-br" alt="" onerror="this.style.display='none';">
-        <span class="card-title">about me</span>
+        <span class="card-title"><span class="lbl-icon" aria-hidden="true">✿</span>about me</span>
         <div class="about-body">
           <p>Hi! I'm Milo. 👋</p>
           <p>📚 Reading manga since forever and deep in the manhwa rabbit hole.</p>
@@ -1013,7 +1104,7 @@
 
       <div class="card">
         <div class="fav-header">
-          <span class="card-title" style="margin-bottom:0;">favorite manhwa &amp; anime</span>
+          <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">✿</span>favorite manhwa &amp; anime</span>
           <span style="color:#ff2d78; font-size:12px; font-style:italic;">you have good taste :)</span>
         </div>
         <div class="fav-grid">
@@ -1072,7 +1163,7 @@
       <div class="card" style="overflow:visible;">
         <img src="public/stickers/washi-tape-sheet.png" class="card-tape" style="left:-10px; transform:rotate(3deg); width:140px;" alt="" onerror="this.style.display='none'">
         <div class="proj-header">
-          <span class="card-title" style="margin-bottom:0;">things i've built</span>
+          <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">💻</span>things i've built</span>
           <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener"
             style="color:#ff2d78; font-size:12px; text-decoration:none;">view all projects →</a>
         </div>
@@ -1082,7 +1173,7 @@
               <img src="public/projects/manhwa-pulse.jpg" alt="" onerror="this.style.display='none';">
               Manhwa Pulse
             </div>
-            <div class="project-name">Manhwa Pulse</div>
+            <div class="project-name"><span aria-hidden="true" style="color:#ff2d78; font-size:10px; margin-right:5px;">■</span>Manhwa Pulse</div>
             <p class="project-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
             <p style="font-size:10px; color:#ff2d78; text-transform:uppercase; letter-spacing:0.06em; font-family:'Patrick Hand',cursive; margin-bottom:2px;">why I built it:</p>
             <p class="project-story">I got tired of jumping between sites so I built one place for everything.</p>
@@ -1093,7 +1184,7 @@
               <img src="public/projects/presencepal.jpg" alt="" onerror="this.style.display='none';">
               PresencePal
             </div>
-            <div class="project-name">PresencePal</div>
+            <div class="project-name"><span aria-hidden="true" style="color:#7c3aed; font-size:10px; margin-right:5px;">■</span>PresencePal</div>
             <p class="project-desc">Show any game on your Discord activity — even mobile games.</p>
             <p style="font-size:10px; color:#ff2d78; text-transform:uppercase; letter-spacing:0.06em; font-family:'Patrick Hand',cursive; margin-bottom:2px;">why I built it:</p>
             <p class="project-story">Discord didn't show my mobile games. That annoyed me. So I fixed it.</p>
@@ -1102,14 +1193,15 @@
         </div>
       </div>
 
-      <div class="card">
-        <p class="card-title">random stats</p>
-        <div class="stat-row"><span class="stat-left"><span>📚</span> Manhwa Read</span><span class="stat-val">500+</span></div>
-        <div class="stat-row"><span class="stat-left"><span>📺</span> Anime Watched</span><span class="stat-val">300+</span></div>
-        <div class="stat-row"><span class="stat-left"><span>📁</span> Projects Started</span><span class="stat-val">Too Many</span></div>
-        <div class="stat-row"><span class="stat-left"><span>✅</span> Projects Finished</span><span class="stat-val">Don't Ask</span></div>
-        <div class="stat-row"><span class="stat-left"><span>🌙</span> All-nighters Pulled</span><span class="stat-val">Countless</span></div>
-        <div class="stat-row"><span class="stat-left"><span>☕</span> Coffee Consumed</span><span class="stat-val">Inhuman</span></div>
+      <div class="card" style="overflow:visible; position:relative;">
+        <div class="sticky-note">send help 🆘</div>
+        <p class="card-title"><span class="lbl-icon" aria-hidden="true">📊</span>random stats</p>
+        <div class="stat-row"><span class="stat-left"><span style="color:#ff2d78;">♥</span> Manhwa Read</span><span class="stat-val">500+</span></div>
+        <div class="stat-row"><span class="stat-left"><span style="color:#22c55e;">▷</span> Anime Watched</span><span class="stat-val">300+</span></div>
+        <div class="stat-row"><span class="stat-left"><span style="color:#7c3aed;">◆</span> Projects Started</span><span class="stat-val">Too Many</span></div>
+        <div class="stat-row"><span class="stat-left"><span style="color:#16a34a;">✓</span> Projects Finished</span><span class="stat-val">Don't Ask</span></div>
+        <div class="stat-row"><span class="stat-left"><span style="color:#1a1a2e;">◐</span> All-nighters Pulled</span><span class="stat-val">Countless</span></div>
+        <div class="stat-row"><span class="stat-left"><span style="color:#92400e;">◉</span> Coffee Consumed</span><span class="stat-val">Inhuman</span></div>
       </div>
 
     </div>
@@ -1121,7 +1213,7 @@
 
       <!-- Things I Like -->
       <div class="card">
-        <p class="card-title">things i like</p>
+        <p class="card-title"><span class="lbl-icon" aria-hidden="true">✦</span>things i like</p>
         <div class="likes-grid">
           <div class="like-item"><span class="like-emoji">📚</span><span class="like-label">Manhwa</span></div>
           <div class="like-item"><span class="like-emoji">🎌</span><span class="like-label">Anime</span></div>
@@ -1138,26 +1230,26 @@
       <div class="center-col">
 
         <div class="card" id="contact">
-          <p class="card-title">find me around the web</p>
+          <p class="card-title"><span class="lbl-icon" aria-hidden="true">♥</span>find me around the web</p>
           <div class="social-row">
             <a class="social-btn" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">
-              <div class="social-circle"><span style="color:#ff0000;">▶</span></div>
+              <div class="social-circle social-circle-yt"><span>▶</span></div>
               <span class="social-label">YouTube</span>
             </a>
             <a class="social-btn" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">
-              <div class="social-circle"><span style="color:#111; font-size:12px; font-family:'Nunito',sans-serif; font-weight:700;">&lt;/&gt;</span></div>
+              <div class="social-circle social-circle-gh"><span style="font-size:12px; font-family:'Nunito',sans-serif; font-weight:700;">&lt;/&gt;</span></div>
               <span class="social-label">GitHub</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#5865F2; font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">dc</span></div>
+              <div class="social-circle social-circle-dc"><span style="font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">dc</span></div>
               <span class="social-label">Discord</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#FF4500; font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">r/</span></div>
+              <div class="social-circle social-circle-rd"><span style="font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">r/</span></div>
               <span class="social-label">Reddit</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#111; font-size:14px; font-weight:700;">𝕏</span></div>
+              <div class="social-circle social-circle-tw"><span style="font-size:14px; font-weight:700;">𝕏</span></div>
               <span class="social-label">Twitter</span>
             </a>
           </div>
@@ -1166,7 +1258,7 @@
         <div class="card" id="guestbook">
           <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
           <div class="gb-header-row">
-            <span class="card-title" style="margin-bottom:0;">guestbook</span>
+            <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">✉</span>guestbook</span>
             <a href="mailto:foxmanhwa@gmail.com?subject=Guestbook%20%E2%99%A1"
               style="color:#ff2d78; font-size:12px; text-decoration:none;">leave a message! ✉</a>
           </div>
@@ -1196,7 +1288,7 @@
 
       <!-- Now Playing -->
       <div class="card">
-        <p class="card-title">now playing ♪</p>
+        <p class="card-title">♪ now playing</p>
         <div class="np-inner">
           <div class="np-art">
             <img src="public/music/now-playing.png" alt="" onerror="this.style.display='none';">
@@ -1234,6 +1326,7 @@
 
 <!-- FOOTER -->
 <footer>
+  <img src="public/chibis/blond-reading.png" class="footer-chibi-left" alt="" onerror="this.style.display='none'">
   <span class="footer-text">Thanks for visiting! Hope you have a great day!</span>
   <span style="color:#ff2d78; font-size:18px;">♡</span>
   <span class="footer-text">© Milo54 · Built with ♡, anime, and way too much free time.</span>
