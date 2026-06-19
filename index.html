@@ -14,7 +14,12 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .like-item, .social-circle, #scroll-top, .hamburger span { transition: none; }
+      .like-item:hover, .social-circle:hover { transform: none; }
+      #scroll-top:hover { transform: none; }
+    }
 
     :root {
       --paper:       #fff8f8;
@@ -173,7 +178,7 @@
     .nav-music {
       font-family: 'Nunito', sans-serif;
       font-size: 13px;
-      color: #999;
+      color: var(--gray);
       flex-shrink: 0;
     }
 
@@ -315,7 +320,7 @@
     .curr-title {
       font-family: 'Patrick Hand', cursive;
       font-size: 18px;
-      color: #111;
+      color: var(--pink);
     }
 
     .curr-item {
@@ -338,7 +343,7 @@
     .curr-info { flex: 1; min-width: 0; }
 
     .curr-name  { font-weight: 700; font-size: 13px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .curr-chapter { font-size: 12px; color: #999; margin-top: 2px; }
+    .curr-chapter { font-size: 12px; color: #666; margin-top: 2px; }
 
     .curr-bar {
       width: 100%;
@@ -355,7 +360,7 @@
       border-radius: 3px;
     }
 
-    .curr-note { font-size: 12px; color: #999; font-style: italic; margin-top: 10px; }
+    .curr-note { font-size: 12px; color: #666; font-style: italic; margin-top: 10px; }
     .curr-grid .card { padding: 28px; }
     .curr-pct { font-size: 11px; color: #ff2d78; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
@@ -436,7 +441,7 @@
 
     .project-name  { font-weight: 700; font-size: 15px; color: #111; }
     .project-desc  { font-size: 13px; color: #666; line-height: 1.6; }
-    .project-story { font-size: 13px; color: #999; }
+    .project-story { font-size: 13px; color: #666; }
 
     .stat-row {
       display: flex;
@@ -564,10 +569,10 @@
     .np-info { flex: 1; }
 
     .np-bar-wrap { margin-top: 12px; }
-    .np-times { display: flex; justify-content: space-between; font-size: 11px; color: #999; margin-bottom: 4px; }
+    .np-times { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); margin-bottom: 4px; }
     .np-bar  { height: 4px; background: #f0e0e8; border-radius: 2px; overflow: hidden; }
     .np-fill { height: 100%; background: linear-gradient(90deg, #ff2d78, #ffb3cc); width: 35%; }
-    .np-controls { text-align: center; margin-top: 10px; font-size: 18px; color: #ccc; }
+    .np-controls { text-align: center; margin-top: 10px; font-size: 18px; color: var(--gray); }
 
     /* ── BTN-BLACK ── */
     .btn-black {
@@ -581,11 +586,20 @@
       font-weight: 600;
       cursor: pointer;
       margin-top: 8px;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
       text-decoration: none;
     }
 
     .btn-black:hover { background: #333; }
+
+    /* ── FOCUS VISIBLE ── */
+    .btn-black:focus-visible,
+    .nav-links a:focus-visible,
+    #scroll-top:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; }
+    .social-btn:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; border-radius: 8px; }
+    .like-item:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; }
 
     /* ── FOOTER ── */
     footer {
@@ -735,7 +749,12 @@
       .bottom-grid       { grid-template-columns: 1fr; }
       .likes-grid        { grid-template-columns: repeat(4, 1fr); }
 
-      footer { flex-direction: column; gap: 8px; text-align: center; }
+      footer { flex-direction: column; gap: 8px; text-align: center; overflow: hidden; }
+      .footer-mascot { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .notebook-rings { display: none; }
     }
   </style>
 </head>
@@ -1082,19 +1101,19 @@
               <span class="social-label">YouTube</span>
             </a>
             <a class="social-btn" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">
-              <div class="social-circle"><span style="color:#111;">⌂</span></div>
+              <div class="social-circle"><span style="color:#111; font-size:12px; font-family:'Nunito',sans-serif; font-weight:700;">&lt;/&gt;</span></div>
               <span class="social-label">GitHub</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#5865F2;">◈</span></div>
+              <div class="social-circle"><span style="color:#5865F2; font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">dc</span></div>
               <span class="social-label">Discord</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#FF4500;">●</span></div>
+              <div class="social-circle"><span style="color:#FF4500; font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">r/</span></div>
               <span class="social-label">Reddit</span>
             </a>
             <a class="social-btn" href="#contact">
-              <div class="social-circle"><span style="color:#1DA1F2;">✦</span></div>
+              <div class="social-circle"><span style="color:#111; font-size:14px; font-weight:700;">𝕏</span></div>
               <span class="social-label">Twitter</span>
             </a>
           </div>
@@ -1104,8 +1123,8 @@
           <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
           <div class="gb-header-row">
             <span class="card-title" style="margin-bottom:0;">guestbook</span>
-            <a href="https://formspree.io/f/PLACEHOLDER" target="_blank" rel="noopener"
-              style="color:#ff2d78; font-size:12px; text-decoration:none;">sign my guestbook!</a>
+            <a href="mailto:foxmanhwa@gmail.com?subject=Guestbook%20%E2%99%A1"
+              style="color:#ff2d78; font-size:12px; text-decoration:none;">leave a message! ✉</a>
           </div>
           <div class="gb-entry">
             <div class="gb-avatar" style="position:relative; overflow:hidden; padding:0;">
@@ -1113,7 +1132,7 @@
               <img src="public/chibis/pink-chibi.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="" onerror="this.remove();">
             </div>
             <div class="gb-content">
-              <div><span style="font-weight:700; font-size:13px;">azura</span> <span style="color:#999; font-size:11px;">May 20, 2025</span></div>
+              <div><span style="font-weight:700; font-size:13px;">azura</span> <span style="color:#666; font-size:11px;">May 20, 2025</span></div>
               <p style="font-size:13px; color:#555; margin-top:2px;">awesome site!! love the vibe &lt;3</p>
             </div>
           </div>
@@ -1123,7 +1142,7 @@
               <img src="public/chibis/blond-sitting.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="" onerror="this.remove();">
             </div>
             <div class="gb-content">
-              <div><span style="font-weight:700; font-size:13px;">voidwalker</span> <span style="color:#999; font-size:11px;">May 18, 2025</span></div>
+              <div><span style="font-weight:700; font-size:13px;">voidwalker</span> <span style="color:#666; font-size:11px;">May 18, 2025</span></div>
               <p style="font-size:13px; color:#555; margin-top:2px;">your projects are really useful, thanks!</p>
             </div>
           </div>
@@ -1141,7 +1160,7 @@
           </div>
           <div class="np-info">
             <p style="font-weight:700; font-size:15px;">unravel</p>
-            <p style="font-size:12px; color:#999;">TK from 凜として時雨</p>
+            <p style="font-size:12px; color:#666;">TK from 凜として時雨</p>
           </div>
         </div>
         <div class="np-bar-wrap">
