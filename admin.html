@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Milo54</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fdf6e8;
+      --ink: #2b2420;
+      --ink-mid: #5c4f4a;
+      --ink-faint: #9a8880;
+      --gold: #e8c14a;
+      --brick: #c1505a;
+      --moss: #5b6b4f;
+      --rule: rgba(43,36,32,0.09);
+      --f-body: 'Inter', system-ui, sans-serif;
+      --f-mono: 'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+
+    /* Auth gate */
+    #auth-gate {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 320px;
+      margin: 80px auto;
+      padding: 32px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+    }
+    #auth-gate h1 { font-size: 18px; margin-bottom: 4px; }
+    #auth-gate p { font-size: 13px; color: var(--ink-mid); }
+
+    /* Dashboard (hidden until authed) */
+    #dashboard { display: none; }
+
+    h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .admin-section { margin-bottom: 48px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 8px 10px;
+      color: var(--ink-mid);
+      border-bottom: 1px solid var(--rule);
+      font-weight: 500;
+    }
+    td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(43,36,32,0.02); }
+
+    .ts {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+    }
+
+    .btn-del {
+      background: none;
+      border: 1px solid rgba(193, 80, 90, 0.4);
+      color: var(--brick);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--f-body);
+      transition: background 0.12s;
+    }
+    .btn-del:hover { background: rgba(193, 80, 90, 0.08); }
+
+    .btn-save {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-family: var(--f-body);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-save:hover { background: #3d342f; }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      background: white;
+      border: 1px solid rgba(43,36,32,0.18);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-family: var(--f-body);
+      font-size: 14px;
+      color: var(--ink);
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(232,193,74,0.18);
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-label { font-size: 12px; color: var(--ink-mid); font-weight: 500; }
+
+    .currently-form { display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+
+    .notice {
+      font-size: 13px;
+      color: var(--ink-mid);
+      padding: 10px 14px;
+      background: rgba(43,36,32,0.04);
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Auth gate — password check wired in step 3 -->
+<div id="auth-gate">
+  <h1>Admin</h1>
+  <p>Password required. Supabase auth wired in step 3.</p>
+  <div class="field-group">
+    <label class="field-label" for="pwd">Password</label>
+    <input type="password" id="pwd" placeholder="enter password" autocomplete="current-password">
+  </div>
+  <button class="btn-save" id="btn-login" type="button">Sign in</button>
+  <p id="auth-error" style="color: var(--brick); font-size: 13px; display: none;">Wrong password.</p>
+</div>
+
+<!-- Dashboard — shown after auth -->
+<div id="dashboard">
+  <div class="wrap">
+
+    <div class="admin-section" id="currently-section">
+      <h2>Right Now</h2>
+      <p class="notice">These values populate the "right now" line on the homepage.</p>
+      <div class="currently-form">
+        <div class="field-group">
+          <label class="field-label" for="cur-reading">Reading</label>
+          <input type="text" id="cur-reading" placeholder="Shadow Slave" maxlength="120">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cur-watching">Watching</label>
+          <input type="text" id="cur-watching" placeholder="Dandadan" maxlength="120">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cur-playing">Playing</label>
+          <input type="text" id="cur-playing" placeholder="Wuthering Waves" maxlength="120">
+        </div>
+        <button class="btn-save" id="btn-save-currently" type="button">Save</button>
+      </div>
+    </div>
+
+    <div class="admin-section" id="recs-section">
+      <h2>Recommendations</h2>
+      <p class="notice">Soft-delete hides from the public page without erasing data.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>From</th>
+            <th>Content</th>
+            <th>Note</th>
+            <th class="ts">Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="recs-tbody">
+          <tr>
+            <td colspan="6" style="color: var(--ink-faint); text-align: center; padding: 24px;">
+              Wired in step 3 — Supabase data will appear here.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section" id="yearbook-section">
+      <h2>Yearbook Entries</h2>
+      <p class="notice">Soft-delete hides the entry. Data is preserved.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Message</th>
+            <th>Sticker</th>
+            <th class="ts">Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="yb-tbody">
+          <tr>
+            <td colspan="5" style="color: var(--ink-faint); text-align: center; padding: 24px;">
+              Wired in step 3 — Supabase data will appear here.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* Step 1 stub — real Supabase auth in step 3 */
+  const ADMIN_PW = 'changeme'; // replaced with env check in step 3
+
+  document.getElementById('btn-login').addEventListener('click', () => {
+    const val = document.getElementById('pwd').value;
+    if (val === ADMIN_PW) {
+      document.getElementById('auth-gate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+    } else {
+      document.getElementById('auth-error').style.display = 'block';
+    }
+  });
+
+  document.getElementById('pwd').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+  });
+</script>
+
+</body>
+</html>

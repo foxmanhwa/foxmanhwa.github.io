@@ -4,1373 +4,992 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milo54</title>
-  <meta name="description" content="Reader · Builder · Professional Manhwa Addict">
+  <meta name="description" content="Reader · Builder · Manhwa addict">
   <meta property="og:title" content="Milo54">
-  <meta property="og:description" content="Reader · Builder · Professional Manhwa Addict">
-  <meta property="og:image" content="avatar.jpg">
+  <meta property="og:description" content="Reader · Builder · Manhwa addict">
+  <meta property="og:image" content="public/characters/hero-reader.png">
   <meta property="og:type" content="website">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .like-item, .social-circle, #scroll-top, .hamburger span { transition: none; }
-      .like-item:hover, .social-circle:hover { transform: none; }
-      #scroll-top:hover { transform: none; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --paper:       #fdf6e8;
+      --paper-mid:   #f5ecce;
+      --paper-card:  #fffef5;
+      --ink:         #2b2420;
+      --ink-mid:     #5c4f4a;
+      --ink-faint:   #9a8880;
+      --gold:        #e8c14a;
+      --gold-dim:    rgba(232, 193, 74, 0.18);
+      --gold-border: rgba(232, 193, 74, 0.32);
+      --brick:       #c1505a;
+      --brick-dark:  #a84048;
+      --moss:        #5b6b4f;
+      --moss-dim:    rgba(91, 107, 79, 0.12);
+      --moss-border: rgba(91, 107, 79, 0.28);
+      --rule:        rgba(43, 36, 32, 0.09);
+
+      --f-display: 'Caveat', cursive;
+      --f-body:    'Inter', system-ui, sans-serif;
+      --f-mono:    'JetBrains Mono', monospace;
+
+      --max-w: 680px;
+      --gutter: clamp(20px, 5vw, 48px);
+      --section-gap: 64px;
     }
 
-    :root {
-      --paper:       #fff8f8;
-      --pink:        #ff2d78;
-      --pink-light:  #fff0f5;
-      --pink-border: #f7cad6;
-      --pink-mid:    #ffb3cc;
-      --black:       #111;
-      --gray:        #777;
-      --card:        rgba(255,255,255,0.85);
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
 
     body {
-      background-color: #fff8f8;
-      background-image:
-        linear-gradient(rgba(255,192,203,.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,192,203,.07) 1px, transparent 1px);
-      background-size: 32px 32px;
-      font-family: 'Nunito', sans-serif;
-      color: #111;
-      font-size: 14px;
-      line-height: 1.6;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--f-body);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .wrapper {
-      padding: 0 5vw;
-      position: relative;
-      z-index: 1;
+    /* ── LAYOUT ── */
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
     }
 
-    /* ── NOTEBOOK RINGS ── */
-    .notebook-rings {
-      position: fixed;
-      left: 12px;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      z-index: 100;
-      pointer-events: none;
-    }
-    .ring {
-      width: 20px;
-      height: 20px;
-      border: 3px solid #f7cad6;
-      border-radius: 50%;
-      background: white;
+    section {
+      padding: var(--section-gap) 0;
+      border-bottom: 1px solid var(--rule);
     }
 
-    /* ── STICKER BG OVERLAY ── */
-    .bg-stickers {
-      position: fixed;
-      inset: 0;
-      background-image: url('public/stickers/doodles-sheet.png');
-      background-size: 500px auto;
-      background-repeat: repeat;
-      opacity: 0.06;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── CARD ── */
-    .card {
-      background: rgba(255,255,255,0.85);
-      border: 1.5px solid #f7cad6;
-      border-radius: 18px;
-      box-shadow: 0 12px 32px rgba(255,143,177,0.15);
-      padding: 36px;
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    /* ── WASHI TAPE ── */
-    .tape {
-      position: absolute;
-      width: 64px;
-      height: 14px;
-      background: rgba(255,182,193,0.5);
-      border-radius: 3px;
-      transform: rotate(-2deg);
-      top: -7px;
-      left: 20px;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* ── CARD TITLE ── */
-    .card-title {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 22px;
-      color: var(--pink);
-      margin-bottom: 16px;
+    /* ── EYEBROW ── */
+    .eyebrow {
       display: block;
-    }
-
-    /* ── SECTION LABEL ── */
-    .section-label {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 16px;
-      color: var(--pink);
-      margin: 20px 0 14px;
+      font-family: var(--f-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 24px;
     }
 
     /* ── NAV ── */
     nav {
       position: sticky;
       top: 0;
-      z-index: 200;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid #f7cad6;
-      height: 48px;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
     }
 
     .nav-inner {
-      padding: 0 5vw;
-      height: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 13px var(--gutter);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
     }
 
     .nav-logo {
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--f-display);
+      font-size: 22px;
       font-weight: 700;
-      font-size: 18px;
-      color: #111;
+      color: var(--ink);
       text-decoration: none;
-      flex-shrink: 0;
+      letter-spacing: -0.01em;
     }
 
-    .nav-links {
+    .nav-logo .star {
+      color: var(--gold);
+      margin-right: 2px;
+    }
+
+    .nav-icons {
       display: flex;
-      list-style: none;
-      gap: 24px;
-    }
-
-    .nav-links a {
-      font-family: 'Nunito', sans-serif;
-      font-size: 14px;
-      color: var(--gray);
-      text-decoration: none;
-      padding-bottom: 2px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--pink);
-      border-bottom-color: var(--pink);
-    }
-
-    .nav-music {
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      color: var(--gray);
-      flex-shrink: 0;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-      flex-shrink: 0;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #111;
-      border-radius: 2px;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 48px;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-bottom: 1px solid #f7cad6;
-      padding: 16px 20px;
-      flex-direction: column;
-      gap: 14px;
-      z-index: 199;
-      box-shadow: 0 4px 16px rgba(255,143,177,0.1);
-    }
-
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-size: 15px; font-weight: 600; color: var(--gray); text-decoration: none; }
-    .mobile-nav a:hover { color: var(--pink); }
-
-    /* ── HERO ── */
-    .hero-card { margin: 28px 0; overflow: visible; min-height: 400px; padding: 48px; }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
       align-items: center;
-    }
-
-    .hero-left { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; }
-
-    .pill-tag {
-      display: inline-block;
-      font-family: 'Patrick Hand', cursive;
-      font-size: 13px;
-      color: var(--pink);
-      background: #fff0f5;
-      border: 1px solid var(--pink-border);
-      border-radius: 20px;
-      padding: 4px 12px;
-      width: fit-content;
-    }
-
-    .hero-name { line-height: 0.9; }
-    .name-milo  { font-family: 'Playfair Display', serif; font-size: 110px; font-weight: 700; color: #111; }
-    .name-54    { font-family: 'Playfair Display', serif; font-size: 110px; font-weight: 700; color: #ff2d78; }
-    .name-tilde { font-family: 'Playfair Display', serif; font-size: 68px; color: #ff2d78; }
-
-    .hero-subtitle {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 20px;
-      color: #ff2d78;
-    }
-
-    .hero-bio {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.8;
-    }
-
-    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-
-    .hero-right { position: relative; margin-left: -40px; z-index: 1; }
-
-    .hero-img-wrap { position: relative; overflow: visible; }
-
-    .hero-img {
-      width: 100%;
-      height: 360px;
-      object-fit: cover;
-      border-radius: 16px;
-      display: block;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
-      transform: rotate(-2deg);
-    }
-
-    .hero-img-fallback {
-      width: 100%;
-      height: 360px;
-      background: var(--pink-light);
-      border-radius: 16px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 80px;
-      color: var(--pink);
-    }
-
-    .quote-card {
-      position: absolute;
-      top: -50px;
-      right: -20px;
-      width: 200px;
-      overflow: visible;
-      z-index: 3;
-    }
-
-    /* ── HERO SPARKLES ── */
-    .hero-sparkle {
-      position: absolute;
-      pointer-events: none;
-      z-index: 6;
-      font-style: normal;
-    }
-    .sp-1 { top: -18px; right: 80px; font-size: 22px; color: #ff2d78; transform: rotate(12deg); opacity: 0.85; }
-    .sp-2 { top: -10px; left: -16px; font-size: 13px; color: #ffb3cc; transform: rotate(-8deg); opacity: 0.70; }
-    .sp-3 { bottom: -14px; left: 110px; font-size: 17px; color: #ff2d78; transform: rotate(5deg); opacity: 0.75; }
-
-    /* ── CURRENTLY ── */
-    .curr-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 28px;
-    }
-
-    .curr-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .curr-title {
-      font-family: 'Patrick Hand', cursive;
-      font-size: 18px;
-      color: var(--pink);
-    }
-
-    .curr-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 14px;
-    }
-
-    .curr-cover {
-      width: 50px;
-      height: 70px;
-      background: #1a1a2e;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-
-    .curr-cover.sq { width: 70px; height: 70px; }
-
-    .curr-info { flex: 1; min-width: 0; }
-
-    .curr-name  { font-weight: 700; font-size: 13px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .curr-chapter { font-size: 12px; color: #666; margin-top: 2px; }
-
-    .curr-bar {
-      width: 100%;
-      height: 5px;
-      background: #f0e0e8;
-      border-radius: 3px;
-      margin-top: 6px;
-      overflow: hidden;
-    }
-
-    .curr-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff2d78, #ffb3cc);
-      border-radius: 3px;
-    }
-
-    .curr-note { font-size: 12px; color: #666; font-style: italic; margin-top: 10px; }
-    .curr-grid .card:nth-child(1) { padding: 30px; }
-    .curr-grid .card:nth-child(2) { padding: 26px; }
-    .curr-grid .card:nth-child(3) { padding: 28px 26px; }
-    .curr-pct { font-size: 11px; color: #ff2d78; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-    /* ── ABOUT + FAVORITES ── */
-    .about-fav-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 36px;
-      margin: 36px 0;
-    }
-    .about-fav-grid .card:nth-child(1) { padding: 34px 30px; }
-    .about-fav-grid .card:nth-child(2) { padding: 36px 38px; overflow: visible; }
-
-    .about-body { font-size: 14px; color: #444; line-height: 1.8; }
-    .about-body p { margin-bottom: 14px; }
-    .about-body p:last-child { margin-bottom: 0; }
-
-    .fav-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .fav-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-    }
-
-    .fav-item { display: flex; flex-direction: column; }
-
-    .fav-cover {
-      aspect-ratio: 3 / 4;
-      background: #1a1a2e;
-      border-radius: 10px;
-      overflow: hidden;
-      width: 100%;
-      min-height: 140px;
-    }
-
-    .fav-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .fav-item:nth-child(odd) .fav-cover { transform: rotate(-1deg); }
-    .fav-item:nth-child(even) .fav-cover { transform: rotate(1.5deg); }
-
-    .fav-name { text-align: center; font-size: 12px; margin-top: 3px; color: #333; line-height: 1.3; }
-
-    /* ── FAV HEARTS ── */
-    .fav-heart { display: block; font-size: 11px; color: var(--pink); text-align: center; line-height: 1; margin-top: 4px; }
-    .fav-item:nth-child(1) .fav-heart { margin-left:  4px; }
-    .fav-item:nth-child(2) .fav-heart { margin-left: -2px; }
-    .fav-item:nth-child(3) .fav-heart { margin-left:  6px; }
-    .fav-item:nth-child(4) .fav-heart { margin-left: -4px; }
-    .fav-item:nth-child(5) .fav-heart { margin-left:  3px; }
-    .fav-item:nth-child(6) .fav-heart { margin-left: -5px; }
-
-    /* ── PROJECTS + STATS ── */
-    .proj-stats-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 28px;
-      margin: 20px 0;
-    }
-    .proj-stats-grid .card:nth-child(1) { overflow: visible; padding: 40px 36px; }
-    .proj-stats-grid .card:nth-child(2) { padding: 30px 28px; }
-
-    .proj-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .proj-entries {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
-    .project-item { display: flex; flex-direction: column; gap: 8px; }
-
-    .project-thumb {
-      width: 100%;
-      height: 90px;
-      background: #1a1a2e;
-      border-radius: 10px;
+    .nav-icons a {
+      color: var(--ink-mid);
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.33);
-      font-size: 12px;
+      text-decoration: none;
+      transition: color 0.15s;
     }
 
-    .project-name  { font-weight: 700; font-size: 15px; color: #111; }
-    .project-desc  { font-size: 13px; color: #666; line-height: 1.6; }
-    .project-story { font-size: 13px; color: #666; }
+    .nav-icons a:hover { color: var(--ink); }
 
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
+    .nav-icons a:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .ico { width: 17px; height: 17px; fill: currentColor; display: block; }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 52px;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #fff0f5;
+    }
+
+    .hero-name {
+      font-family: var(--f-display);
+      font-size: clamp(56px, 10vw, 84px);
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--ink);
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-tagline {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .hero-bio {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+
+    .hero-img-col { position: relative; }
+
+    .hero-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .hero-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--paper-mid);
+      border-radius: 12px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-display);
+      font-size: 52px;
+      color: var(--ink-faint);
+    }
+
+    /* ── RIGHT NOW ── */
+    .rightnow-row {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0;
+      row-gap: 6px;
+      font-size: 15px;
+    }
+
+    .rn-item {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+
+    .rn-label { color: var(--ink-faint); font-size: 13px; }
+    .rn-value { color: var(--ink); font-weight: 500; }
+
+    .rn-sep {
+      color: var(--ink-faint);
+      padding: 0 14px;
+      user-select: none;
       font-size: 13px;
     }
 
-    .stat-row:last-child { border-bottom: none; }
-    .stat-left { display: flex; align-items: center; gap: 8px; color: #555; }
-    .stat-val  { font-weight: 700; font-size: 14px; color: #ff2d78; }
-
-    /* ── BOTTOM THREE COLS ── */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
-      margin: 36px 0;
-    }
-    .bottom-grid > .card:first-child { padding: 34px 32px; }
-    .bottom-grid > .card:last-child  { padding: 32px 30px; }
-    .center-col .card:first-child { padding: 28px 30px; }
-    .center-col .card:last-child  { padding: 26px 28px; }
-
-    .likes-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+    /* ── ABOUT ── */
+    .about-body {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.8;
     }
 
-    .like-item {
-      background: #fff0f5;
-      border-radius: 12px;
-      padding: 12px 8px;
-      text-align: center;
-      border: 1px solid #f7cad6;
-      cursor: default;
-      transition: all 0.2s ease;
-    }
+    .about-body p + p { margin-top: 12px; }
+    .about-body .hi { color: var(--ink); font-weight: 500; }
 
-    .like-item:hover { background: #ffd6e7; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(255,45,120,0.15); }
-    .like-emoji { font-size: 24px; display: block; }
-    .like-label { font-size: 11px; color: #555; margin-top: 4px; display: block; }
-
-    /* Find me */
-    .center-col { display: flex; flex-direction: column; gap: 12px; }
-
-    .social-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .social-btn {
+    /* ── WHAT I'M INTO ── */
+    .into-stack {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
+      gap: 52px;
     }
 
-    .social-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid #f7cad6;
-      background: #fff0f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    .social-btn:hover .social-circle {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255,45,120,0.15);
-    }
-
-    .social-label { font-size: 11px; color: #555; }
-
-    /* Guestbook */
-    .gb-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .into-block-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       margin-bottom: 14px;
     }
 
-    .gb-entry {
-      display: flex;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid #fff0f5;
-    }
-
-    .gb-entry:last-child { border-bottom: none; }
-
-    .gb-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff2d78, #ffb3cc);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: -3px;
-    }
-
-    .gb-content { flex: 1; }
-
     /* Now Playing */
-    .np-inner { display: flex; gap: 12px; align-items: center; }
+    .np-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
 
     .np-art {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-      background: #1a1a2e;
+      width: 52px;
+      height: 52px;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.5);
-      font-size: 20px;
+      border-radius: 6px;
+      background: var(--paper-mid);
+      overflow: hidden;
     }
 
-    .np-info { flex: 1; }
+    .np-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-    .np-bar-wrap { margin-top: 12px; }
-    .np-times { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); margin-bottom: 4px; }
-    .np-bar  { height: 4px; background: #f0e0e8; border-radius: 2px; overflow: hidden; }
-    .np-fill { height: 100%; background: linear-gradient(90deg, #ff2d78, #ffb3cc); width: 35%; }
-    .np-controls { text-align: center; margin-top: 10px; font-size: 18px; color: var(--gray); }
-
-    /* ── BTN-BLACK ── */
-    .btn-black {
-      background: #111;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 18px;
-      font-size: 13px;
-      font-family: 'Nunito', sans-serif;
+    .np-track {
+      font-size: 15px;
       font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
+      color: var(--ink);
+    }
+
+    .np-artist {
+      font-size: 14px;
+      color: var(--ink-mid);
+      margin-top: 1px;
+    }
+
+    .np-timestamp {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      margin-top: 5px;
+    }
+
+    /* Tags */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      font-size: 13px;
+      color: var(--moss);
+      background: var(--moss-dim);
+      border: 1px solid var(--moss-border);
+      border-radius: 4px;
+      padding: 3px 10px;
+      line-height: 1.5;
+    }
+
+    /* Recommend forms */
+    .rec-form {
+      border-top: 1px solid var(--rule);
+      padding-top: 18px;
+    }
+
+    .rec-prompt {
+      font-size: 13px;
+      color: var(--ink-mid);
+      margin-bottom: 12px;
+    }
+
+    .rec-prompt em {
+      font-style: normal;
+      color: var(--brick);
+      font-weight: 500;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .field-row.full { grid-template-columns: 1fr; }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: var(--paper);
+      border: 1px solid rgba(43, 36, 32, 0.18);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-family: var(--f-body);
+      font-size: 14px;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+    }
+
+    input[type="text"]::placeholder,
+    textarea::placeholder { color: var(--ink-faint); }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 72px;
+      line-height: 1.6;
+    }
+
+    .btn-rec {
       display: inline-flex;
       align-items: center;
-      min-height: 44px;
-      text-decoration: none;
+      gap: 6px;
+      background: var(--brick);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: var(--f-body);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
     }
 
-    .btn-black:hover { background: #333; }
+    .btn-rec:hover { background: var(--brick-dark); }
+    .btn-rec:focus-visible { outline: 2px solid var(--brick); outline-offset: 2px; }
 
-    /* ── FOCUS VISIBLE ── */
-    .btn-black:focus-visible,
-    .nav-links a:focus-visible,
-    #scroll-top:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; }
-    .social-btn:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; border-radius: 8px; }
-    .like-item:focus-visible { outline: 2px solid #ff2d78; outline-offset: 2px; }
+    /* ── BUILDING ── */
+    .building-intro {
+      font-size: 15px;
+      color: var(--ink-mid);
+      margin-bottom: 22px;
+    }
 
-    /* ── FOOTER ── */
-    footer {
-      background: #fff0f5;
-      border-top: 1px solid #f7cad6;
-      padding: 20px 40px;
-      margin-top: 24px;
+    .proj-list {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .proj-name a {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--moss);
+      text-decoration: none;
+      border-bottom: 1px solid var(--moss-border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .proj-name a:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .proj-name a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
+
+    .proj-desc {
+      font-size: 14px;
+      color: var(--ink-mid);
+      margin-top: 3px;
+    }
+
+    /* ── YEARBOOK ── */
+    #yearbook { padding-bottom: 80px; }
+
+    .yb-header { margin-bottom: 36px; }
+
+    .yb-title {
+      font-family: var(--f-display);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .yb-sub {
+      font-size: 14px;
+      color: var(--ink-mid);
+    }
+
+    /* The signatures page */
+    .yb-page {
+      position: relative;
+      background: var(--paper-card);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 28px 24px 36px;
+      margin-bottom: 32px;
+
+      /* faint ruled lines like notebook paper */
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 29px,
+        rgba(139, 110, 90, 0.07) 29px,
+        rgba(139, 110, 90, 0.07) 30px
+      );
+      background-position: 0 12px;
+    }
+
+    .yb-scatter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       position: relative;
     }
 
-    .footer-text { font-size: 13px; color: #666; }
-    .footer-mascot { width: 90px; position: absolute; top: -55px; right: 40px; opacity: 0.85; pointer-events: none; }
-
-    /* ── CARD WASHI TAPE ── */
-    .card-tape {
-      position: absolute;
-      top: -10px;
-      left: 30px;
-      width: 120px;
-      height: 24px;
-      object-fit: cover;
-      object-position: 0 -80px;
-      opacity: 0.85;
-      transform: rotate(-1.5deg);
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* ── WASHI TAPE IMAGE ── */
-    .washi-img {
-      position: absolute;
-      top: -10px;
-      left: 10px;
-      width: 80px;
-      height: 20px;
-      object-fit: cover;
+    /* Each signature slip */
+    .yb-entry {
+      background: #fffef8;
+      border: 1px solid rgba(232, 193, 74, 0.25);
       border-radius: 3px;
-      transform: rotate(-3deg);
-      opacity: 0.85;
-      pointer-events: none;
-      z-index: 2;
+      padding: 13px 15px 11px;
+      max-width: 188px;
+      min-width: 130px;
+      flex-shrink: 0;
+      font-family: var(--f-display);
+      font-size: 16px;
+      line-height: 1.45;
+      box-shadow:
+        1px 2px 6px rgba(43, 36, 32, 0.08),
+        0 0 0 0.5px rgba(43, 36, 32, 0.04);
     }
 
-    /* ── LARGE WASHI TAPE DECORATIONS ── */
-    .washi-deco {
-      position: absolute;
-      width: 260px;
-      height: auto;
-      opacity: 0.75;
-      pointer-events: none;
-      z-index: 2;
-      object-fit: cover;
-      object-position: 0 0;
-    }
-    .washi-1 { top: 320px; left: -30px; transform: rotate(-8deg); width: 220px; }
-    .washi-2 { top: 900px; right: -20px; transform: rotate(5deg); width: 200px; object-position: 0 -80px; }
-    .washi-3 { bottom: 200px; left: 20px; transform: rotate(-3deg); width: 240px; object-position: 0 -160px; }
+    /* Vary background warmth and rotation */
+    .yb-entry:nth-child(1) { transform: rotate(-2.5deg); margin-top: 0;    background: #fffef8; }
+    .yb-entry:nth-child(2) { transform: rotate( 1.5deg); margin-top: 24px; background: #fefcf0; }
+    .yb-entry:nth-child(3) { transform: rotate(-3deg);   margin-top: 10px; background: #fffef8; }
+    .yb-entry:nth-child(4) { transform: rotate( 2.5deg); margin-top: 36px; background: #fefcf0; }
+    .yb-entry:nth-child(5) { transform: rotate(-1.5deg); margin-top: 4px;  background: #fffef8; }
+    .yb-entry:nth-child(6) { transform: rotate( 3.5deg); margin-top: 20px; background: #fefcf0; }
+    .yb-entry:nth-child(7) { transform: rotate(-2deg);   margin-top: 14px; background: #fffef8; }
+    .yb-entry:nth-child(8) { transform: rotate( 1deg);   margin-top: 30px; background: #fefcf0; }
 
-    /* ── CHIBI / DECORATIVE IMAGES ── */
-    .chibi {
-      position: absolute;
-      pointer-events: none;
-      z-index: 10;
-      height: 90px;
-      width: auto;
+    .yb-sticker {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 7px;
+      line-height: 1;
     }
 
-    .chibi-br { bottom: -30px; right: 12px; }
-    .chibi-bl { bottom: -30px; left: 12px; }
-    .chibi-tc { top: -45px; left: 50%; transform: translateX(-50%); }
-
-    .cat-corner {
-      position: absolute;
-      bottom: -6px;
-      right: 8px;
-      height: 30px;
-      width: auto;
-      pointer-events: none;
-      z-index: 4;
+    .yb-message {
+      color: var(--ink);
+      margin-bottom: 9px;
+      word-break: break-word;
     }
 
-    /* ── PROJECT THUMB IMAGE ── */
-    .project-thumb { position: relative; overflow: hidden; }
-    .project-thumb img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .yb-name {
+      font-size: 13px;
+      color: var(--ink-mid);
+    }
+
+    .yb-date {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      color: var(--ink-faint);
+      margin-top: 3px;
+    }
+
+    /* Yearbook sign form */
+    .yb-form {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
       border-radius: 10px;
+      padding: 24px;
     }
 
-    /* ── NOW PLAYING ART IMAGE ── */
-    .np-art { position: relative; overflow: hidden; }
-    .np-art img {
+    .yb-form-title {
+      font-family: var(--f-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    /* Sticker picker */
+    .sticker-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .sticker-opt { position: relative; }
+
+    .sticker-opt input[type="radio"] {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
+      opacity: 0;
+      width: 0;
+      height: 0;
     }
 
-    /* ── SCROLL TO TOP ── */
-    #scroll-top {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #ff2d78;
-      color: #fff;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
+    .sticker-opt label {
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 14px rgba(255,45,120,0.35);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s, transform 0.15s;
-      z-index: 300;
+      width: 38px;
+      height: 38px;
+      border-radius: 7px;
+      border: 1.5px solid transparent;
+      background: var(--paper);
+      font-size: 19px;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
     }
 
-    #scroll-top:hover { transform: scale(1.1); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .nav-links, .nav-music { display: none; }
-      .hamburger { display: flex; }
-
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-right { margin-left: 0; }
-      .name-milo, .name-54 { font-size: 56px; }
-      .name-tilde { font-size: 40px; }
-      .quote-card { position: static; width: 100%; margin-top: 12px; }
-
-      .curr-grid         { grid-template-columns: 1fr; gap: 16px; }
-      .about-fav-grid    { grid-template-columns: 1fr; }
-      .fav-grid          { grid-template-columns: repeat(3, 1fr); }
-      .proj-stats-grid   { grid-template-columns: 1fr; }
-      .proj-entries      { grid-template-columns: 1fr; }
-      .bottom-grid       { grid-template-columns: 1fr; }
-      .likes-grid        { grid-template-columns: repeat(4, 1fr); }
-
-      footer { flex-direction: column; gap: 8px; text-align: center; overflow: hidden; }
-      .footer-mascot { display: none; }
+    .sticker-opt label:hover {
+      background: var(--paper-mid);
     }
 
-    @media (max-width: 480px) {
-      .notebook-rings { display: none; }
+    .sticker-opt input:checked + label {
+      border-color: var(--gold);
+      background: rgba(232, 193, 74, 0.14);
     }
 
-    /* ── HERO GAP SPARKLES (between text and image columns) ── */
-    .hero-gap-sp {
-      position: absolute;
-      pointer-events: none;
-      z-index: 3;
-      font-style: normal;
-      line-height: 1;
-    }
-    .hgsp-1 { left: 48%; top: 22%; font-size: 18px; color: #ff2d78; transform: rotate(15deg); opacity: 0.9; }
-    .hgsp-2 { left: 50%; top: 50%; font-size: 12px; color: #ffb3cc; transform: rotate(-10deg); opacity: 0.85; }
-    .hgsp-3 { left: 46%; top: 72%; font-size: 14px; color: #ff2d78; transform: rotate(6deg); opacity: 0.75; }
-
-    /* ── HERO PEEK CHIBI (top-right corner, partially outside) ── */
-    .hero-peek-chibi {
-      position: absolute;
-      top: -16px;
-      right: 14px;
-      height: 58px;
-      width: auto;
-      pointer-events: none;
-      z-index: 5;
-      transform: rotate(5deg);
+    .sticker-opt label:focus-within,
+    .sticker-opt input:focus-visible + label {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
     }
 
-    /* ── CURRENTLY GAP DECORATIONS ── */
-    .curr-grid { position: relative; }
-    .curr-gap-deco {
-      position: absolute;
-      pointer-events: none;
-      z-index: 11;
-      font-style: normal;
-      line-height: 1;
-    }
-    .cgd-1 { left: calc(33.33% + 5px); top: 36%; font-size: 15px; color: #ff2d78; transform: rotate(-12deg); }
-    .cgd-2 { left: calc(33.33% + 7px); top: 54%; font-size: 11px; color: #ffb3cc; transform: rotate(9deg); }
-
-    /* ── STICKY NOTE (stats card) ── */
-    .sticky-note {
-      position: absolute;
-      top: -14px;
-      right: -8px;
-      background: #fef9c3;
-      padding: 5px 9px;
-      font-size: 11px;
-      font-family: 'Patrick Hand', cursive;
-      color: #78350f;
-      transform: rotate(4deg);
-      box-shadow: 2px 3px 8px rgba(0,0,0,0.13);
-      border-radius: 3px;
-      pointer-events: none;
-      z-index: 6;
-      white-space: nowrap;
+    .sticker-label {
+      font-size: 12px;
+      color: var(--ink-mid);
+      margin-bottom: 8px;
+      display: block;
     }
 
-    /* ── FOOTER LEFT CHIBI ── */
-    .footer-chibi-left {
-      width: 50px;
-      position: absolute;
-      top: -42px;
-      left: 28px;
-      opacity: 0.88;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* ── LABEL ICON — consistent inline prefix icon ── */
-    .lbl-icon {
-      font-style: normal;
+    .btn-sign {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: var(--f-body);
       font-size: 14px;
-      margin-right: 5px;
-      vertical-align: middle;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.15s;
     }
 
-    /* ── SOCIAL CIRCLE SOLID VARIANTS ── */
-    .social-circle-yt  { background: #ff0000 !important; border-color: #ff0000 !important; }
-    .social-circle-gh  { background: #111    !important; border-color: #111    !important; }
-    .social-circle-dc  { background: #5865F2 !important; border-color: #5865F2 !important; }
-    .social-circle-rd  { background: #FF4500 !important; border-color: #FF4500 !important; }
-    .social-circle-tw  { background: #111    !important; border-color: #111    !important; }
-    .social-circle-yt span,
-    .social-circle-gh span,
-    .social-circle-dc span,
-    .social-circle-rd span,
-    .social-circle-tw span { color: #fff !important; }
+    .btn-sign:hover { background: #3d342f; }
+    .btn-sign:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 36px 0;
+    }
+
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-credit {
+      font-size: 13px;
+      color: var(--ink-faint);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--ink); }
+    .footer-links a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      :root { --section-gap: 48px; }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-img-col {
+        order: -1;
+        max-width: 180px;
+      }
+
+      .rn-sep { display: none; }
+
+      .rightnow-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .field-row { grid-template-columns: 1fr; }
+
+      .yb-entry { max-width: 150px; min-width: 120px; font-size: 15px; }
+
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
   </style>
 </head>
+
 <body>
 
-<div class="bg-stickers" aria-hidden="true"></div>
-
-<div class="notebook-rings" aria-hidden="true">
-  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-</div>
-
-<!-- NAV -->
-<nav>
+<!-- ── NAV ── -->
+<nav aria-label="Site navigation">
   <div class="nav-inner">
-    <a class="nav-logo" href="#home"><span aria-hidden="true" style="color:#ff2d78; font-size:12px; margin-right:3px;">★</span>Milo54<span aria-hidden="true" style="color:#ff2d78; font-size:10px; margin-left:2px;">✦✧</span></a>
-    <ul class="nav-links">
-      <li><a href="#home">home</a></li>
-      <li><a href="#about">about me</a></li>
-      <li><a href="#likes">stuff i like</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#guestbook">wall</a></li>
-      <li><a href="#contact">contact</a></li>
-    </ul>
-    <span class="nav-music"><span aria-hidden="true" style="font-size:14px; cursor:default;">⏮</span>&nbsp;<span aria-hidden="true" style="font-size:14px; color:#ff2d78; cursor:default;">⏸</span>&nbsp;<span aria-hidden="true" style="font-size:14px; cursor:default;">⏭</span>&nbsp; ♪ unravel - TK</span>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a class="nav-logo" href="#hero" aria-label="Milo54 — home">
+      <span class="star" aria-hidden="true">★</span>Milo54
+    </a>
+    <div class="nav-icons" role="list">
+      <a href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener" aria-label="YouTube" role="listitem">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.4 12 20.4 12 20.4s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+        </svg>
+      </a>
+      <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener" aria-label="GitHub" role="listitem">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/>
+        </svg>
+      </a>
+      <a href="#" aria-label="Discord" role="listitem">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M20.3 4.4A19.3 19.3 0 0 0 15.5 3c-.2.4-.5 1-.6 1.4a17.8 17.8 0 0 0-5.8 0C8.9 4 8.6 3.4 8.4 3A19.2 19.2 0 0 0 3.5 4.4C.5 9 0 13.5.3 17.9a19.5 19.5 0 0 0 6 3.1c.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1l.4-.4a13.8 13.8 0 0 0 12 0l.4.4c-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2a19.4 19.4 0 0 0 6-3.1c.5-5-1.4-9.4-3.8-13.5zM8 15.3c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6zm8 0c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6z"/>
+        </svg>
+      </a>
+      <a href="#" aria-label="Twitter / X" role="listitem">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M18.2 2h3.4l-7.4 8.5 8.7 11.5h-6.8l-5.3-7-6.2 7H1.2l7.9-9L.9 2h7l4.8 6.4L18.2 2zm-1.2 18h1.9L7.1 4H5.1l11.9 16z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </nav>
 
-<div class="mobile-nav" id="mobile-nav">
-  <a href="#home"      class="mob-link">home</a>
-  <a href="#about"     class="mob-link">about me</a>
-  <a href="#likes"     class="mob-link">stuff i like</a>
-  <a href="#projects"  class="mob-link">projects</a>
-  <a href="#guestbook" class="mob-link">wall</a>
-  <a href="#contact"   class="mob-link">contact</a>
-</div>
-
-<div class="wrapper">
+<main class="wrap">
 
   <!-- ── HERO ── -->
-  <section id="home">
-    <div class="card hero-card">
-      <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
-      <span class="hero-sparkle sp-1" aria-hidden="true">✦</span>
-      <span class="hero-sparkle sp-2" aria-hidden="true">✧</span>
-      <span class="hero-sparkle sp-3" aria-hidden="true">★</span>
-      <span class="hero-gap-sp hgsp-1" aria-hidden="true">✦</span>
-      <span class="hero-gap-sp hgsp-2" aria-hidden="true">✧</span>
-      <span class="hero-gap-sp hgsp-3" aria-hidden="true">★</span>
-      <div class="hero-grid">
-
-        <div class="hero-left">
-          <span class="pill-tag">✿ welcome!</span>
-          <h1 class="hero-name">
-            <span class="name-milo">Milo</span><span class="name-54">54</span><span class="name-tilde"> ~</span>
-          </h1>
-          <p class="hero-subtitle">Reader. Builder. Professional Manhwa Addict. 🐱</p>
-          <p class="hero-bio">I read way too much, watch anime, build random things, and make recap videos when inspiration hits.</p>
-          <div class="hero-btns">
-            <a class="btn-black" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">YouTube</a>
-            <a class="btn-black" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">GitHub</a>
-            <a class="btn-black" href="#contact">Discord</a>
-            <a class="btn-black" href="#contact">Email</a>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <div class="hero-img-wrap">
-            <img class="hero-peek-chibi" src="public/chibis/pink-chibi.png" alt="" onerror="this.style.display='none'">
-            <!-- To update hero: drop file into public/characters/hero-reader.png and push -->
-            <img src="public/characters/hero-reader.png" class="hero-img" alt="Milo54"
-              onerror="this.src='avatar.jpg'; this.onerror=function(){ this.style.display='none'; this.nextElementSibling.style.display='flex'; };">
-            <div class="hero-img-fallback">M</div>
-            <div class="quote-card card">
-              <div class="tape" style="width:110px; left:-22px; top:-8px; transform:rotate(-3deg);"></div>
-              <p style="font-size:11px; color:#ff2d78; font-family:'Patrick Hand',cursive; margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase;">Quote of the day</p>
-              <p style="font-size:13px; font-family:'Patrick Hand',cursive; line-height:1.6; color:#333;">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
-              <img src="public/cats/doodle-cat.png" class="cat-corner" alt="" onerror="this.style.display='none';">
-            </div>
-          </div>
-        </div>
-
+  <section id="hero" aria-label="Introduction">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-name">Milo54</h1>
+        <p class="hero-tagline">Reader. Builder. Manhwa addict.</p>
+        <p class="hero-bio">Deep in a manhwa rabbit hole, building random tools when I come up for air. This is the place I put it all.</p>
+      </div>
+      <div class="hero-img-col">
+        <img
+          src="public/characters/hero-reader.png"
+          class="hero-img"
+          alt="Milo54 character art"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <div class="hero-img-placeholder" aria-hidden="true">M</div>
       </div>
     </div>
   </section>
 
-  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-1" aria-hidden="true" onerror="this.style.display='none'">
-
-  <!-- ── CURRENTLY ── -->
-  <section id="currently" style="position:relative;">
-    <img src="public/stickers/doodles-sheet.png" alt="" onerror="this.style.display='none'"
-      style="position:absolute; top:-4px; right:0; height:40px; width:auto; opacity:0.7; pointer-events:none; z-index:1;">
-    <p class="section-label">★ currently...</p>
-    <div class="curr-grid">
-      <span class="curr-gap-deco cgd-1" aria-hidden="true">♡</span>
-      <span class="curr-gap-deco cgd-2" aria-hidden="true">✦</span>
-
-      <div class="card" style="overflow:visible;">
-        <img src="public/chibis/blond-reading.png" class="chibi chibi-bl" alt="" onerror="this.style.display='none';">
-        <div class="curr-header">
-          <span class="curr-title">Reading</span>
-          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
-        </div>
-        <div class="curr-item">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Shadow Slave</div>
-              <span class="curr-pct">95%</span>
-            </div>
-            <div class="curr-chapter">Chapter 1656</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:95%"></div></div>
-          </div>
-        </div>
-        <div class="curr-item">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Lord of the Mysteries</div>
-              <span class="curr-pct">60%</span>
-            </div>
-            <div class="curr-chapter">Chapter 1343</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:60%"></div></div>
-          </div>
-        </div>
-        <div class="curr-item" style="margin-bottom:0;">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Omniscient Reader</div>
-              <span class="curr-pct">80%</span>
-            </div>
-            <div class="curr-chapter">Chapter 216</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:80%"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="overflow:visible;">
-        <img src="public/chibis/pink-chibi.png" class="chibi chibi-tc" alt="" onerror="this.style.display='none';">
-        <div class="curr-header">
-          <span class="curr-title">Watching</span>
-          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
-        </div>
-        <div class="curr-item">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Dandadan</div>
-              <span class="curr-pct">75%</span>
-            </div>
-            <div class="curr-chapter">Episode 8</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:75%"></div></div>
-          </div>
-        </div>
-        <div class="curr-item">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">One Piece</div>
-              <span class="curr-pct">60%</span>
-            </div>
-            <div class="curr-chapter">Episode 1112</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:60%"></div></div>
-          </div>
-        </div>
-        <div class="curr-item" style="margin-bottom:0;">
-          <div class="curr-cover"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Frieren: Beyond Journey's End</div>
-              <span class="curr-pct">40%</span>
-            </div>
-            <div class="curr-chapter">Episode 16</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:40%"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="overflow:visible;">
-        <img src="public/chibis/white-chibi.png" class="chibi chibi-br" alt="" onerror="this.style.display='none';">
-        <div class="curr-header">
-          <span class="curr-title">Playing</span>
-          <span style="color:#ccc; font-size:16px; letter-spacing:2px;">···</span>
-        </div>
-        <div class="curr-item" style="margin-bottom:0;">
-          <div class="curr-cover sq"></div>
-          <div class="curr-info">
-            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-              <div class="curr-name">Wuthering Waves</div>
-              <span class="curr-pct">60%</span>
-            </div>
-            <div class="curr-chapter">Level 48</div>
-            <div class="curr-bar"><div class="curr-bar-fill" style="width:60%"></div></div>
-          </div>
-        </div>
-        <p class="curr-note">Just exploring and enjoying the story</p>
-      </div>
-
+  <!-- ── RIGHT NOW ── -->
+  <section id="now" aria-label="What I'm doing right now">
+    <span class="eyebrow">right now</span>
+    <div class="rightnow-row" role="list">
+      <span class="rn-item" role="listitem">
+        <span class="rn-label">reading:</span>
+        <span class="rn-value">Shadow Slave</span>
+      </span>
+      <span class="rn-sep" aria-hidden="true">/</span>
+      <span class="rn-item" role="listitem">
+        <span class="rn-label">watching:</span>
+        <span class="rn-value">Dandadan</span>
+      </span>
+      <span class="rn-sep" aria-hidden="true">/</span>
+      <span class="rn-item" role="listitem">
+        <span class="rn-label">playing:</span>
+        <span class="rn-value">Wuthering Waves</span>
+      </span>
     </div>
   </section>
 
-  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-2" aria-hidden="true" onerror="this.style.display='none'">
-
-  <!-- ── ABOUT + FAVORITES ── -->
-  <section id="about">
-    <div class="about-fav-grid">
-
-      <div class="card" style="overflow:visible;">
-        <img src="public/stickers/washi-tape-sheet.png" class="washi-img" alt="" onerror="this.style.display='none'">
-        <img src="public/chibis/blond-sitting.png" class="chibi chibi-br" alt="" onerror="this.style.display='none';">
-        <span class="card-title"><span class="lbl-icon" aria-hidden="true">✿</span>about me</span>
-        <div class="about-body">
-          <p>Hi! I'm Milo. 👋</p>
-          <p>📚 Reading manga since forever and deep in the manhwa rabbit hole.</p>
-          <p>⚒ Building random tools that solve tiny problems nobody else cares about.</p>
-          <p>☕ Powered by caffeine, curiosity, and way too many all-nighters.</p>
-          <p>💖 Most of my projects are born from wanting something that didn't exist.</p>
-          <p>Nice to meet you! \(^_^)/</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="fav-header">
-          <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">✿</span>favorite manhwa &amp; anime</span>
-          <span style="color:#ff2d78; font-size:12px; font-style:italic;">you have good taste :)</span>
-        </div>
-        <div class="fav-grid">
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/manga/3/222295.jpg" alt="Solo Leveling" onerror="this.src='public/favorites/solo-leveling.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Solo Leveling</p>
-          </div>
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/manga/1/259352.jpg" alt="Omniscient Reader" onerror="this.src='public/favorites/omniscient-reader.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Omniscient Reader</p>
-          </div>
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/manga/2/265525.jpg" alt="Legend of the Northern Blade" onerror="this.src='public/favorites/legend-northern-blade.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Legend of the Northern Blade</p>
-          </div>
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/anime/5/73199.jpg" alt="Steins;Gate" onerror="this.src='public/favorites/steinsgate.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Steins;Gate</p>
-          </div>
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/anime/10/47347.jpg" alt="Attack on Titan" onerror="this.src='public/favorites/attack-on-titan.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Attack on Titan</p>
-          </div>
-          <div class="fav-item">
-            <div class="fav-cover">
-              <img src="https://cdn.myanimelist.net/images/anime/1932/143506.jpg" alt="Dandadan" onerror="this.src='public/favorites/dandadan.jpg'; this.onerror=function(){this.style.display='none';}">
-            </div>
-            <span class="fav-heart" aria-hidden="true">♡</span>
-            <p class="fav-name">Dandadan</p>
-          </div>
-        </div>
-      </div>
-
+  <!-- ── ABOUT ── -->
+  <section id="about" aria-label="About me">
+    <span class="eyebrow">about me</span>
+    <div class="about-body">
+      <p class="hi">Hi! I'm Milo.</p>
+      <p>I've been reading manga since forever and got pulled deep into the manhwa rabbit hole a few years ago. Now I make recap and review videos on YouTube when inspiration strikes.</p>
+      <p>On the side I build random tools that solve tiny problems nobody else cares about. Most projects start with me wanting something that didn't exist yet.</p>
+      <p>Powered by caffeine, curiosity, and way too many all-nighters. Nice to meet you! \(^_^)/</p>
     </div>
   </section>
 
-  <!-- ── PROJECTS + STATS ── -->
-  <section id="projects">
-    <div class="proj-stats-grid">
-
-      <div class="card" style="overflow:visible;">
-        <img src="public/stickers/washi-tape-sheet.png" class="card-tape" style="left:-10px; transform:rotate(3deg); width:140px;" alt="" onerror="this.style.display='none'">
-        <div class="proj-header">
-          <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">💻</span>things i've built</span>
-          <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener"
-            style="color:#ff2d78; font-size:12px; text-decoration:none;">view all projects →</a>
-        </div>
-        <div class="proj-entries">
-          <div class="project-item">
-            <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a3e,#2d1b4e); color:#fff; font-family:'Patrick Hand',cursive; font-size:14px;">
-              <img src="public/projects/manhwa-pulse.jpg" alt="" onerror="this.style.display='none';">
-              Manhwa Pulse
-            </div>
-            <div class="project-name"><span aria-hidden="true" style="color:#ff2d78; font-size:10px; margin-right:5px;">■</span>Manhwa Pulse</div>
-            <p class="project-desc">An aggregator for manhwa and anime. 13+ sources, one place.</p>
-            <p style="font-size:10px; color:#ff2d78; text-transform:uppercase; letter-spacing:0.06em; font-family:'Patrick Hand',cursive; margin-bottom:2px;">why I built it:</p>
-            <p class="project-story">I got tired of jumping between sites so I built one place for everything.</p>
-            <a class="btn-black" href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Check it out!</a>
-          </div>
-          <div class="project-item">
-            <div class="project-thumb" style="background:linear-gradient(135deg,#0d0d1a,#1a0d2e); color:#00c2ff; font-family:'Patrick Hand',cursive; font-size:14px;">
-              <img src="public/projects/presencepal.jpg" alt="" onerror="this.style.display='none';">
-              PresencePal
-            </div>
-            <div class="project-name"><span aria-hidden="true" style="color:#7c3aed; font-size:10px; margin-right:5px;">■</span>PresencePal</div>
-            <p class="project-desc">Show any game on your Discord activity — even mobile games.</p>
-            <p style="font-size:10px; color:#ff2d78; text-transform:uppercase; letter-spacing:0.06em; font-family:'Patrick Hand',cursive; margin-bottom:2px;">why I built it:</p>
-            <p class="project-story">Discord didn't show my mobile games. That annoyed me. So I fixed it.</p>
-            <a class="btn-black" href="https://github.com/foxmanhwa/presencepal/releases/latest" target="_blank" rel="noopener">Download →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="overflow:visible; position:relative;">
-        <div class="sticky-note">send help 🆘</div>
-        <p class="card-title"><span class="lbl-icon" aria-hidden="true">📊</span>random stats</p>
-        <div class="stat-row"><span class="stat-left"><span style="color:#ff2d78;">♥</span> Manhwa Read</span><span class="stat-val">500+</span></div>
-        <div class="stat-row"><span class="stat-left"><span style="color:#22c55e;">▷</span> Anime Watched</span><span class="stat-val">300+</span></div>
-        <div class="stat-row"><span class="stat-left"><span style="color:#7c3aed;">◆</span> Projects Started</span><span class="stat-val">Too Many</span></div>
-        <div class="stat-row"><span class="stat-left"><span style="color:#16a34a;">✓</span> Projects Finished</span><span class="stat-val">Don't Ask</span></div>
-        <div class="stat-row"><span class="stat-left"><span style="color:#1a1a2e;">◐</span> All-nighters Pulled</span><span class="stat-val">Countless</span></div>
-        <div class="stat-row"><span class="stat-left"><span style="color:#92400e;">◉</span> Coffee Consumed</span><span class="stat-val">Inhuman</span></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── BOTTOM THREE COLS ── -->
-  <section id="likes">
-    <div class="bottom-grid">
-
-      <!-- Things I Like -->
-      <div class="card">
-        <p class="card-title"><span class="lbl-icon" aria-hidden="true">✦</span>things i like</p>
-        <div class="likes-grid">
-          <div class="like-item"><span class="like-emoji">📚</span><span class="like-label">Manhwa</span></div>
-          <div class="like-item"><span class="like-emoji">🎌</span><span class="like-label">Anime</span></div>
-          <div class="like-item"><span class="like-emoji">📖</span><span class="like-label">Novels</span></div>
-          <div class="like-item"><span class="like-emoji">🎮</span><span class="like-label">Games</span></div>
-          <div class="like-item"><span class="like-emoji">☕</span><span class="like-label">Coffee</span></div>
-          <div class="like-item"><span class="like-emoji">🎵</span><span class="like-label">Music</span></div>
-          <div class="like-item"><span class="like-emoji">🌙</span><span class="like-label">Late Nights</span></div>
-          <div class="like-item"><span class="like-emoji">🐱</span><span class="like-label">Cats</span></div>
-        </div>
-      </div>
-
-      <!-- Center: Find me + Guestbook -->
-      <div class="center-col">
-
-        <div class="card" id="contact">
-          <p class="card-title"><span class="lbl-icon" aria-hidden="true">♥</span>find me around the web</p>
-          <div class="social-row">
-            <a class="social-btn" href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">
-              <div class="social-circle social-circle-yt"><span>▶</span></div>
-              <span class="social-label">YouTube</span>
-            </a>
-            <a class="social-btn" href="https://github.com/foxmanhwa" target="_blank" rel="noopener">
-              <div class="social-circle social-circle-gh"><span style="font-size:12px; font-family:'Nunito',sans-serif; font-weight:700;">&lt;/&gt;</span></div>
-              <span class="social-label">GitHub</span>
-            </a>
-            <a class="social-btn" href="#contact">
-              <div class="social-circle social-circle-dc"><span style="font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">dc</span></div>
-              <span class="social-label">Discord</span>
-            </a>
-            <a class="social-btn" href="#contact">
-              <div class="social-circle social-circle-rd"><span style="font-size:13px; font-family:'Nunito',sans-serif; font-weight:700;">r/</span></div>
-              <span class="social-label">Reddit</span>
-            </a>
-            <a class="social-btn" href="#contact">
-              <div class="social-circle social-circle-tw"><span style="font-size:14px; font-weight:700;">𝕏</span></div>
-              <span class="social-label">Twitter</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="card" id="guestbook">
-          <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
-          <div class="gb-header-row">
-            <span class="card-title" style="margin-bottom:0;"><span class="lbl-icon" aria-hidden="true">✉</span>guestbook</span>
-            <a href="mailto:foxmanhwa@gmail.com?subject=Guestbook%20%E2%99%A1"
-              style="color:#ff2d78; font-size:12px; text-decoration:none;">leave a message! ✉</a>
-          </div>
-          <div class="gb-entry">
-            <div class="gb-avatar" style="position:relative; overflow:hidden; padding:0;">
-              <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#fff;">A</span>
-              <img src="public/chibis/pink-chibi.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="" onerror="this.remove();">
-            </div>
-            <div class="gb-content">
-              <div><span style="font-weight:700; font-size:13px;">azura</span> <span style="color:#666; font-size:11px;">May 20, 2025</span></div>
-              <p style="font-size:13px; color:#555; margin-top:2px;">awesome site!! love the vibe &lt;3</p>
-            </div>
-          </div>
-          <div class="gb-entry">
-            <div class="gb-avatar" style="position:relative; overflow:hidden; padding:0;">
-              <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#fff;">V</span>
-              <img src="public/chibis/blond-sitting.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="" onerror="this.remove();">
-            </div>
-            <div class="gb-content">
-              <div><span style="font-weight:700; font-size:13px;">voidwalker</span> <span style="color:#666; font-size:11px;">May 18, 2025</span></div>
-              <p style="font-size:13px; color:#555; margin-top:2px;">your projects are really useful, thanks!</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <!-- ── WHAT I'M INTO ── -->
+  <section id="into" aria-label="What I'm into">
+    <span class="eyebrow">what i'm into</span>
+    <div class="into-stack">
 
       <!-- Now Playing -->
-      <div class="card">
-        <p class="card-title">♪ now playing</p>
-        <div class="np-inner">
+      <div class="into-block" id="now-playing">
+        <p class="into-block-label">Now Playing</p>
+        <div class="np-row">
           <div class="np-art">
-            <img src="public/music/now-playing.png" alt="" onerror="this.style.display='none';">
-            ♪
+            <img src="public/music/now-playing.png" alt="" onerror="this.style.display='none'">
           </div>
           <div class="np-info">
-            <p style="font-weight:700; font-size:15px;">unravel</p>
-            <p style="font-size:12px; color:#666;">TK from 凜として時雨</p>
+            <p class="np-track">unravel</p>
+            <p class="np-artist">TK from 凜として時雨</p>
+            <p class="np-timestamp">as of Jun 19, 2026</p>
           </div>
         </div>
-        <div class="np-bar-wrap">
-          <div class="np-times"><span>1:24</span><span>4:00</span></div>
-          <div class="np-bar"><div class="np-fill"></div></div>
+        <div class="rec-form">
+          <p class="rec-prompt">recommend me a song <em>→</em></p>
+          <div class="field-row">
+            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
+            <input type="text" placeholder="song — artist" maxlength="120" autocomplete="off" aria-label="Song and artist">
+          </div>
+          <button class="btn-rec" type="button" data-form="song">send it</button>
         </div>
-        <div class="np-controls">
-          <span>⏮</span>&nbsp;&nbsp;<span style="color:#ff2d78; font-size:22px;">⏸</span>&nbsp;&nbsp;<span>⏭</span>
+      </div>
+
+      <!-- Manhwa -->
+      <div class="into-block" id="manhwa">
+        <p class="into-block-label">Manhwa I'm Reading</p>
+        <div class="tag-row" aria-label="Currently reading">
+          <span class="tag">Shadow Slave</span>
+          <span class="tag">Omniscient Reader's Viewpoint</span>
+          <span class="tag">Lord of the Mysteries</span>
+          <span class="tag">Legend of the Northern Blade</span>
         </div>
-        <div class="np-openings" style="margin-top:16px; padding-top:12px; border-top:1px solid #fff0f5;">
-          <p style="font-size:11px; color:#ff2d78; margin-bottom:6px; font-family:'Patrick Hand',cursive;">favorite openings</p>
-          <ul style="list-style:none; font-size:12px; color:#777; line-height:2;">
-            <li>• Unravel — TK</li>
-            <li>• Idol — YOASOBI</li>
-            <li>• Gurenge — LiSA</li>
-            <li>• Blue Bird — Ikimono-gakari</li>
-          </ul>
+        <div class="rec-form">
+          <p class="rec-prompt">recommend me a manhwa <em>→</em></p>
+          <div class="field-row">
+            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
+            <input type="text" placeholder="title" maxlength="120" autocomplete="off" aria-label="Manhwa title">
+          </div>
+          <div class="field-row full">
+            <input type="text" placeholder="why should I read it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should read it">
+          </div>
+          <button class="btn-rec" type="button" data-form="manhwa">send it</button>
+        </div>
+      </div>
+
+      <!-- Anime -->
+      <div class="into-block" id="anime">
+        <p class="into-block-label">Anime I'm Watching</p>
+        <div class="tag-row" aria-label="Currently watching">
+          <span class="tag">Dandadan</span>
+          <span class="tag">Frieren: Beyond Journey's End</span>
+          <span class="tag">One Piece</span>
+        </div>
+        <div class="rec-form">
+          <p class="rec-prompt">recommend me an anime <em>→</em></p>
+          <div class="field-row">
+            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
+            <input type="text" placeholder="title" maxlength="120" autocomplete="off" aria-label="Anime title">
+          </div>
+          <div class="field-row full">
+            <input type="text" placeholder="why should I watch it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should watch it">
+          </div>
+          <button class="btn-rec" type="button" data-form="anime">send it</button>
         </div>
       </div>
 
     </div>
   </section>
 
-  <img src="public/stickers/washi-tape-sheet.png" class="washi-deco washi-3" aria-hidden="true" onerror="this.style.display='none'">
+  <!-- ── BUILDING ── -->
+  <section id="building" aria-label="Things I'm building">
+    <span class="eyebrow">things i'm building</span>
+    <p class="building-intro">by the way, here's some stuff i've made —</p>
+    <div class="proj-list">
+      <div class="proj-item">
+        <p class="proj-name"><a href="https://manhwa-pulse.onrender.com" target="_blank" rel="noopener">Manhwa Pulse</a></p>
+        <p class="proj-desc">An aggregator pulling from 13+ sources so I'd stop juggling browser tabs.</p>
+      </div>
+      <div class="proj-item">
+        <p class="proj-name"><a href="https://github.com/foxmanhwa/presencepal/releases/latest" target="_blank" rel="noopener">PresencePal</a></p>
+        <p class="proj-desc">Discord Rich Presence for mobile games. Built it because Discord didn't show what I was playing and that annoyed me.</p>
+      </div>
+    </div>
+  </section>
 
-</div><!-- /wrapper -->
+  <!-- ── YEARBOOK ── -->
+  <section id="yearbook" aria-label="Sign the yearbook">
+    <div class="yb-header">
+      <h2 class="yb-title">Sign the yearbook</h2>
+      <p class="yb-sub">Leave your mark. Say hi, share what you're watching, write a terrible pun. I read these.</p>
+    </div>
 
-<!-- FOOTER -->
-<footer>
-  <img src="public/chibis/blond-reading.png" class="footer-chibi-left" alt="" onerror="this.style.display='none'">
-  <span class="footer-text">Thanks for visiting! Hope you have a great day!</span>
-  <span style="color:#ff2d78; font-size:18px;">♡</span>
-  <span class="footer-text">© Milo54 · Built with ♡, anime, and way too much free time.</span>
-  <img src="public/characters/forest-spirit.png" class="footer-mascot" alt="" onerror="this.style.display='none'">
+    <!-- Scattered signatures -->
+    <div class="yb-page">
+      <div class="yb-scatter" role="list" aria-label="Yearbook entries">
+
+        <article class="yb-entry" role="listitem">
+          <span class="yb-sticker" aria-label="sticker: sparkle">✨</span>
+          <p class="yb-message">awesome site!! love the vibe</p>
+          <p class="yb-name">— azura</p>
+          <p class="yb-date">May 20, 2025</p>
+        </article>
+
+        <article class="yb-entry" role="listitem">
+          <span class="yb-sticker" aria-label="sticker: rocket">🚀</span>
+          <p class="yb-message">your projects are really useful, thanks!</p>
+          <p class="yb-name">— voidwalker</p>
+          <p class="yb-date">May 18, 2025</p>
+        </article>
+
+        <article class="yb-entry" role="listitem">
+          <span class="yb-sticker" aria-label="sticker: books">📚</span>
+          <p class="yb-message">read omniscient reader. you won't regret it</p>
+          <p class="yb-name">— raikousei</p>
+          <p class="yb-date">May 12, 2025</p>
+        </article>
+
+        <article class="yb-entry" role="listitem">
+          <span class="yb-sticker" aria-label="sticker: cat">🐱</span>
+          <p class="yb-message">found you from manhwa pulse, glad I did</p>
+          <p class="yb-name">— stellarwind</p>
+          <p class="yb-date">Apr 30, 2025</p>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Sign form -->
+    <div class="yb-form">
+      <p class="yb-form-title">leave a note</p>
+
+      <span class="sticker-label" id="sticker-group-label">pick a sticker (optional)</span>
+      <div class="sticker-row" role="group" aria-labelledby="sticker-group-label">
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-none" value="" checked>
+          <label for="sk-none" title="none">—</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-1" value="✨">
+          <label for="sk-1" title="sparkle">✨</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-2" value="🐱">
+          <label for="sk-2" title="cat">🐱</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-3" value="📚">
+          <label for="sk-3" title="books">📚</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-4" value="🌙">
+          <label for="sk-4" title="moon">🌙</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-5" value="🎌">
+          <label for="sk-5" title="japan">🎌</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-6" value="☕">
+          <label for="sk-6" title="coffee">☕</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-7" value="🚀">
+          <label for="sk-7" title="rocket">🚀</label>
+        </div>
+        <div class="sticker-opt">
+          <input type="radio" name="sticker" id="sk-8" value="💀">
+          <label for="sk-8" title="skull">💀</label>
+        </div>
+      </div>
+
+      <div class="field-row full" style="margin-bottom: 8px;">
+        <input type="text" id="yb-name" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
+      </div>
+      <div class="field-row full">
+        <textarea id="yb-message" placeholder="say hi, share what you're watching, write a terrible pun — anything goes" maxlength="280" rows="3" aria-label="Your message"></textarea>
+      </div>
+      <button class="btn-sign" type="button" id="btn-sign">sign it</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer aria-label="Find me">
+  <div class="footer-inner">
+    <p class="footer-credit">© Milo54 · made with too much free time</p>
+    <ul class="footer-links">
+      <li><a href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://github.com/foxmanhwa" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="#">Discord</a></li>
+      <li><a href="#">Twitter</a></li>
+    </ul>
+  </div>
 </footer>
 
-<!-- SCROLL TO TOP -->
-<button id="scroll-top" aria-label="Scroll to top">↑</button>
-
 <script>
-  // Scroll to top
-  const scrollBtn = document.getElementById('scroll-top');
-  window.addEventListener('scroll', () => {
-    const show = window.scrollY > 300;
-    scrollBtn.style.opacity = show ? '1' : '0';
-    scrollBtn.style.pointerEvents = show ? 'auto' : 'none';
-  }, { passive: true });
-  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  /* Step 1 — form stubs. Supabase wired in step 3. */
 
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobile-nav');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-  });
-  document.querySelectorAll('.mob-link').forEach(l => {
-    l.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
+  function stubSubmit(btn, successText) {
+    btn.addEventListener('click', () => {
+      const original = btn.textContent;
+      btn.textContent = successText;
+      btn.disabled = true;
+      btn.style.opacity = '0.65';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.disabled = false;
+        btn.style.opacity = '';
+      }, 3000);
     });
+  }
+
+  document.querySelectorAll('.btn-rec').forEach(btn => {
+    stubSubmit(btn, 'sent ✓');
   });
 
-  // Active nav on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => observer.observe(s));
+  const signBtn = document.getElementById('btn-sign');
+  if (signBtn) stubSubmit(signBtn, 'signed ✓');
 </script>
+
 </body>
 </html>
