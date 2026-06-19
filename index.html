@@ -87,7 +87,7 @@
       background: rgba(255,255,255,0.85);
       border: 1.5px solid #f7cad6;
       border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(255,143,177,0.10);
+      box-shadow: 0 12px 32px rgba(255,143,177,0.15);
       padding: 36px;
       position: relative;
       margin-bottom: 20px;
@@ -110,7 +110,7 @@
     /* ── CARD TITLE ── */
     .card-title {
       font-family: 'Patrick Hand', cursive;
-      font-size: 20px;
+      font-size: 22px;
       color: var(--pink);
       margin-bottom: 16px;
       display: block;
@@ -121,7 +121,7 @@
       font-family: 'Patrick Hand', cursive;
       font-size: 16px;
       color: var(--pink);
-      margin: 24px 0 12px;
+      margin: 20px 0 14px;
     }
 
     /* ── NAV ── */
@@ -226,7 +226,7 @@
     .mobile-nav a:hover { color: var(--pink); }
 
     /* ── HERO ── */
-    .hero-card { margin: 24px 0; overflow: visible; min-height: 400px; padding: 48px; }
+    .hero-card { margin: 28px 0; overflow: visible; min-height: 400px; padding: 48px; }
 
     .hero-grid {
       display: grid;
@@ -235,7 +235,7 @@
       align-items: center;
     }
 
-    .hero-left { display: flex; flex-direction: column; gap: 12px; }
+    .hero-left { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; }
 
     .pill-tag {
       display: inline-block;
@@ -250,9 +250,9 @@
     }
 
     .hero-name { line-height: 0.9; }
-    .name-milo  { font-family: 'Playfair Display', serif; font-size: 96px; font-weight: 700; color: #111; }
-    .name-54    { font-family: 'Playfair Display', serif; font-size: 96px; font-weight: 700; color: #ff2d78; }
-    .name-tilde { font-family: 'Playfair Display', serif; font-size: 60px; color: #ff2d78; }
+    .name-milo  { font-family: 'Playfair Display', serif; font-size: 110px; font-weight: 700; color: #111; }
+    .name-54    { font-family: 'Playfair Display', serif; font-size: 110px; font-weight: 700; color: #ff2d78; }
+    .name-tilde { font-family: 'Playfair Display', serif; font-size: 68px; color: #ff2d78; }
 
     .hero-subtitle {
       font-family: 'Patrick Hand', cursive;
@@ -268,7 +268,7 @@
 
     .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 
-    .hero-right { position: relative; }
+    .hero-right { position: relative; margin-left: -40px; z-index: 1; }
 
     .hero-img-wrap { position: relative; overflow: visible; }
 
@@ -278,8 +278,8 @@
       object-fit: cover;
       border-radius: 16px;
       display: block;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-      transform: rotate(-1deg);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+      transform: rotate(-2deg);
     }
 
     .hero-img-fallback {
@@ -297,17 +297,29 @@
 
     .quote-card {
       position: absolute;
-      top: -12px;
-      right: -12px;
-      width: 180px;
+      top: -50px;
+      right: -20px;
+      width: 200px;
       overflow: visible;
+      z-index: 3;
     }
+
+    /* ── HERO SPARKLES ── */
+    .hero-sparkle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 6;
+      font-style: normal;
+    }
+    .sp-1 { top: -18px; right: 80px; font-size: 22px; color: #ff2d78; transform: rotate(12deg); opacity: 0.85; }
+    .sp-2 { top: -10px; left: -16px; font-size: 13px; color: #ffb3cc; transform: rotate(-8deg); opacity: 0.70; }
+    .sp-3 { bottom: -14px; left: 110px; font-size: 17px; color: #ff2d78; transform: rotate(5deg); opacity: 0.75; }
 
     /* ── CURRENTLY ── */
     .curr-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
+      gap: 28px;
     }
 
     .curr-header {
@@ -361,16 +373,20 @@
     }
 
     .curr-note { font-size: 12px; color: #666; font-style: italic; margin-top: 10px; }
-    .curr-grid .card { padding: 28px; }
+    .curr-grid .card:nth-child(1) { padding: 30px; }
+    .curr-grid .card:nth-child(2) { padding: 26px; }
+    .curr-grid .card:nth-child(3) { padding: 28px 26px; }
     .curr-pct { font-size: 11px; color: #ff2d78; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
     /* ── ABOUT + FAVORITES ── */
     .about-fav-grid {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 32px;
-      margin: 32px 0;
+      gap: 36px;
+      margin: 36px 0;
     }
+    .about-fav-grid .card:nth-child(1) { padding: 34px 30px; }
+    .about-fav-grid .card:nth-child(2) { padding: 36px 38px; overflow: visible; }
 
     .about-body { font-size: 14px; color: #444; line-height: 1.8; }
     .about-body p { margin-bottom: 14px; }
@@ -401,16 +417,29 @@
     }
 
     .fav-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fav-item:nth-child(odd) .fav-cover { transform: rotate(-1deg); }
+    .fav-item:nth-child(even) .fav-cover { transform: rotate(1.5deg); }
 
-    .fav-name { text-align: center; font-size: 12px; margin-top: 8px; color: #333; line-height: 1.3; }
+    .fav-name { text-align: center; font-size: 12px; margin-top: 3px; color: #333; line-height: 1.3; }
+
+    /* ── FAV HEARTS ── */
+    .fav-heart { display: block; font-size: 11px; color: var(--pink); text-align: center; line-height: 1; margin-top: 4px; }
+    .fav-item:nth-child(1) .fav-heart { margin-left:  4px; }
+    .fav-item:nth-child(2) .fav-heart { margin-left: -2px; }
+    .fav-item:nth-child(3) .fav-heart { margin-left:  6px; }
+    .fav-item:nth-child(4) .fav-heart { margin-left: -4px; }
+    .fav-item:nth-child(5) .fav-heart { margin-left:  3px; }
+    .fav-item:nth-child(6) .fav-heart { margin-left: -5px; }
 
     /* ── PROJECTS + STATS ── */
     .proj-stats-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 32px;
-      margin: 32px 0;
+      gap: 28px;
+      margin: 20px 0;
     }
+    .proj-stats-grid .card:nth-child(1) { overflow: visible; padding: 40px 36px; }
+    .proj-stats-grid .card:nth-child(2) { padding: 30px 28px; }
 
     .proj-header {
       display: flex;
@@ -461,8 +490,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 32px;
-      margin: 32px 0;
+      margin: 36px 0;
     }
+    .bottom-grid > .card:first-child { padding: 34px 32px; }
+    .bottom-grid > .card:last-child  { padding: 32px 30px; }
+    .center-col .card:first-child { padding: 28px 30px; }
+    .center-col .card:last-child  { padding: 26px 28px; }
 
     .likes-grid {
       display: grid;
@@ -535,8 +568,8 @@
     .gb-entry:last-child { border-bottom: none; }
 
     .gb-avatar {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: linear-gradient(135deg, #ff2d78, #ffb3cc);
       display: flex;
@@ -546,6 +579,7 @@
       font-size: 14px;
       font-weight: 700;
       flex-shrink: 0;
+      margin-top: -3px;
     }
 
     .gb-content { flex: 1; }
@@ -614,7 +648,7 @@
     }
 
     .footer-text { font-size: 13px; color: #666; }
-    .footer-mascot { width: 80px; position: absolute; bottom: 0; right: 40px; opacity: 0.8; pointer-events: none; }
+    .footer-mascot { width: 90px; position: absolute; top: -55px; right: 40px; opacity: 0.85; pointer-events: none; }
 
     /* ── CARD WASHI TAPE ── */
     .card-tape {
@@ -640,7 +674,7 @@
       height: 20px;
       object-fit: cover;
       border-radius: 3px;
-      transform: rotate(-2deg);
+      transform: rotate(-3deg);
       opacity: 0.85;
       pointer-events: none;
       z-index: 2;
@@ -666,13 +700,13 @@
       position: absolute;
       pointer-events: none;
       z-index: 10;
-      height: 70px;
+      height: 90px;
       width: auto;
     }
 
-    .chibi-br { bottom: -8px; right: 12px; }
-    .chibi-bl { bottom: -8px; left: 12px; }
-    .chibi-tc { top: -8px; left: 50%; transform: translateX(-50%); height: 54px; }
+    .chibi-br { bottom: -30px; right: 12px; }
+    .chibi-bl { bottom: -30px; left: 12px; }
+    .chibi-tc { top: -45px; left: 50%; transform: translateX(-50%); }
 
     .cat-corner {
       position: absolute;
@@ -737,6 +771,7 @@
       .hamburger { display: flex; }
 
       .hero-grid { grid-template-columns: 1fr; }
+      .hero-right { margin-left: 0; }
       .name-milo, .name-54 { font-size: 56px; }
       .name-tilde { font-size: 40px; }
       .quote-card { position: static; width: 100%; margin-top: 12px; }
@@ -803,6 +838,9 @@
   <section id="home">
     <div class="card hero-card">
       <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
+      <span class="hero-sparkle sp-1" aria-hidden="true">✦</span>
+      <span class="hero-sparkle sp-2" aria-hidden="true">✧</span>
+      <span class="hero-sparkle sp-3" aria-hidden="true">★</span>
       <div class="hero-grid">
 
         <div class="hero-left">
@@ -827,7 +865,7 @@
               onerror="this.src='avatar.jpg'; this.onerror=function(){ this.style.display='none'; this.nextElementSibling.style.display='flex'; };">
             <div class="hero-img-fallback">M</div>
             <div class="quote-card card">
-              <div class="tape" style="width:40px; left:10px;"></div>
+              <div class="tape" style="width:110px; left:-22px; top:-8px; transform:rotate(-3deg);"></div>
               <p style="font-size:11px; color:#ff2d78; font-family:'Patrick Hand',cursive; margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase;">Quote of the day</p>
               <p style="font-size:13px; font-family:'Patrick Hand',cursive; line-height:1.6; color:#333;">"Sleep is nice. But have you ever read a 100+ chapter manhwa at 3AM?"</p>
               <img src="public/cats/doodle-cat.png" class="cat-corner" alt="" onerror="this.style.display='none';">
@@ -983,36 +1021,42 @@
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/manga/3/222295.jpg" alt="Solo Leveling" onerror="this.src='public/favorites/solo-leveling.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Solo Leveling</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/manga/1/259352.jpg" alt="Omniscient Reader" onerror="this.src='public/favorites/omniscient-reader.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Omniscient Reader</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/manga/2/265525.jpg" alt="Legend of the Northern Blade" onerror="this.src='public/favorites/legend-northern-blade.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Legend of the Northern Blade</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/anime/5/73199.jpg" alt="Steins;Gate" onerror="this.src='public/favorites/steinsgate.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Steins;Gate</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/anime/10/47347.jpg" alt="Attack on Titan" onerror="this.src='public/favorites/attack-on-titan.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Attack on Titan</p>
           </div>
           <div class="fav-item">
             <div class="fav-cover">
               <img src="https://cdn.myanimelist.net/images/anime/1932/143506.jpg" alt="Dandadan" onerror="this.src='public/favorites/dandadan.jpg'; this.onerror=function(){this.style.display='none';}">
             </div>
+            <span class="fav-heart" aria-hidden="true">♡</span>
             <p class="fav-name">Dandadan</p>
           </div>
         </div>
@@ -1025,8 +1069,8 @@
   <section id="projects">
     <div class="proj-stats-grid">
 
-      <div class="card">
-        <img src="public/stickers/washi-tape-sheet.png" class="card-tape" alt="" onerror="this.style.display='none'">
+      <div class="card" style="overflow:visible;">
+        <img src="public/stickers/washi-tape-sheet.png" class="card-tape" style="left:-10px; transform:rotate(3deg); width:140px;" alt="" onerror="this.style.display='none'">
         <div class="proj-header">
           <span class="card-title" style="margin-bottom:0;">things i've built</span>
           <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener"
