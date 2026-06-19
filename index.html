@@ -24,26 +24,25 @@
       --ink-mid:     #5c4f4a;
       --ink-faint:   #9a8880;
       --gold:        #e8c14a;
-      --gold-dim:    rgba(232, 193, 74, 0.18);
-      --gold-border: rgba(232, 193, 74, 0.32);
+      --gold-dim:    rgba(232,193,74,0.18);
+      --gold-border: rgba(232,193,74,0.32);
       --brick:       #c1505a;
       --brick-dark:  #a84048;
       --moss:        #5b6b4f;
-      --moss-dim:    rgba(91, 107, 79, 0.12);
-      --moss-border: rgba(91, 107, 79, 0.28);
-      --rule:        rgba(43, 36, 32, 0.09);
+      --moss-dim:    rgba(91,107,79,0.12);
+      --moss-border: rgba(91,107,79,0.28);
+      --rule:        rgba(43,36,32,0.09);
 
       --f-display: 'Caveat', cursive;
       --f-body:    'Inter', system-ui, sans-serif;
       --f-mono:    'JetBrains Mono', monospace;
 
-      --max-w: 680px;
+      --max-w:  680px;
       --gutter: clamp(20px, 5vw, 48px);
-      --section-gap: 64px;
+      --gap:    64px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     @media (prefers-reduced-motion: reduce) {
@@ -68,7 +67,7 @@
     }
 
     section {
-      padding: var(--section-gap) 0;
+      padding: var(--gap) 0;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -108,19 +107,11 @@
       font-weight: 700;
       color: var(--ink);
       text-decoration: none;
-      letter-spacing: -0.01em;
     }
 
-    .nav-logo .star {
-      color: var(--gold);
-      margin-right: 2px;
-    }
+    .nav-logo .star { color: var(--gold); margin-right: 2px; }
 
-    .nav-icons {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .nav-icons { display: flex; align-items: center; gap: 16px; }
 
     .nav-icons a {
       color: var(--ink-mid);
@@ -131,20 +122,12 @@
     }
 
     .nav-icons a:hover { color: var(--ink); }
-
-    .nav-icons a:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 3px;
-      border-radius: 2px;
-    }
+    .nav-icons a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
 
     .ico { width: 17px; height: 17px; fill: currentColor; display: block; }
 
     /* ── HERO ── */
-    #hero {
-      padding-top: 72px;
-      padding-bottom: 72px;
-    }
+    #hero { padding-top: 72px; padding-bottom: 72px; }
 
     .hero-grid {
       display: grid;
@@ -163,24 +146,12 @@
       letter-spacing: -0.02em;
     }
 
-    .hero-tagline {
-      font-size: 17px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
-
-    .hero-bio {
-      font-size: 15px;
-      color: var(--ink-mid);
-      line-height: 1.75;
-    }
-
-    .hero-img-col { position: relative; }
+    .hero-tagline { font-size: 17px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+    .hero-bio     { font-size: 15px; color: var(--ink-mid); line-height: 1.75; }
 
     .hero-img {
       width: 100%;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 3/4;
       object-fit: cover;
       border-radius: 12px;
       display: block;
@@ -188,7 +159,7 @@
 
     .hero-img-placeholder {
       width: 100%;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 3/4;
       background: var(--paper-mid);
       border-radius: 12px;
       display: none;
@@ -203,43 +174,22 @@
     .rightnow-row {
       display: flex;
       flex-wrap: wrap;
-      column-gap: 0;
       row-gap: 6px;
       font-size: 15px;
     }
 
-    .rn-item {
-      display: flex;
-      align-items: baseline;
-      gap: 5px;
-    }
-
+    .rn-item { display: flex; align-items: baseline; gap: 5px; }
     .rn-label { color: var(--ink-faint); font-size: 13px; }
     .rn-value { color: var(--ink); font-weight: 500; }
-
-    .rn-sep {
-      color: var(--ink-faint);
-      padding: 0 14px;
-      user-select: none;
-      font-size: 13px;
-    }
+    .rn-sep { color: var(--ink-faint); padding: 0 14px; user-select: none; font-size: 13px; }
 
     /* ── ABOUT ── */
-    .about-body {
-      font-size: 15px;
-      color: var(--ink-mid);
-      line-height: 1.8;
-    }
-
+    .about-body { font-size: 15px; color: var(--ink-mid); line-height: 1.8; }
     .about-body p + p { margin-top: 12px; }
     .about-body .hi { color: var(--ink); font-weight: 500; }
 
     /* ── WHAT I'M INTO ── */
-    .into-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 52px;
-    }
+    .into-stack { display: flex; flex-direction: column; gap: 52px; }
 
     .into-block-label {
       font-size: 13px;
@@ -251,12 +201,7 @@
     }
 
     /* Now Playing */
-    .np-row {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      margin-bottom: 20px;
-    }
+    .np-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px; }
 
     .np-art {
       width: 52px;
@@ -267,39 +212,14 @@
       overflow: hidden;
     }
 
-    .np-art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .np-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .np-track {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .np-artist {
-      font-size: 14px;
-      color: var(--ink-mid);
-      margin-top: 1px;
-    }
-
-    .np-timestamp {
-      font-family: var(--f-mono);
-      font-size: 11px;
-      color: var(--ink-faint);
-      margin-top: 5px;
-    }
+    .np-track      { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .np-artist     { font-size: 14px; color: var(--ink-mid); margin-top: 1px; }
+    .np-timestamp  { font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); margin-top: 5px; }
 
     /* Tags */
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 20px;
-    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
 
     .tag {
       font-size: 13px;
@@ -312,37 +232,22 @@
     }
 
     /* Recommend forms */
-    .rec-form {
-      border-top: 1px solid var(--rule);
-      padding-top: 18px;
-    }
+    .rec-form { border-top: 1px solid var(--rule); padding-top: 18px; }
 
-    .rec-prompt {
-      font-size: 13px;
-      color: var(--ink-mid);
-      margin-bottom: 12px;
-    }
+    .rec-prompt { font-size: 13px; color: var(--ink-mid); margin-bottom: 12px; }
+    .rec-prompt em { font-style: normal; color: var(--brick); font-weight: 500; }
 
-    .rec-prompt em {
-      font-style: normal;
-      color: var(--brick);
-      font-weight: 500;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
     .field-row.full { grid-template-columns: 1fr; }
+
+    /* Honeypot — hidden from humans, traps bots */
+    .hp { position: absolute; left: -9999px; visibility: hidden; pointer-events: none; }
 
     input[type="text"],
     textarea {
       width: 100%;
       background: var(--paper);
-      border: 1px solid rgba(43, 36, 32, 0.18);
+      border: 1px solid rgba(43,36,32,0.18);
       border-radius: 6px;
       padding: 9px 12px;
       font-family: var(--f-body);
@@ -352,21 +257,15 @@
       appearance: none;
     }
 
-    input[type="text"]::placeholder,
-    textarea::placeholder { color: var(--ink-faint); }
+    input[type="text"]::placeholder, textarea::placeholder { color: var(--ink-faint); }
 
-    input[type="text"]:focus,
-    textarea:focus {
+    input[type="text"]:focus, textarea:focus {
       outline: none;
       border-color: var(--gold);
       box-shadow: 0 0 0 3px var(--gold-dim);
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 72px;
-      line-height: 1.6;
-    }
+    textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
 
     .btn-rec {
       display: inline-flex;
@@ -383,23 +282,26 @@
       cursor: pointer;
       margin-top: 8px;
       transition: background 0.15s;
+      min-height: 38px;
     }
 
-    .btn-rec:hover { background: var(--brick-dark); }
+    .btn-rec:hover  { background: var(--brick-dark); }
+    .btn-rec:disabled { opacity: 0.65; cursor: default; }
     .btn-rec:focus-visible { outline: 2px solid var(--brick); outline-offset: 2px; }
 
-    /* ── BUILDING ── */
-    .building-intro {
-      font-size: 15px;
-      color: var(--ink-mid);
-      margin-bottom: 22px;
+    .form-msg {
+      font-size: 12px;
+      margin-top: 6px;
+      min-height: 16px;
     }
 
-    .proj-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+    .form-msg.error { color: var(--brick); }
+    .form-msg.ok    { color: var(--moss); }
+
+    /* ── BUILDING ── */
+    .building-intro { font-size: 15px; color: var(--ink-mid); margin-bottom: 22px; }
+
+    .proj-list { display: flex; flex-direction: column; gap: 20px; }
 
     .proj-name a {
       font-size: 15px;
@@ -410,18 +312,10 @@
       transition: color 0.15s, border-color 0.15s;
     }
 
-    .proj-name a:hover {
-      color: var(--ink);
-      border-color: var(--ink);
-    }
-
+    .proj-name a:hover { color: var(--ink); border-color: var(--ink); }
     .proj-name a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
 
-    .proj-desc {
-      font-size: 14px;
-      color: var(--ink-mid);
-      margin-top: 3px;
-    }
+    .proj-desc { font-size: 14px; color: var(--ink-mid); margin-top: 3px; }
 
     /* ── YEARBOOK ── */
     #yearbook { padding-bottom: 80px; }
@@ -437,10 +331,7 @@
       margin-bottom: 8px;
     }
 
-    .yb-sub {
-      font-size: 14px;
-      color: var(--ink-mid);
-    }
+    .yb-sub { font-size: 14px; color: var(--ink-mid); }
 
     /* The signatures page */
     .yb-page {
@@ -450,29 +341,21 @@
       border-radius: 10px;
       padding: 28px 24px 36px;
       margin-bottom: 32px;
-
-      /* faint ruled lines like notebook paper */
       background-image: repeating-linear-gradient(
         to bottom,
         transparent 0,
         transparent 29px,
-        rgba(139, 110, 90, 0.07) 29px,
-        rgba(139, 110, 90, 0.07) 30px
+        rgba(139,110,90,0.07) 29px,
+        rgba(139,110,90,0.07) 30px
       );
       background-position: 0 12px;
     }
 
-    .yb-scatter {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      position: relative;
-    }
+    .yb-scatter { display: flex; flex-wrap: wrap; gap: 10px; }
 
-    /* Each signature slip */
     .yb-entry {
       background: #fffef8;
-      border: 1px solid rgba(232, 193, 74, 0.25);
+      border: 1px solid rgba(232,193,74,0.25);
       border-radius: 3px;
       padding: 13px 15px 11px;
       max-width: 188px;
@@ -481,44 +364,29 @@
       font-family: var(--f-display);
       font-size: 16px;
       line-height: 1.45;
-      box-shadow:
-        1px 2px 6px rgba(43, 36, 32, 0.08),
-        0 0 0 0.5px rgba(43, 36, 32, 0.04);
+      box-shadow: 1px 2px 6px rgba(43,36,32,0.08), 0 0 0 0.5px rgba(43,36,32,0.04);
     }
 
-    /* Vary background warmth and rotation */
-    .yb-entry:nth-child(1) { transform: rotate(-2.5deg); margin-top: 0;    background: #fffef8; }
-    .yb-entry:nth-child(2) { transform: rotate( 1.5deg); margin-top: 24px; background: #fefcf0; }
-    .yb-entry:nth-child(3) { transform: rotate(-3deg);   margin-top: 10px; background: #fffef8; }
-    .yb-entry:nth-child(4) { transform: rotate( 2.5deg); margin-top: 36px; background: #fefcf0; }
-    .yb-entry:nth-child(5) { transform: rotate(-1.5deg); margin-top: 4px;  background: #fffef8; }
-    .yb-entry:nth-child(6) { transform: rotate( 3.5deg); margin-top: 20px; background: #fefcf0; }
-    .yb-entry:nth-child(7) { transform: rotate(-2deg);   margin-top: 14px; background: #fffef8; }
-    .yb-entry:nth-child(8) { transform: rotate( 1deg);   margin-top: 30px; background: #fefcf0; }
+    /* Scatter: rotation + vertical offset per nth-child */
+    .yb-entry:nth-child(8n+1) { transform: rotate(-2.5deg); margin-top: 0;    background: #fffef8; }
+    .yb-entry:nth-child(8n+2) { transform: rotate( 1.5deg); margin-top: 24px; background: #fefcf0; }
+    .yb-entry:nth-child(8n+3) { transform: rotate(-3deg);   margin-top: 10px; background: #fffef8; }
+    .yb-entry:nth-child(8n+4) { transform: rotate( 2.5deg); margin-top: 36px; background: #fefcf0; }
+    .yb-entry:nth-child(8n+5) { transform: rotate(-1.5deg); margin-top: 4px;  background: #fffef8; }
+    .yb-entry:nth-child(8n+6) { transform: rotate( 3.5deg); margin-top: 20px; background: #fefcf0; }
+    .yb-entry:nth-child(8n+7) { transform: rotate(-2deg);   margin-top: 14px; background: #fffef8; }
+    .yb-entry:nth-child(8n+8) { transform: rotate( 1deg);   margin-top: 30px; background: #fefcf0; }
 
-    .yb-sticker {
-      font-size: 22px;
-      display: block;
-      margin-bottom: 7px;
-      line-height: 1;
-    }
+    .yb-sticker  { font-size: 22px; display: block; margin-bottom: 7px; line-height: 1; }
+    .yb-message  { color: var(--ink); margin-bottom: 9px; word-break: break-word; }
+    .yb-name     { font-size: 13px; color: var(--ink-mid); }
+    .yb-date     { font-family: var(--f-mono); font-size: 10px; color: var(--ink-faint); margin-top: 3px; }
 
-    .yb-message {
-      color: var(--ink);
-      margin-bottom: 9px;
-      word-break: break-word;
-    }
-
-    .yb-name {
-      font-size: 13px;
-      color: var(--ink-mid);
-    }
-
-    .yb-date {
-      font-family: var(--f-mono);
-      font-size: 10px;
+    .yb-empty {
+      font-family: var(--f-display);
+      font-size: 16px;
       color: var(--ink-faint);
-      margin-top: 3px;
+      padding: 16px 0;
     }
 
     /* Yearbook sign form */
@@ -537,7 +405,13 @@
       margin-bottom: 18px;
     }
 
-    /* Sticker picker */
+    .sticker-label {
+      font-size: 12px;
+      color: var(--ink-mid);
+      margin-bottom: 8px;
+      display: block;
+    }
+
     .sticker-row {
       display: flex;
       gap: 6px;
@@ -548,10 +422,7 @@
     .sticker-opt { position: relative; }
 
     .sticker-opt input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
+      position: absolute; opacity: 0; width: 0; height: 0;
     }
 
     .sticker-opt label {
@@ -568,27 +439,14 @@
       transition: background 0.12s, border-color 0.12s;
     }
 
-    .sticker-opt label:hover {
-      background: var(--paper-mid);
-    }
+    .sticker-opt label:hover { background: var(--paper-mid); }
 
     .sticker-opt input:checked + label {
       border-color: var(--gold);
-      background: rgba(232, 193, 74, 0.14);
+      background: rgba(232,193,74,0.14);
     }
 
-    .sticker-opt label:focus-within,
-    .sticker-opt input:focus-visible + label {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-
-    .sticker-label {
-      font-size: 12px;
-      color: var(--ink-mid);
-      margin-bottom: 8px;
-      display: block;
-    }
+    .sticker-opt input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 2px; }
 
     .btn-sign {
       display: inline-flex;
@@ -605,16 +463,15 @@
       cursor: pointer;
       margin-top: 10px;
       transition: background 0.15s;
+      min-height: 42px;
     }
 
-    .btn-sign:hover { background: #3d342f; }
+    .btn-sign:hover    { background: #3d342f; }
+    .btn-sign:disabled { opacity: 0.65; cursor: default; }
     .btn-sign:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 36px 0;
-    }
+    footer { border-top: 1px solid var(--rule); padding: 36px 0; }
 
     .footer-inner {
       max-width: var(--max-w);
@@ -627,16 +484,9 @@
       gap: 14px;
     }
 
-    .footer-credit {
-      font-size: 13px;
-      color: var(--ink-faint);
-    }
+    .footer-credit { font-size: 13px; color: var(--ink-faint); }
 
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-    }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
 
     .footer-links a {
       font-size: 13px;
@@ -650,24 +500,13 @@
 
     /* ── MOBILE ── */
     @media (max-width: 640px) {
-      :root { --section-gap: 48px; }
+      :root { --gap: 48px; }
 
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .hero-img-col {
-        order: -1;
-        max-width: 180px;
-      }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-img-col { order: -1; max-width: 180px; }
 
       .rn-sep { display: none; }
-
-      .rightnow-row {
-        flex-direction: column;
-        gap: 5px;
-      }
+      .rightnow-row { flex-direction: column; gap: 5px; }
 
       .field-row { grid-template-columns: 1fr; }
 
@@ -688,24 +527,16 @@
     </a>
     <div class="nav-icons" role="list">
       <a href="https://youtube.com/@qickmanhwa" target="_blank" rel="noopener" aria-label="YouTube" role="listitem">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.4 12 20.4 12 20.4s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
-        </svg>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.4 12 20.4 12 20.4s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
       </a>
       <a href="https://github.com/foxmanhwa" target="_blank" rel="noopener" aria-label="GitHub" role="listitem">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/>
-        </svg>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
       </a>
       <a href="#" aria-label="Discord" role="listitem">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M20.3 4.4A19.3 19.3 0 0 0 15.5 3c-.2.4-.5 1-.6 1.4a17.8 17.8 0 0 0-5.8 0C8.9 4 8.6 3.4 8.4 3A19.2 19.2 0 0 0 3.5 4.4C.5 9 0 13.5.3 17.9a19.5 19.5 0 0 0 6 3.1c.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1l.4-.4a13.8 13.8 0 0 0 12 0l.4.4c-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2a19.4 19.4 0 0 0 6-3.1c.5-5-1.4-9.4-3.8-13.5zM8 15.3c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6zm8 0c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6z"/>
-        </svg>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.3 4.4A19.3 19.3 0 0 0 15.5 3c-.2.4-.5 1-.6 1.4a17.8 17.8 0 0 0-5.8 0C8.9 4 8.6 3.4 8.4 3A19.2 19.2 0 0 0 3.5 4.4C.5 9 0 13.5.3 17.9a19.5 19.5 0 0 0 6 3.1c.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1l.4-.4a13.8 13.8 0 0 0 12 0l.4.4c-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2a19.4 19.4 0 0 0 6-3.1c.5-5-1.4-9.4-3.8-13.5zM8 15.3c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6zm8 0c-1.3 0-2.3-1.2-2.3-2.6 0-1.4 1-2.6 2.3-2.6s2.4 1.2 2.3 2.6c0 1.4-1 2.6-2.3 2.6z"/></svg>
       </a>
       <a href="#" aria-label="Twitter / X" role="listitem">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M18.2 2h3.4l-7.4 8.5 8.7 11.5h-6.8l-5.3-7-6.2 7H1.2l7.9-9L.9 2h7l4.8 6.4L18.2 2zm-1.2 18h1.9L7.1 4H5.1l11.9 16z"/>
-        </svg>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.2 2h3.4l-7.4 8.5 8.7 11.5h-6.8l-5.3-7-6.2 7H1.2l7.9-9L.9 2h7l4.8 6.4L18.2 2zm-1.2 18h1.9L7.1 4H5.1l11.9 16z"/></svg>
       </a>
     </div>
   </div>
@@ -739,17 +570,17 @@
     <div class="rightnow-row" role="list">
       <span class="rn-item" role="listitem">
         <span class="rn-label">reading:</span>
-        <span class="rn-value">Shadow Slave</span>
+        <span class="rn-value" id="rn-reading">Shadow Slave</span>
       </span>
       <span class="rn-sep" aria-hidden="true">/</span>
       <span class="rn-item" role="listitem">
         <span class="rn-label">watching:</span>
-        <span class="rn-value">Dandadan</span>
+        <span class="rn-value" id="rn-watching">Dandadan</span>
       </span>
       <span class="rn-sep" aria-hidden="true">/</span>
       <span class="rn-item" role="listitem">
         <span class="rn-label">playing:</span>
-        <span class="rn-value">Wuthering Waves</span>
+        <span class="rn-value" id="rn-playing">Wuthering Waves</span>
       </span>
     </div>
   </section>
@@ -771,30 +602,33 @@
     <div class="into-stack">
 
       <!-- Now Playing -->
-      <div class="into-block" id="now-playing">
+      <div class="into-block" id="block-nowplaying">
         <p class="into-block-label">Now Playing</p>
         <div class="np-row">
           <div class="np-art">
-            <img src="public/music/now-playing.png" alt="" onerror="this.style.display='none'">
+            <img id="np-art-img" src="public/music/now-playing.png" alt="" onerror="this.style.display='none'">
           </div>
           <div class="np-info">
-            <p class="np-track">unravel</p>
-            <p class="np-artist">TK from 凜として時雨</p>
-            <p class="np-timestamp">as of Jun 19, 2026</p>
+            <p class="np-track"   id="np-track">unravel</p>
+            <p class="np-artist"  id="np-artist">TK from 凜として時雨</p>
+            <p class="np-timestamp" id="np-timestamp">as of Jun 19, 2026</p>
           </div>
         </div>
         <div class="rec-form">
           <p class="rec-prompt">recommend me a song <em>→</em></p>
+          <!-- Honeypot: invisible to humans, bots fill it in -->
+          <input class="hp" type="text" id="hp-song" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field-row">
-            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
-            <input type="text" placeholder="song — artist" maxlength="120" autocomplete="off" aria-label="Song and artist">
+            <input type="text" id="song-name"    placeholder="your name"    maxlength="60"  autocomplete="off" aria-label="Your name">
+            <input type="text" id="song-content" placeholder="song — artist" maxlength="120" autocomplete="off" aria-label="Song and artist">
           </div>
-          <button class="btn-rec" type="button" data-form="song">send it</button>
+          <button class="btn-rec" type="button" id="btn-song">send it</button>
+          <p class="form-msg" id="msg-song" aria-live="polite"></p>
         </div>
       </div>
 
       <!-- Manhwa -->
-      <div class="into-block" id="manhwa">
+      <div class="into-block" id="block-manhwa">
         <p class="into-block-label">Manhwa I'm Reading</p>
         <div class="tag-row" aria-label="Currently reading">
           <span class="tag">Shadow Slave</span>
@@ -804,19 +638,21 @@
         </div>
         <div class="rec-form">
           <p class="rec-prompt">recommend me a manhwa <em>→</em></p>
+          <input class="hp" type="text" id="hp-manhwa" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field-row">
-            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
-            <input type="text" placeholder="title" maxlength="120" autocomplete="off" aria-label="Manhwa title">
+            <input type="text" id="manhwa-name"    placeholder="your name" maxlength="60"  autocomplete="off" aria-label="Your name">
+            <input type="text" id="manhwa-content" placeholder="title"     maxlength="120" autocomplete="off" aria-label="Manhwa title">
           </div>
           <div class="field-row full">
-            <input type="text" placeholder="why should I read it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should read it">
+            <input type="text" id="manhwa-note" placeholder="why should I read it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should read it">
           </div>
-          <button class="btn-rec" type="button" data-form="manhwa">send it</button>
+          <button class="btn-rec" type="button" id="btn-manhwa">send it</button>
+          <p class="form-msg" id="msg-manhwa" aria-live="polite"></p>
         </div>
       </div>
 
       <!-- Anime -->
-      <div class="into-block" id="anime">
+      <div class="into-block" id="block-anime">
         <p class="into-block-label">Anime I'm Watching</p>
         <div class="tag-row" aria-label="Currently watching">
           <span class="tag">Dandadan</span>
@@ -825,14 +661,16 @@
         </div>
         <div class="rec-form">
           <p class="rec-prompt">recommend me an anime <em>→</em></p>
+          <input class="hp" type="text" id="hp-anime" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field-row">
-            <input type="text" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
-            <input type="text" placeholder="title" maxlength="120" autocomplete="off" aria-label="Anime title">
+            <input type="text" id="anime-name"    placeholder="your name" maxlength="60"  autocomplete="off" aria-label="Your name">
+            <input type="text" id="anime-content" placeholder="title"     maxlength="120" autocomplete="off" aria-label="Anime title">
           </div>
           <div class="field-row full">
-            <input type="text" placeholder="why should I watch it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should watch it">
+            <input type="text" id="anime-note" placeholder="why should I watch it? (optional)" maxlength="200" autocomplete="off" aria-label="Why I should watch it">
           </div>
-          <button class="btn-rec" type="button" data-form="anime">send it</button>
+          <button class="btn-rec" type="button" id="btn-anime">send it</button>
+          <p class="form-msg" id="msg-anime" aria-live="polite"></p>
         </div>
       </div>
 
@@ -862,38 +700,10 @@
       <p class="yb-sub">Leave your mark. Say hi, share what you're watching, write a terrible pun. I read these.</p>
     </div>
 
-    <!-- Scattered signatures -->
+    <!-- Scattered signatures — populated from Supabase -->
     <div class="yb-page">
-      <div class="yb-scatter" role="list" aria-label="Yearbook entries">
-
-        <article class="yb-entry" role="listitem">
-          <span class="yb-sticker" aria-label="sticker: sparkle">✨</span>
-          <p class="yb-message">awesome site!! love the vibe</p>
-          <p class="yb-name">— azura</p>
-          <p class="yb-date">May 20, 2025</p>
-        </article>
-
-        <article class="yb-entry" role="listitem">
-          <span class="yb-sticker" aria-label="sticker: rocket">🚀</span>
-          <p class="yb-message">your projects are really useful, thanks!</p>
-          <p class="yb-name">— voidwalker</p>
-          <p class="yb-date">May 18, 2025</p>
-        </article>
-
-        <article class="yb-entry" role="listitem">
-          <span class="yb-sticker" aria-label="sticker: books">📚</span>
-          <p class="yb-message">read omniscient reader. you won't regret it</p>
-          <p class="yb-name">— raikousei</p>
-          <p class="yb-date">May 12, 2025</p>
-        </article>
-
-        <article class="yb-entry" role="listitem">
-          <span class="yb-sticker" aria-label="sticker: cat">🐱</span>
-          <p class="yb-message">found you from manhwa pulse, glad I did</p>
-          <p class="yb-name">— stellarwind</p>
-          <p class="yb-date">Apr 30, 2025</p>
-        </article>
-
+      <div class="yb-scatter" id="yb-scatter" role="list" aria-label="Yearbook entries">
+        <p class="yb-empty" aria-live="polite">Loading...</p>
       </div>
     </div>
 
@@ -903,51 +713,28 @@
 
       <span class="sticker-label" id="sticker-group-label">pick a sticker (optional)</span>
       <div class="sticker-row" role="group" aria-labelledby="sticker-group-label">
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-none" value="" checked>
-          <label for="sk-none" title="none">—</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-1" value="✨">
-          <label for="sk-1" title="sparkle">✨</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-2" value="🐱">
-          <label for="sk-2" title="cat">🐱</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-3" value="📚">
-          <label for="sk-3" title="books">📚</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-4" value="🌙">
-          <label for="sk-4" title="moon">🌙</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-5" value="🎌">
-          <label for="sk-5" title="japan">🎌</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-6" value="☕">
-          <label for="sk-6" title="coffee">☕</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-7" value="🚀">
-          <label for="sk-7" title="rocket">🚀</label>
-        </div>
-        <div class="sticker-opt">
-          <input type="radio" name="sticker" id="sk-8" value="💀">
-          <label for="sk-8" title="skull">💀</label>
-        </div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-none" value="" checked><label for="sk-none" title="none">—</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-1" value="✨"><label for="sk-1" title="sparkle">✨</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-2" value="🐱"><label for="sk-2" title="cat">🐱</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-3" value="📚"><label for="sk-3" title="books">📚</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-4" value="🌙"><label for="sk-4" title="moon">🌙</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-5" value="🎌"><label for="sk-5" title="japan">🎌</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-6" value="☕"><label for="sk-6" title="coffee">☕</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-7" value="🚀"><label for="sk-7" title="rocket">🚀</label></div>
+        <div class="sticker-opt"><input type="radio" name="sticker" id="sk-8" value="💀"><label for="sk-8" title="skull">💀</label></div>
       </div>
 
-      <div class="field-row full" style="margin-bottom: 8px;">
+      <!-- Honeypot -->
+      <input class="hp" type="text" id="hp-yb" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <div class="field-row full" style="margin-bottom:8px;">
         <input type="text" id="yb-name" placeholder="your name" maxlength="60" autocomplete="off" aria-label="Your name">
       </div>
       <div class="field-row full">
         <textarea id="yb-message" placeholder="say hi, share what you're watching, write a terrible pun — anything goes" maxlength="280" rows="3" aria-label="Your message"></textarea>
       </div>
       <button class="btn-sign" type="button" id="btn-sign">sign it</button>
+      <p class="form-msg" id="msg-yb" aria-live="polite"></p>
     </div>
   </section>
 
@@ -966,29 +753,272 @@
   </div>
 </footer>
 
+<!-- Supabase CDN — anon key only, service_role never touches this file -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  /* Step 1 — form stubs. Supabase wired in step 3. */
+'use strict';
 
-  function stubSubmit(btn, successText) {
-    btn.addEventListener('click', () => {
-      const original = btn.textContent;
-      btn.textContent = successText;
-      btn.disabled = true;
-      btn.style.opacity = '0.65';
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.disabled = false;
-        btn.style.opacity = '';
-      }, 3000);
-    });
+const SUPABASE_URL      = 'https://zildayxlcgenepnbzmwm.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_hKAjHBnUtBoaP6lGWBtdSg_e9GOW8QX';
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── RATE LIMIT ────────────────────────────────────────────────────────────────
+const COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
+
+function isOnCooldown(key) {
+  const last = parseInt(localStorage.getItem(key) || '0', 10);
+  return Date.now() - last < COOLDOWN_MS;
+}
+
+function setCooldown(key) {
+  localStorage.setItem(key, Date.now().toString());
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function fmtDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric'
+  });
+}
+
+function setBtn(btn, text, enabled) {
+  btn.textContent = text;
+  btn.disabled    = !enabled;
+}
+
+function setMsg(el, text, type) {
+  el.textContent  = text;
+  el.className    = 'form-msg ' + (type || '');
+}
+
+// ── LOAD: CURRENTLY ──────────────────────────────────────────────────────────
+async function loadCurrently() {
+  const { data, error } = await sb.from('currently').select('reading,watching,playing').limit(1).single();
+  if (error || !data) return;
+  document.getElementById('rn-reading').textContent = data.reading  || '—';
+  document.getElementById('rn-watching').textContent = data.watching || '—';
+  document.getElementById('rn-playing').textContent  = data.playing  || '—';
+}
+
+// ── LOAD: NOW PLAYING ────────────────────────────────────────────────────────
+async function loadNowPlaying() {
+  const { data, error } = await sb
+    .from('now_playing')
+    .select('track,artist,art_url,fetched_at')
+    .order('fetched_at', { ascending: false })
+    .limit(1)
+    .single();
+  if (error || !data) return;
+  document.getElementById('np-track').textContent  = data.track;
+  document.getElementById('np-artist').textContent = data.artist;
+  document.getElementById('np-timestamp').textContent = 'as of ' + fmtDate(data.fetched_at);
+  if (data.art_url) {
+    const img = document.getElementById('np-art-img');
+    img.src = data.art_url;
+    img.style.display = '';
+  }
+}
+
+// ── LOAD: YEARBOOK ────────────────────────────────────────────────────────────
+async function loadYearbook() {
+  const scatter = document.getElementById('yb-scatter');
+  const { data, error } = await sb
+    .from('yearbook')
+    .select('id,name,message,sticker,created_at')
+    .eq('hidden', false)
+    .order('created_at', { ascending: false })
+    .limit(24);
+
+  if (error) {
+    scatter.innerHTML = '<p class="yb-empty">Couldn\'t load entries.</p>';
+    return;
   }
 
-  document.querySelectorAll('.btn-rec').forEach(btn => {
-    stubSubmit(btn, 'sent ✓');
-  });
+  if (!data || data.length === 0) {
+    scatter.innerHTML = '<p class="yb-empty">No entries yet — be the first!</p>';
+    return;
+  }
 
-  const signBtn = document.getElementById('btn-sign');
-  if (signBtn) stubSubmit(signBtn, 'signed ✓');
+  scatter.innerHTML = '';
+  data.forEach(e => {
+    scatter.appendChild(buildEntry(e));
+  });
+}
+
+function buildEntry({ name, message, sticker, created_at }) {
+  const article = document.createElement('article');
+  article.className = 'yb-entry';
+  article.setAttribute('role', 'listitem');
+  article.innerHTML =
+    (sticker ? `<span class="yb-sticker" aria-hidden="true">${esc(sticker)}</span>` : '') +
+    `<p class="yb-message">${esc(message)}</p>` +
+    `<p class="yb-name">— ${esc(name)}</p>` +
+    `<p class="yb-date">${fmtDate(created_at)}</p>`;
+  return article;
+}
+
+// ── RECOMMEND: SONG ──────────────────────────────────────────────────────────
+document.getElementById('btn-song').addEventListener('click', async () => {
+  if (document.getElementById('hp-song').value) return; // honeypot
+
+  const btn     = document.getElementById('btn-song');
+  const msgEl   = document.getElementById('msg-song');
+  const nameEl  = document.getElementById('song-name');
+  const contEl  = document.getElementById('song-content');
+
+  const name    = nameEl.value.trim();
+  const content = contEl.value.trim();
+
+  if (name.length < 1)    { nameEl.focus();  setMsg(msgEl, 'name is required', 'error'); return; }
+  if (content.length < 2) { contEl.focus();  setMsg(msgEl, 'what song?', 'error'); return; }
+
+  if (isOnCooldown('rec_song')) {
+    setMsg(msgEl, 'you already sent one recently — check back in 10 min', 'error');
+    return;
+  }
+
+  setBtn(btn, 'sending…', false);
+  const { error } = await sb.from('recommendations').insert({ type: 'song', name, content });
+  if (error) { setBtn(btn, 'send it', true); setMsg(msgEl, 'something went wrong — try again', 'error'); return; }
+
+  setCooldown('rec_song');
+  nameEl.value = '';
+  contEl.value = '';
+  setBtn(btn, 'send it', true);
+  setMsg(msgEl, 'sent ✓ i\'ll check it out', 'ok');
+  setTimeout(() => setMsg(msgEl, '', ''), 4000);
+});
+
+// ── RECOMMEND: MANHWA ────────────────────────────────────────────────────────
+document.getElementById('btn-manhwa').addEventListener('click', async () => {
+  if (document.getElementById('hp-manhwa').value) return;
+
+  const btn     = document.getElementById('btn-manhwa');
+  const msgEl   = document.getElementById('msg-manhwa');
+  const nameEl  = document.getElementById('manhwa-name');
+  const contEl  = document.getElementById('manhwa-content');
+  const noteEl  = document.getElementById('manhwa-note');
+
+  const name    = nameEl.value.trim();
+  const content = contEl.value.trim();
+  const note    = noteEl.value.trim() || null;
+
+  if (name.length < 1)    { nameEl.focus(); setMsg(msgEl, 'name is required', 'error'); return; }
+  if (content.length < 2) { contEl.focus(); setMsg(msgEl, 'what title?', 'error'); return; }
+
+  if (isOnCooldown('rec_manhwa')) {
+    setMsg(msgEl, 'you already sent one recently — check back in 10 min', 'error');
+    return;
+  }
+
+  setBtn(btn, 'sending…', false);
+  const { error } = await sb.from('recommendations').insert({ type: 'manhwa', name, content, note });
+  if (error) { setBtn(btn, 'send it', true); setMsg(msgEl, 'something went wrong — try again', 'error'); return; }
+
+  setCooldown('rec_manhwa');
+  nameEl.value = '';
+  contEl.value = '';
+  noteEl.value = '';
+  setBtn(btn, 'send it', true);
+  setMsg(msgEl, 'sent ✓ added to my backlog', 'ok');
+  setTimeout(() => setMsg(msgEl, '', ''), 4000);
+});
+
+// ── RECOMMEND: ANIME ────────────────────────────────────────────────────────
+document.getElementById('btn-anime').addEventListener('click', async () => {
+  if (document.getElementById('hp-anime').value) return;
+
+  const btn     = document.getElementById('btn-anime');
+  const msgEl   = document.getElementById('msg-anime');
+  const nameEl  = document.getElementById('anime-name');
+  const contEl  = document.getElementById('anime-content');
+  const noteEl  = document.getElementById('anime-note');
+
+  const name    = nameEl.value.trim();
+  const content = contEl.value.trim();
+  const note    = noteEl.value.trim() || null;
+
+  if (name.length < 1)    { nameEl.focus(); setMsg(msgEl, 'name is required', 'error'); return; }
+  if (content.length < 2) { contEl.focus(); setMsg(msgEl, 'what title?', 'error'); return; }
+
+  if (isOnCooldown('rec_anime')) {
+    setMsg(msgEl, 'you already sent one recently — check back in 10 min', 'error');
+    return;
+  }
+
+  setBtn(btn, 'sending…', false);
+  const { error } = await sb.from('recommendations').insert({ type: 'anime', name, content, note });
+  if (error) { setBtn(btn, 'send it', true); setMsg(msgEl, 'something went wrong — try again', 'error'); return; }
+
+  setCooldown('rec_anime');
+  nameEl.value = '';
+  contEl.value = '';
+  noteEl.value = '';
+  setBtn(btn, 'send it', true);
+  setMsg(msgEl, 'sent ✓ noted!', 'ok');
+  setTimeout(() => setMsg(msgEl, '', ''), 4000);
+});
+
+// ── YEARBOOK: SIGN ───────────────────────────────────────────────────────────
+document.getElementById('btn-sign').addEventListener('click', async () => {
+  if (document.getElementById('hp-yb').value) return;
+
+  const btn     = document.getElementById('btn-sign');
+  const msgEl   = document.getElementById('msg-yb');
+  const nameEl  = document.getElementById('yb-name');
+  const msgArea = document.getElementById('yb-message');
+  const sticker = document.querySelector('input[name="sticker"]:checked')?.value || null;
+
+  const name    = nameEl.value.trim();
+  const message = msgArea.value.trim();
+
+  if (name.length < 1)    { nameEl.focus();  setMsg(msgEl, 'what should I call you?', 'error'); return; }
+  if (message.length < 2) { msgArea.focus(); setMsg(msgEl, 'say something!', 'error'); return; }
+
+  if (isOnCooldown('yb')) {
+    setMsg(msgEl, 'you already signed recently — check back in 10 min', 'error');
+    return;
+  }
+
+  setBtn(btn, 'signing…', false);
+  const { data, error } = await sb
+    .from('yearbook')
+    .insert({ name, message, sticker: sticker || null })
+    .select()
+    .single();
+
+  if (error) { setBtn(btn, 'sign it', true); setMsg(msgEl, 'something went wrong — try again', 'error'); return; }
+
+  setCooldown('yb');
+
+  // Prepend new entry immediately without reload
+  const scatter = document.getElementById('yb-scatter');
+  const empty   = scatter.querySelector('.yb-empty');
+  if (empty) empty.remove();
+  scatter.prepend(buildEntry({ ...data, created_at: new Date().toISOString() }));
+
+  nameEl.value  = '';
+  msgArea.value = '';
+  document.getElementById('sk-none').checked = true;
+  setBtn(btn, 'sign it', true);
+  setMsg(msgEl, 'signed ✓ thanks for stopping by!', 'ok');
+  setTimeout(() => setMsg(msgEl, '', ''), 5000);
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+(async () => {
+  await Promise.all([loadCurrently(), loadNowPlaying(), loadYearbook()]);
+})();
 </script>
 
 </body>
